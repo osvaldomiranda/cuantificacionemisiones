@@ -67,7 +67,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    
+
     <v-toolbar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       color="success"
@@ -112,8 +112,8 @@
         { icon: 'contacts', text: 'Datos del Establecimiento', link: '/' },
         { icon: 'wrap_text', text: 'Listado de Envíos', link: '/send_list'}, 
         { icon: 'settings', text: 'Cuantificacion de Emisiones', link: '/source_list' },
-        { icon: 'wrap_text', text: 'Diagramas de Descarga', link: '/'}, 
-        { icon: 'wrap_text', text: 'Administrar Solicitudes', link: '/'},     
+        { icon: 'wrap_text', text: 'Administrar Declaraciones', link: '/send_admin'}, 
+        { icon: 'wrap_text', text: 'Administrar Solicitudes', link: '/requisition_list'},     
       ]
     }),
     props: {

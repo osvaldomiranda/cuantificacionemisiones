@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store(
 {
 	state: {
+		token:'',
 	  // currentCiiu: '',
 	  // changeState: false,
 	  // establishment: '',
@@ -19,6 +20,9 @@ export default new Vuex.Store(
 	  // burners:[],
 	},
 	mutations: {
+		changeToken(state, token) {
+		    state.token = token;
+		},
 
 		// changePda(state, option) {
 		//     state.pdaOption = option;
@@ -53,6 +57,7 @@ export default new Vuex.Store(
 		// }
 	},
 	getters: {
+		token: state => state.token,
 		// currentCiiu: state => state.currentCiiu,
 		// changeState: state => state.changeState,
 		// pdaOption: state => state.pdaOption,

@@ -30,6 +30,17 @@ axios.defaults.headers.common = {
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
 };
+
+let token_vu = document.head.querySelector('meta[name="token"]');
+
+if (token_vu){
+    window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
+    //mapState(['token']).$store.commit('changeToken',token_vu)
+}else{
+    //window.axios.defaults.headers.common['authorization'] = 'Bearer '+mapState(['token']).$store.getters.token;
+}
+
+
 Vue.prototype.$http = window.axios
 
 
@@ -76,5 +87,19 @@ const app = new Vue({
     render: h => h(AppComponent),
     store,
     router: router,
-    
+    created () {
+        this.initialize()
+    },
+    methods: {
+        initialize () {
+            let token_vu = document.head.querySelector('meta[name="token"]');
+
+            if (token_vu){
+                window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
+                this.$store.commit('changeToken',token_vu)
+            }else{
+                window.axios.defaults.headers.common['authorization'] = 'Bearer '+ this.$store.getters.token;
+            }
+        }
+    }
 });

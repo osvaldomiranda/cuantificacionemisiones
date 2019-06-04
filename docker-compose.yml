@@ -1,0 +1,31 @@
+version: '3'
+services:
+  app:
+    build: .
+    image: cuantificacion
+    ports:
+      - "8082:80"
+    networks:
+      - cuantificacion
+    volumes:
+      - .:/var/www/app
+    depends_on:
+      - pgdb
+  pgdb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - cuantificacion
+    environment:
+      POSTGRES_USER: reporte_gei
+      POSTGRES_PASSWORD: osvaldo1249
+      POSTGRES_DB: cuantificacion_development
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+  cuantificacion:
+    driver: "local"
+networks:
+  cuantificacion:

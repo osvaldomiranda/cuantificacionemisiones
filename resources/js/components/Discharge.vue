@@ -573,7 +573,7 @@ body{
             var enc = new mxCodec(mxUtils.createXmlDocument());
             var node = enc.encode(ref.editor.graph.getModel());
             //console.log(mxUtils.getPrettyXml(node));       
-            var req = mxUtils.load("http://localhost:8000/xml/xml.xml");
+            var req = mxUtils.load("../../../xml/xml.xml");
             var xmlText = req.getText();
             //console.log(xmlText)
             // use the DOMParser browser API to convert text to a Document

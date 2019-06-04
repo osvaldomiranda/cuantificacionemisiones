@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'sftp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,6 +62,21 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+        ],
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => 'localhost',
+            'username' => 'cuantificaion',
+            'password' => '1001',
+
+            // Settings for SSH key based authentication...
+            // 'privateKey' => '/path/to/privateKey',
+            // 'password' => 'encryption-password',
+
+            // Optional SFTP Settings...
+            'port' => 2222,
+            // 'root' => '',
+            // 'timeout' => 30,
         ],
 
     ],

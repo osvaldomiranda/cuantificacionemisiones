@@ -121,6 +121,8 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'vukey' => env('VU_KEY'),
+
     'cipher' => 'AES-256-CBC',
 
     /*

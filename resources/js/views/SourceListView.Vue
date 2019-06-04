@@ -1,7 +1,7 @@
 <template>
   <div>
 
-		<v-card>
+        <v-card>
       <v-container
         id="grid"
         fluid
@@ -14,7 +14,7 @@
         </v-layout>
         
       </v-container>
-		</v-card>
+        </v-card>
 
 
       <v-dialog v-model="dialog" max-width="800px">
@@ -120,20 +120,20 @@
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
-        	<v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
-        	<v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
-        </td>	
+            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
+            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
+        </td>   
 
       </template>
     </v-data-table>
 
 
     <v-toolbar flat>
-      	<v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
-      	<v-spacer></v-spacer> 
-  		
+        <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
+        <v-spacer></v-spacer> 
+        
         <discharge></discharge>
-  		
+        
     </v-toolbar>
 
 
@@ -153,21 +153,27 @@
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
-        	<v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
-        	<v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
-        </td>	
+            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
+            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
+        </td>   
       </template>
     </v-data-table>
 
 
     <v-toolbar flat>
-      	<v-toolbar-title>Procesos con Transformación de Materia Prima</v-toolbar-title>
+        <v-toolbar-title>Procesos con Transformación de Materia Prima</v-toolbar-title>
     </v-toolbar>
     <v-toolbar flat color="white">
-      	<v-toolbar-title>Producción de Celulosa</v-toolbar-title>
-      	<v-spacer></v-spacer> 
-		  <discharge></discharge>
+        <v-toolbar-title>Producción de Celulosa</v-toolbar-title>
 
+            
+        <v-spacer></v-spacer> 
+            <router-link to="/graphics">
+                <v-btn small color="error">
+                  <span>Registrar producción consumo</span>
+                </v-btn>
+            </router-link>
+            <discharge></discharge>
     </v-toolbar>
     <v-data-table
       :headers="headers"
@@ -183,9 +189,9 @@
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="justify-center layout px-0">
-        	<v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
-        	<v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
-        </td>	
+            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
+            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
+        </td>   
       </template>
     </v-data-table>
 
@@ -207,13 +213,19 @@
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
-        	<v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
-        	<v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
-        </td>	
+            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
+            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
+        </td>   
       </template>
     </v-data-table>
 
-    <graphics></graphics>
+
+    <router-link to="/graphics">
+        <v-btn color="success">
+          <span>Siguiente</span>
+        </v-btn>
+    </router-link>
+    
 
   </div>
 </template>
@@ -235,19 +247,19 @@
 
         ],
       desserts: [],
-      	company:{
-      		name: 'Empresa Prueba',
-      		rut: '76200200',
-      		digit: '3',
-      		stret: 'Moneda',
-      		number: '920',
-      		comune: 'Santiago Centro',
-      	},
-      	user:{
-      		name:'Osvaldo Miranda',
-      		email: 'omiranda@mma.gob.cl'
-      	},
-		editedItem: {
+        company:{
+            name: 'Empresa Prueba',
+            rut: '76200200',
+            digit: '3',
+            stret: 'Moneda',
+            number: '920',
+            comune: 'Santiago Centro',
+        },
+        user:{
+            name:'Osvaldo Miranda',
+            email: 'omiranda@mma.gob.cl'
+        },
+        editedItem: {
             source_id:0,
             name: '',
             kva: 0,
@@ -323,7 +335,7 @@
     methods: {
       initialize () {
         this.desserts = [
-        	{
+            {
             source_id:345,
             name: 'Equipo 1',
             source_type_name: 'Grupo Electrógeno',
@@ -354,8 +366,8 @@
             pruduction_unit: '',
             origin_data: ''
 
-        	},
-        	{
+            },
+            {
             source_id:345,
             name: 'Equipo 1',
             source_type_name: 'Grupo Electrógeno',
@@ -385,8 +397,8 @@
             production:0,
             pruduction_unit: 'T',
             origin_data:''
-        	},
-        	{
+            },
+            {
             source_id:345,
             name: 'Equipo 1',
             source_type_name: 'Convertidor Teniente',
@@ -417,8 +429,8 @@
             pruduction_unit: 'T',
             origin_data:'SICTER'
 
-        	},
-        	{
+            },
+            {
             source_id:345,
             name: 'Equipo 1',
             source_type_name: 'Grupo Electrógeno',
@@ -448,7 +460,7 @@
             production:23,
             pruduction_unit: 'T',
             origin_data:'DS13'
-        	},
+            },
         ]
       },
 

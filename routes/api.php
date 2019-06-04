@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middleware('client');
+Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
+Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
+
+Route::get('/requisitions', 'RequisitionController@index');
+Route::post('/requisition/approve', 'RequisitionController@approve');
+Route::post('/requisition/reject', 'RequisitionController@reject');

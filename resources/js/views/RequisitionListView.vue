@@ -1,0 +1,103 @@
+
+
+<template>
+
+  <v-data-table
+    v-model="selected"
+    :headers="headers"
+    :items="requisitions"
+    item-key="name"
+    select-all
+    class="elevation-1"
+  >
+    <template v-slot:items="props">
+      <td>
+        <v-checkbox
+          v-model="props.selected"
+          primary
+          hide-details
+        ></v-checkbox>
+      </td>
+      <td>{{ props.item.retc_id }}</td>
+      <td>{{ props.item.data }}</td>
+      <td>{{ props.item.retc_id }}</td>
+      <td>{{ props.item.state }}</td>
+      <td>{{ requis }}
+      <td class="justify-center layout px-0"> 
+            <v-btn small @click="approve_requisition(props.item)" color="success">Aprobar</v-btn>
+      </td> 
+      <td class="justify-center layout px-0"> 
+            <v-btn small @click="refuse(props.item)" color="success">Rechazar</v-btn>
+      </td> 
+    </template>
+  </v-data-table>
+
+
+</template>
+<script>
+  export default {
+    data () {
+      return {
+        selected: [],
+        requis:"hola",
+        headers: [
+          { text: 'Solicitud', value: 'retc_id' },
+          { text: 'Empresa', value: 'retc_id' },
+          { text: 'Establecimiento', value: 'retc_id' },
+          { text: 'Estado', value: 'state' },
+          
+        ],
+        requisitions: [
+          // {
+          //   retc_id: 1,
+          //   company: 'Empresa Prueba',
+          //   establishment: 'Establecimiento Prueba',
+          //   state: 'Pendiente',
+
+          // },
+        ]
+      }
+    },
+    created () {
+        this.initialize()
+    },
+    methods: {
+      initialize () {
+   
+        var app = this;
+        axios.get('/api/requisitions')
+            .then(function (resp) {
+              app.requisitions = resp.data
+
+              // alert(JSON.stringify(app.requisitions, null, 4))
+              
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Could not load data :" + resp);
+            });
+        },
+      approve_requisition(item){
+        axios.post('/api/requisition/approve', item)
+            .then(function (resp) {    
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error approve_requisition :" + resp);
+            });
+      },
+      refuse(item){
+
+        var transform = {'<>':'li','html':[
+                    {'<>':'span','html':'${name} (${age})'}
+                ]};
+
+        alert(JSON.stringify(item));        
+
+        this.requis =  json2html(item,transform);        
+
+        alert(requis);
+      } 
+    }        
+  }
+</script>

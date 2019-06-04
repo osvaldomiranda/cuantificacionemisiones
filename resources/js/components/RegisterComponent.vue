@@ -19,7 +19,6 @@
 
           <v-card-text>
 
-            <v-btn v-if=" editedItem.raw_material!='' " color="blue darken-1" flat @click="abatimiento">Abatimientos</v-btn>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md3>
