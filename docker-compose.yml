@@ -6,17 +6,15 @@ services:
     ports:
       - "8082:80"
     networks:
-      - cuantificacion
+      - reporte_gei
     volumes:
       - .:/var/www/app
     depends_on:
       - pgdb
   pgdb:
     image: postgres
-    ports:
-      - "5433:5432"
     networks:
-      - cuantificacion
+      - reporte_gei
     environment:
       POSTGRES_USER: reporte_gei
       POSTGRES_PASSWORD: osvaldo1249
@@ -28,4 +26,4 @@ volumes:
   cuantificacion:
     driver: "local"
 networks:
-  cuantificacion:
+  reporte_gei:
