@@ -27,6 +27,8 @@ class RequisitionController extends Controller
 
     	$retc_id =$request->input('retc_id');
 
+    	Info('approve');
+
     	$client = new Client();
     	$res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/access/token',['form_params' => ['client'=>'1', 'secret'=>'123']]);
         $jsonData = json_decode((string) $res->getBody()->getContents()) ;
@@ -35,7 +37,7 @@ class RequisitionController extends Controller
         Info($token);
 
         $client = new Client();
-        $res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/application/' . $retc_id . '/approve',['headers'=>['authorization'=>$token]] );
+        $res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/application/' . $retc_id . '/approve',['headers'=>['Authorization'=>$token]] );
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
 
         if($res->getStatusCode()==200){

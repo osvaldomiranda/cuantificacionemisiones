@@ -29,7 +29,9 @@ class ApiUserController extends Controller
             if ($user->save()){
                 return response()->json(['response' => 1]);
             }
-        }                
+        }  else {
+            
+        }              
         return response()->json(['response' => 0]);
     }
 
@@ -65,6 +67,7 @@ class ApiUserController extends Controller
         $result = UserEstablishment::where('secret_a',$secret_a)->where('secret_b',$secret_b)->first();
         
         Info('validateSecret');
+
         if($result){
             $token = $result->user->createToken('VU')->accessToken;
             Info($token);
