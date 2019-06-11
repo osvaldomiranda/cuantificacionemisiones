@@ -17,6 +17,8 @@ class ApiUserController extends Controller
 
     public function setSecretInvitation(Request $request)
     {
+
+        Info('setSecretInvitation');
         $retcid = $request->input('retcid');
         $secret_a = $request->input('secret_a');
         $secret_b = $request->input('secret_b');
@@ -62,10 +64,10 @@ class ApiUserController extends Controller
         $secret_b =$request->secret_b;
         $result = UserEstablishment::where('secret_a',$secret_a)->where('secret_b',$secret_b)->first();
         
-
+        Info('validateSecret');
         if($result){
             $token = $result->user->createToken('VU')->accessToken;
-            
+            Info($token);
             //Auth::guard('api')->login($result->user);
             $result->secret_a = null;
             $result->secret_b = null;

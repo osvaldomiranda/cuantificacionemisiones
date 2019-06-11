@@ -22,6 +22,7 @@ class RequisitionController extends Controller
     	$requisitions = Requisition::all();
     	return response()->json($requisitions);
     }
+    
     public function approve(Request $request){
 
     	$retc_id =$request->input('retc_id');
