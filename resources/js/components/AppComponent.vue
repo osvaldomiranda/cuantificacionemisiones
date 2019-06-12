@@ -125,6 +125,13 @@
     methods: {
       initialize () {
         var app = this;
+            let token_vu = document.head.querySelector('meta[name="token"]');
+
+            if (token_vu){
+                alert(JSON.stringify(token_vu));
+                //window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
+                this.$store.commit('changeToken',token_vu)
+            }
         
     }
   	}
