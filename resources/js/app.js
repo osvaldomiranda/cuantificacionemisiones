@@ -35,9 +35,9 @@ let token_vu = document.head.querySelector('meta[name="token"]');
 
 if (token_vu){
     window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
-    //mapState(['token']).$store.commit('changeToken',token_vu)
+    mapState(['token']).$store.commit('changeToken',token_vu)
 }else{
-    //window.axios.defaults.headers.common['authorization'] = 'Bearer '+mapState(['token']).$store.getters.token;
+    window.axios.defaults.headers.common['authorization'] = 'Bearer '+mapState(['token']).$store.getters.token;
 }
 
 

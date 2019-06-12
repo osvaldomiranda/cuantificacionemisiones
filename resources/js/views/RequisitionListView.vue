@@ -2,6 +2,8 @@
 
 <template>
 
+  
+
   <v-data-table
     v-model="selected"
     :headers="headers"
@@ -35,6 +37,7 @@
 
 </template>
 <script>
+  import { mapState } from 'vuex';
   export default {
     data () {
       return {

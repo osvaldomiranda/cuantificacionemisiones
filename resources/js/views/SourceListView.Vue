@@ -9,6 +9,7 @@
         tag="section"
       >
         <v-layout row wrap>
+          <v-flex xs6 tag="h4" >Usuario: {{JSON.stringify(this.$store.getters.token)}}</v-flex>
           <v-flex xs6 tag="h4" >Usuario: {{user.name}}</v-flex>
           <v-flex xs6 tag="h4" >Establecimiento: {{company.name}}</v-flex>
         </v-layout>
