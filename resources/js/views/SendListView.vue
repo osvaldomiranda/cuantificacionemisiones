@@ -15,7 +15,7 @@
 		    tag="section"
 		  >
 		    <v-layout row wrap>
-          <v-btn  small color="success" @click="token" >token</v-btn> 
+          <v-flex xs6 tag="h4" >{{ JSON.stringify(this.$store.getters.token) }}</v-flex>
 		      <v-flex xs6 tag="h4" >Usuario: {{user.name}}</v-flex>
 		      <v-flex xs6 tag="h4" >Establecimiento: {{company.name}}</v-flex>
 		    </v-layout>
@@ -127,9 +127,6 @@
         	},
         ]
       },
-      token (){
-        alert(this.$store.getters.token);
-      }
     }
   }
 </script>
