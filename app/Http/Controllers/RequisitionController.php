@@ -22,8 +22,12 @@ class RequisitionController extends Controller
     	Info( $request->headers );
 
     	$user = Auth::user();
-
+    	Info('**********');
     	Info($user);
+    	Info($request->user());
+
+    	
+    	Info('**********');
 
     	$requisitions = Requisition::all();
     	return response()->json($requisitions);
