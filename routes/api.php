@@ -21,6 +21,7 @@ Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middle
 Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 
-Route::get('/requisitions', 'RequisitionController@index');
+Route::get('/requisitions', 'RequisitionController@index')->middleware('auth:api');;
 Route::post('/requisition/approve', 'RequisitionController@approve');
 Route::post('/requisition/reject', 'RequisitionController@reject');
+

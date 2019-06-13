@@ -31,14 +31,7 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-let token_vu = document.head.querySelector('meta[name="token"]');
 
-if (token_vu){
-    window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
-    //mapState(['token']).$store.commit('changeToken',token_vu)
-}else{
-    //window.axios.defaults.headers.common['authorization'] = 'Bearer '+mapState(['token']).$store.getters.token;
-}
 
 
 Vue.prototype.$http = window.axios
@@ -94,12 +87,12 @@ const app = new Vue({
         initialize () {
             let token_vu = document.head.querySelector('meta[name="token"]');
 
-            if (token_vu){
+            if (token_vu.content){
                 alert(JSON.stringify(token_vu.content));
-                //window.axios.defaults.headers.common['authorization'] = 'Bearer '+token_vu.content;
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer '+token_vu.content;
                 this.$store.commit('changeToken',token_vu.content)
             }else{
-               // window.axios.defaults.headers.common['authorization'] = 'Bearer '+ this.$store.getters.token;
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.getters.token;
             }
         }
     }
