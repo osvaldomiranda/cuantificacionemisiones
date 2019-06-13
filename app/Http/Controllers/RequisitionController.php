@@ -21,7 +21,9 @@ class RequisitionController extends Controller
     public function index(Request $request){
     	Info( $request->headers );
 
+    	$user = Auth::user();
 
+    	Info($user);
 
     	$requisitions = Requisition::all();
     	return response()->json($requisitions);
