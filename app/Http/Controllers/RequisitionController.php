@@ -18,7 +18,11 @@ use App\UserEstablishment;
 
 class RequisitionController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+    	Info( $request->headers );
+
+
+
     	$requisitions = Requisition::all();
     	return response()->json($requisitions);
     }
