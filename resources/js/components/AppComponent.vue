@@ -125,8 +125,14 @@
     methods: {
       initialize () {
         var app = this;
-
-        
+        axios.get('/api/set_user')
+            .then(function (resp) {
+              app.$store.commit('changeUser',resp.data);
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Could not load data :" + resp);
+            });   
       }
   	}
 }

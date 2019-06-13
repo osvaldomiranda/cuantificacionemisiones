@@ -12,7 +12,7 @@ export default new Vuex.Store(
 	  // changeState: false,
 	  // establishment: '',
 	  // naturalStates:'',
-	  // user: '',
+	  user: '',
 	  // pdaOption: false,
 	  // currentWizardStep: 0,
 	  // wisardStepRights: [],
@@ -43,9 +43,9 @@ export default new Vuex.Store(
 		//   	state.establishment = establishment;
 		//   	state.currentCiiu = establishment.ciiu4.name;
 		// },
-		// changeUser(state, user) {
-		//   	state.user = user
-		// },
+		changeUser(state, user) {
+		   	state.user = user
+		},
 		// changeBurners(state, burners) {
 		//   	state.burners = burners
 		// },
@@ -64,7 +64,7 @@ export default new Vuex.Store(
 		// establishment: state => state.establishment,
 		// company: state => state.establishment.company, 
 		// commune: state => state.establishment.commune, 
-		// user: state => state.user,
+		user: state => state.user,
 		// currentWizardStep: state => state.currentWizardStep,
 		// wisardStepRights: state => state.wisardStepRights,
 		// naturalStates: state => state.naturalStates,

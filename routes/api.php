@@ -17,11 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middleware('client');
-Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
-
-Route::get('/requisitions', 'RequisitionController@index')->middleware('auth:api');
 Route::post('/requisition/approve', 'RequisitionController@approve');
 Route::post('/requisition/reject', 'RequisitionController@reject');
+
+Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middleware('client');
+Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
+Route::get('/set_user', 'ApiUserController@setUserVue')->middleware('auth:api');
+
+Route::get('/requisitions', 'RequisitionController@index')->middleware('auth:api');
+
 

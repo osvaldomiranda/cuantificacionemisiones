@@ -80,4 +80,8 @@ class ApiUserController extends Controller
             return abort(404,'Error: UserAccess');
         }
     }
+    public function setUserVue(Request $request){
+        $user = Auth::user();
+        return response()->json($user);
+    }
 }
