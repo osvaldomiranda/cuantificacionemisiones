@@ -128,12 +128,8 @@
         axios.get('/api/set_user')
             .then(function (resp) {
 
-              app.$store.commit('changeUser',resp.data.user);
-              app.$store.commit('changeEstablishment',resp.data['establishment']);
-
-              alert(JSON.stringify(resp.data));
-              alert(JSON.stringify(resp.data[user]));
-              alert(JSON.stringify(resp.data[establishment]));
+              app.$store.commit('changeUser',resp.data[0]['user']);
+              app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
 
             })
             .catch(function (resp) {
