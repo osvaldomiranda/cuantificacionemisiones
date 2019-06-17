@@ -10,4 +10,9 @@ class UserEstablishment extends Model
 	{
 	   	return $this->belongsTo(User::class, 'user_id');
 	}
+
+    public function establishment()
+	{
+	   	return $this->belongsTo(Establishment::class, 'establishment_id');
+	}
 }

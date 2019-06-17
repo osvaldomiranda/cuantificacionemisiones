@@ -23,8 +23,8 @@ Route::post('/requisition/reject', 'RequisitionController@reject');
 
 Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middleware('client');
 Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
-Route::get('/set_user', 'ApiUserController@setUserVue')->middleware('auth:api');
+Route::get('/set_user', 'ApiUserController@setUserVue');
 
-Route::get('/requisitions', 'RequisitionController@index')->middleware('auth:api');
+Route::get('/requisitions', 'RequisitionController@index');
 
 

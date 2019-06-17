@@ -7,12 +7,12 @@ Vue.use(Vuex);
 export default new Vuex.Store(
 {
 	state: {
-		token:'',
-	  // currentCiiu: '',
+	    token:'',
+	    currentCiiu: '',
 	  // changeState: false,
-	  // establishment: '',
+	    establishment: '',
 	  // naturalStates:'',
-	  user: '',
+	    user: '',
 	  // pdaOption: false,
 	  // currentWizardStep: 0,
 	  // wisardStepRights: [],
@@ -39,10 +39,10 @@ export default new Vuex.Store(
 		// changeWisardStepRights(state, wisardStepRights){
 		// 	state.wisardStepRights = wisardStepRights;
 		// },
-		// changeEstablishment(state, establishment) {
-		//   	state.establishment = establishment;
-		//   	state.currentCiiu = establishment.ciiu4.name;
-		// },
+		changeEstablishment(state, establishment) {
+		   	state.establishment = establishment;
+		   	state.currentCiiu = establishment.ciiu4.name;
+		},
 		changeUser(state, user) {
 		   	state.user = user
 		},
@@ -58,10 +58,10 @@ export default new Vuex.Store(
 	},
 	getters: {
 		token: state => state.token,
-		// currentCiiu: state => state.currentCiiu,
+		currentCiiu: state => state.currentCiiu,
 		// changeState: state => state.changeState,
 		// pdaOption: state => state.pdaOption,
-		// establishment: state => state.establishment,
+		establishment: state => state.establishment,
 		// company: state => state.establishment.company, 
 		// commune: state => state.establishment.commune, 
 		user: state => state.user,

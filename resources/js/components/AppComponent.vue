@@ -127,7 +127,10 @@
         var app = this;
         axios.get('/api/set_user')
             .then(function (resp) {
-              app.$store.commit('changeUser',resp.data);
+
+              app.$store.commit('changeUser',resp.data.user);
+              app.$store.commit('changeEstablishment',resp.data.establishment);
+
             })
             .catch(function (resp) {
                 console.log(resp);

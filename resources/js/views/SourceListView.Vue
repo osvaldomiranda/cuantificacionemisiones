@@ -9,30 +9,39 @@
         tag="section"
       >
         <v-layout row wrap>
-          <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user }}</v-flex>
-          <v-flex xs6 tag="h4" >Establecimiento: {{company.name}}</v-flex>
+          <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user.name }}</v-flex>
+          <v-flex xs6 tag="h4" >Establecimiento: {{ $store.getters.establisment.name }}</v-flex>
         </v-layout>
         
       </v-container>
         </v-card>
 
 
-      <v-dialog v-model="dialog" max-width="800px">
+      <v-dialog v-model="dialog" max-width="900px">
 
         <v-card>
           <v-card-title>
-            <span class="headline">Registro Consumo y Producción</span>
-            </br>
-            <p>Tipo Fuente: {{editedItem.source_type_name}}--</p>
-            <p>CCF8: {{editedItem.ccf8}}</p>
+            <span class="headline">Tipo Fuente: {{editedItem.source_type_name}}</span> 
           </v-card-title>
 
 
           <v-card-text>
+<!--             <v-container grid-list-md>
+              <v-layout wrap row>
+                <v-flex xs12 sm12 md12>
+                    <span class="subheading">Tipo Fuente: {{editedItem.source_type_name}}</span>
+                </v-flex> 
+              </v-layout>
+              <v-layout wrap row>
+                <v-flex xs12 sm12 md12>
+                    <span class="subheading">CCF8: {{editedItem.ccf8}}</span>
+                </v-flex> 
+              </v-layout>
+            </v-container>  -->
 
             <v-btn v-if=" editedItem.raw_material!='' " color="blue darken-1" flat @click="abatimiento">Abatimientos</v-btn>
             <v-container grid-list-md>
-              <v-layout wrap>
+              <v-layout wrap roe>
                 <v-flex xs12 sm6 md3>
                   <v-text-field readonly='true' v-model="editedItem.primary_fuel_name" label="Combustible"></v-text-field>
                 </v-flex>
@@ -65,6 +74,49 @@
                   <v-text-field v-if=" editedItem.product!='' "   readonly='true' v-model="editedItem.pruduction_unit" label="Unidad"></v-text-field>
                 </v-flex>
               </v-layout>
+              <span class="subheading">Periodos de Paralización</span>
+              <v-layout wrap row>
+                <v-flex xs12 sm6 md2>
+                  <v-text-field  v-model="editedItem.desde" label="Desde"></v-text-field>   
+                </v-flex>
+                <v-flex xs12 sm6 md2>
+                  <v-text-field  v-model="editedItem.desde" label="Hasta"></v-text-field>   
+                </v-flex>
+
+
+                <v-flex xs1>
+                  
+                </v-flex>
+
+
+
+
+
+
+
+              </v-layout> 
+              <span class="subheading">Ciclo de Funcionamiento semanal</span>
+              <v-layout wrap row>
+                <v-flex xs12 sm6 md2>
+                    <v-select
+                        :items="dias"
+                        label="Día Desde"
+                    ></v-select> 
+                </v-flex>
+                <v-flex xs12 sm6 md2>
+                    <v-select
+                        :items="dias"
+                        label="Día Hasta"
+                    ></v-select>   
+                </v-flex>
+                <v-flex xs12 sm6 md2>
+                  <v-text-field  v-model="editedItem.horadesde" label="Hora Desde"></v-text-field>   
+                </v-flex>
+                <v-flex xs12 sm6 md2>
+                  <v-text-field  v-model="editedItem.horahasta" label="Hora Hasta"></v-text-field>   
+                </v-flex>
+              </v-layout>  
+
             </v-container>
           </v-card-text>
 
@@ -235,6 +287,7 @@
     data: () => ({
         dialog: false,
         dialog2: false,
+        dias: ['Lunes', 'Martes', 'Miercoles', 'Jueves','Viernes', 'Sabado', 'Domingo'],
         headers: [
 
             { text: 'Tipo de Fuente', value: 'source_type_name' },            
@@ -285,7 +338,9 @@
             aw_material_unit: '',
             production:0,
             pruduction_unit: '',
-            origin_data:''
+            origin_data:'',
+            horahasta:'23:59',
+            horadesde:'00:00',
         },
         defaultItem: {
             source_id:0,
