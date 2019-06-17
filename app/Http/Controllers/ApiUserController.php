@@ -82,6 +82,7 @@ class ApiUserController extends Controller
     }
     public function setUserVue(Request $request){
         $user = Auth::user();
+        Info($usser);
         $user_establishment = UserEstablishment::where('user_id', $user->id)->whith('user')->whith('establishment')->get();
         return response()->json($user_establishment);
     }
