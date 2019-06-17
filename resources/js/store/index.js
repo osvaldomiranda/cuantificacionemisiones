@@ -8,7 +8,7 @@ export default new Vuex.Store(
 {
 	state: {
 	    token:'',
-	    currentCiiu: '',
+	  // currentCiiu: '',
 	  // changeState: false,
 	    establishment: '',
 	  // naturalStates:'',
@@ -41,7 +41,7 @@ export default new Vuex.Store(
 		// },
 		changeEstablishment(state, establishment) {
 		   	state.establishment = establishment;
-		   	state.currentCiiu = establishment.ciiu4.name;
+		   //	state.currentCiiu = establishment.ciiu4.name;
 		},
 		changeUser(state, user) {
 		   	state.user = user
@@ -58,7 +58,7 @@ export default new Vuex.Store(
 	},
 	getters: {
 		token: state => state.token,
-		currentCiiu: state => state.currentCiiu,
+		// currentCiiu: state => state.currentCiiu,
 		// changeState: state => state.changeState,
 		// pdaOption: state => state.pdaOption,
 		establishment: state => state.establishment,
