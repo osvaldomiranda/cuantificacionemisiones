@@ -16,8 +16,8 @@
 		  >
 		    <v-layout row wrap>
           <!-- <v-flex xs6 tag="h4" >{{ JSON.stringify(this.$store.getters.token) }}</v-flex> -->
-		      <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user.name }}</v-flex>
-		      <v-flex xs6 tag="h4" >Establecimiento: {{ $store.getters.establisment.name }}</v-flex>
+		      <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user }}</v-flex>
+		      <v-flex xs6 tag="h4" >Establecimiento: {{ $store.getters.establisment }}</v-flex>
 		    </v-layout>
 		    
 		  </v-container>
