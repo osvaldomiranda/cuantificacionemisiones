@@ -81,12 +81,13 @@ class ApiUserController extends Controller
         }
     }
     public function setUserVue(Request $request){
-        $user = Auth::user();
-        $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get();
+       $user = Auth::user();
+       $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get();
+        //$user_establishment = UserEstablishment::where('user_id', 18)->with('user')->with('establishment')->get();
 
-        Info($user);
-        Info($user_establishment);
-        
+        //Info($user);
+        //Info($user_establishment);
+
         return response()->json($user_establishment);
     }
 }
