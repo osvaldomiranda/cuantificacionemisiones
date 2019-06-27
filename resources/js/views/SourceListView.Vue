@@ -168,10 +168,12 @@
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.serial_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">
+            <isocinetic></isocinetic>
+        </td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
             <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
             <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
@@ -201,10 +203,12 @@
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.serial_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">
+            <isocinetic></isocinetic>
+        </td>
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
             <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="error">Registrar Consumo</v-btn>
             <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="success">Consumo Registrado</v-btn>
@@ -237,7 +241,6 @@
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.serial_number }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
         <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
@@ -294,7 +297,6 @@
             { text: 'Tipo de Fuente', value: 'source_type_name' },            
             { text: 'Nº registro', value: 'register_number' },
             { text: 'Marca', value: 'brand' },
-            { text: 'Nº de Serie', value: 'serial_number' },
             { text: 'Nº Interno', value: 'internal_number' },
             { text: 'Origen del Dato', value: 'origin_data' },
             { text: 'CCF8', value: 'ccf8' },

@@ -19,6 +19,10 @@ import AppComponent         from './components/AppComponent'
 import GraphicsComponent    from './components/GraphicsComponent'
 import Register             from './components/RegisterComponent'
 
+import Covs                 from './components/CovsComponent'
+import Isocinetic           from './components/IsocineticComponent'
+import Upload               from './components/UploadComponent'
+
 
 Vue.use(Vuex);
 Vue.use(VueApexCharts)
@@ -68,6 +72,11 @@ Vue.component('graphics', GraphicsComponent);
 Vue.component('discharge', Discharge);
 Vue.component('register', Register);
 
+Vue.component('covs', Covs);
+Vue.component('isocinetic', Isocinetic);
+Vue.component('upload', Upload);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -81,18 +90,13 @@ const app = new Vue({
     store,
     router: router,
     created () {
-        this.initialize()
-    },
-    methods: {
-        initialize () {
-            let token_vu = document.head.querySelector('meta[name="token"]');
+        let token_vu = document.head.querySelector('meta[name="token"]');
 
-            if (token_vu.content){
-                window.axios.defaults.headers.common['Authorization'] = 'Bearer '+token_vu.content;
-                this.$store.commit('changeToken',token_vu.content)
-            }else{
-                window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.getters.token;
-            }
+        if (token_vu.content){
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer '+token_vu.content;
+            this.$store.commit('changeToken',token_vu.content)
+        }else{
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.getters.token;
         }
-    }
+    },
 });

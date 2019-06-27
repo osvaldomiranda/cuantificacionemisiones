@@ -57,11 +57,9 @@
     >
 		<v-btn small color="success">Editar declaración D.S 138</v-btn>
 	</router-link>
-    <router-link
-        to="/source_list"
-    >
-		<v-btn  small color="success">Nueva declaración RES 15027</v-btn>	
-	</router-link>
+    
+    <covs></covs>
+
   </div>
 </template>
 

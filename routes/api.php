@@ -1,4 +1,4 @@
-<?php
+ed<?php
 
 use Illuminate\Http\Request;
 
@@ -21,9 +21,16 @@ Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 Route::post('/requisition/approve', 'RequisitionController@approve');
 Route::post('/requisition/reject', 'RequisitionController@reject');
 
-Route::post('/user_invitation', 'ApiUserController@setSecretInvitation')->middleware('client');
-Route::post('/crear_solicitud', 'ApiUserController@createRequisition')->middleware('client');
-Route::get('/set_user', 'ApiUserController@setUserVue')->middleware('auth:api');
+// Route::middleware('client')->group(function () {
+	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');
+	Route::post('/crear_solicitud', 'ApiUserController@createRequisition');
+// }
+
+// Route::middleware('auth:api')->group(function () {
+	Route::get('/set_user', 'ApiUserController@setUserVue');
+// }
+
+
 
 Route::get('/requisitions', 'RequisitionController@index');
 
