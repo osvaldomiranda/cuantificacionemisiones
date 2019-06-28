@@ -22,6 +22,7 @@ import Register             from './components/RegisterComponent'
 import Covs                 from './components/CovsComponent'
 import Isocinetic           from './components/IsocineticComponent'
 import Upload               from './components/UploadComponent'
+import NewIso               from './components/NewIsocinetic'
 
 
 Vue.use(Vuex);
@@ -75,6 +76,7 @@ Vue.component('register', Register);
 Vue.component('covs', Covs);
 Vue.component('isocinetic', Isocinetic);
 Vue.component('upload', Upload);
+Vue.component('new_iso', NewIso);
 
 
 /**

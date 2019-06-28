@@ -16,105 +16,69 @@
           </v-toolbar-items>
         </v-toolbar>
  
-
-
-
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout row wrap>
-              <v-flex xs4>
-                <v-text-field label="Nro.Correlativo" required></v-text-field>
-              </v-flex>
-            </v-layout>  
-            <v-layout row wrap> 
-              <v-flex xs4>
-                <v-select
-                  :items="['CH015662-4', 'CH015663-4', 'CH015664-4', 'CH015665-4']"
-                  label="Nro.Registro del Ducto"
-                  required
-                ></v-select>
-              </v-flex>
-              <v-flex xs4>
-                <v-select
-                  :items="['Amoniaco', 'Arsenico', 'Dioxido de Carbono (CO2)', 'Oxidos de Azufre(SOx)']"
-                  label="Contaminante"
-                  required
-                ></v-select>
-              </v-flex>
-            </v-layout>
-            <v-layout row wrap>  
-              <v-flex xs4>
-                <v-select
-                  :items="['Descarga por Chimenea', 'Emisiones Evaporativas', 'Emisiones Fugitivas']"
-                  label="Tipo de Descarga"
-                  required
-                ></v-select>
-              </v-flex>
-              <v-flex xs4>
+
+     <v-container fluid>
+
+        <v-layout align-center row>
+            <v-flex xs1>
+            </v-flex>
+  
+        <v-flex xs10 style="overflow: auto">
+
+            <v-card>
+              <v-card-title>
+                 <span class="headline">Mediciones Isocineticas</span>
+                 <v-spacer></v-spacer>
+                 <new_iso></new_iso>
+              </v-card-title>
+              <v-data-table
+                :headers="headers"
+                :items="isocinetics"
+                :search="search"
+                v-model="selected"
+                :rows-per-page-items="rowsPerPageItems"
+                :pagination.sync="pagination"
+              >
+                <template v-slot:items="props">
+                  <tr @click="showAlert(props.item)">
+                  <td class="text-xs-left">{{ props.item.nro_registro }}</td>
+                  <td class="text-xs-left">{{ props.item.contaminante }}</td>
+                  <td class="text-xs-left">{{ props.item.laboratorio }}</td>
+                  <td class="text-xs-left">{{ props.item.fecha }}</td>
+                  <td class="text-xs-left">{{ props.item.archivo }}</td>
+                </tr>
+                </template>
+                <v-alert v-slot:no-results :value="true" color="error" icon="warning">
+                  Your search for "{{ search }}" found no results.
+                </v-alert>
+              </v-data-table>
+            </v-card> 
+            <v-flex xs1>
+            </v-flex>
+        </v-flex>
                 
-                <v-select
-                  :items="['CH-5', 'CH-6(EPA-6)', 'Análisis Granulometrico']"
-                  label="Metodo de Medición"
-                  required
-                ></v-select>
-              </v-flex>  
-            </v-layout> 
-            <v-layout row wrap> 
-              <v-flex xs2>
-                <v-text-field label="Emisión(Kg/hr)" required></v-text-field>
-              </v-flex>
-              <v-flex xs2>
-                <v-text-field label="Caudal(m3N/hr)" required></v-text-field>
-              </v-flex>
-              <v-flex xs2>
-                <v-text-field label="Concentración" required></v-text-field>
-              </v-flex>
-               <v-flex xs2>
-                <v-select
-                  :items="['ppm', 'mg/m3N']"
-                  label="Unidad de Concentración"
-                  required
-                ></v-select>
-              </v-flex>
-            </v-layout> 
-            <v-layout row wrap> 
-               <v-flex xs4>
-                <v-select
-                  :items="['Cesmec', 'Airon S.A.','ASITEC','ATIS S.A.']"
-                  label="Laboratorio"
-                  required
-                ></v-select>
-              </v-flex>  
+        </v-layout>
+        <div ref="container">
 
-              <v-flex xs2>
-                <v-text-field label="Fecha" required>28/06/2019</v-text-field>
-              </v-flex>
-            </v-layout>
-            <v-layout row wrap>
-              <v-flex xs12>
-                <v-text-field label="Observaciones" required></v-text-field>
-              </v-flex>
-
-            </v-layout>
-            <v-layout row wrap>
-              <v-flex xs12>
-                <upload></upload>
-              </v-flex>
-
-            </v-layout>
-          </v-container>
-          
+        </div>
+    </v-container>    
         </v-card-text>
-
-
-
-
-
-
       </v-card>
     </v-dialog>
   </v-layout>
+
+
+
 </template>
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -122,6 +86,25 @@
     data () {
       return {
         dialog: false,
+        dialog2: false,
+
+        isocinetics: [
+        {   nro_registro: 9879384,
+            contaminante: 'SOx',
+            laboratorio: 'Cesmec',
+            fecha: '01/01/2019',
+            archivo: '9879384.pdf',
+        }
+        ],
+
+        headers: [
+          { text: 'Nro.Registro', value: '' },
+          { text: 'Contaminante', value: '' },
+          { text: 'Laboratorio', value: '' },
+          { text: 'Fecha', value: '' },
+          { text: 'Archivo', value: '' },
+        ],
+
       }
     }
   }
