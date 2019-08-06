@@ -8,6 +8,8 @@ import SendAdmin    from './views/SendAdminView'
 import RequisitionList    from './views/RequisitionListView'
 import Graphics     from './components/GraphicsComponent'
 
+import Readings       from './views/ReadingsView'
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -22,6 +24,11 @@ const router = new VueRouter({
             path: '/source_list',
             name: 'source_list',
             component: SourceList,
+        },
+        {
+            path: '/readings',
+            name: 'readings',
+            component: Readings,
         },
         {
             path: '/send_list',
