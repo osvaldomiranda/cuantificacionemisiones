@@ -31,11 +31,11 @@
                 </v-flex>  
             </v-layout>
 
-            <v-layout row wrap>
-                <v-flex xs1>
+            <v-layout row>
+                <v-flex xs1 class="px-1">
                     <v-text-field v-model="editedItem.fuel_consume" label="Ene"></v-text-field>
                 </v-flex>
-                <v-flex xs1>
+                <v-flex xs1 class="px-1">
                     <v-text-field v-model="editedItem.fuel_consume" label="Feb"></v-text-field>
                 </v-flex>
                 <v-flex xs1>
@@ -175,21 +175,34 @@
                   </v-flex>
                 </v-layout> -->
 
+
+            <template>
+              <v-card>
+                
+               
               <span class="title">Periodos de Paralización</span>
+
               <v-layout wrap row>
+                <v-flex xs1>                  
+                </v-flex>
                 <v-flex xs12 sm6 md2>
                   <v-text-field  v-model="editedItem.desde" label="Desde"></v-text-field>   
                 </v-flex>
                 <v-flex xs12 sm6 md2>
                   <v-text-field  v-model="editedItem.desde" label="Hasta"></v-text-field>   
                 </v-flex>
-
-
-                <v-flex xs1>                  
-                </v-flex>
-
-
               </v-layout> 
+               </v-card>
+              <v-data-table
+                :headers="headers"
+                :items="desserts"
+                :items-per-page="5"
+                class="elevation-1"
+              ></v-data-table>
+            </template>
+
+
+              
               <span class="title">Ciclo de Funcionamiento semanal</span>
               <v-layout wrap row>
                 <v-flex xs12 sm6 md2>
@@ -228,6 +241,39 @@
   export default {
     data () {
       return {
+
+       headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' },
+        ],
+        desserts: [
+          {
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%',
+          },
+          {
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%',
+          },],
+
+
         dialog: false,
         notifications: false,
         sound: true,

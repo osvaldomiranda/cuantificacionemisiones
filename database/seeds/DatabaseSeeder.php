@@ -15,6 +15,24 @@ class DatabaseSeeder extends Seeder
     	App\User::create(['name'=> 'Osvaldo Miranda', 'email'=>'osvaldo.omiranda@gmail.com', 'password'=>'prueba']);
 
 
+    	App\Process::truncate();
+		App\Process::create(['name'=>'GENERAL', 'description'=> 'FUENTES DE USO GENERAL', 'step'=>1]);
+		App\Process::create(['name'=>'ENERGY', 'description'=> 'GENERACIÓN DE ENERGIA ELÉCTRICA Y VAPOR', 'step'=>2]);
+		App\Process::create(['name'=>'CELULOSA', 'description'=> 'PRODUCCION DE CELULOSA', 'step'=>3]);
+		App\Process::create(['name'=>'ACERO_PELLET_HIERRO', 'description'=> 'PRODUCCION DE ACERO Y PELLET DE HIERRO', 'step'=>3]);
+		App\Process::create(['name'=>'NITRATO_AMONIO', 'description'=> 'PRODUCCION DE NITRATO DE AMONIO', 'step'=>3]);
+		App\Process::create(['name'=>'PIROMETALURGIA', 'description'=> 'EXTRACCION Y BENEFICIO DE MINERALES, PROCESOS DE PIROMETALURGIA', 'step'=>3]);
+		App\Process::create(['name'=>'ASFALTO', 'description'=> 'PRODUCCION DE ASFALTO', 'step'=>3]);
+		App\Process::create(['name'=>'CAL', 'description'=> 'PRODUCCION DE CAL', 'step'=>3]);
+		App\Process::create(['name'=>'PETROQUIMICO', 'description'=> 'REFINACIÓN DE CRUDO Y OTROS PROCESOS PETROQUÍMICOS', 'step'=>3]);
+		App\Process::create(['name'=>'VIDRIO', 'description'=> 'PRODUCCION DE VIDRIO', 'step'=>3]);
+		App\Process::create(['name'=>'CEMENTO', 'description'=> 'PRODUCCION DE CEMENTO', 'step'=>3]);
+		App\Process::create(['name'=>'CERAMICA', 'description'=> 'PRODUCCION DE CERAMICA', 'step'=>3]);
+		App\Process::create(['name'=>'YESO', 'description'=> 'PRODUCCION DE YESO', 'step'=>3]);
+		App\Process::create(['name'=>'MOLIBDENO', 'description'=> 'PRODUCCION DE MOLIBDENO Y OTROS MINERALES', 'step'=>3]);
+		App\Process::create(['name'=>'NO_METALICA', 'description'=> 'MINERIA NO METALICA', 'step'=>3]);
+		App\Process::create(['name'=>'PDA', 'description'=> 'PLANES DE DESCONTAMINACIÓN', 'step'=>4]);   	
+
 
 	    App\Region::truncate();    
 		App\Region::create(['id' => 1,  'name' => 'Tarapacá', 'subdere' => 1, 'order' => 2, 'status' => 1]);

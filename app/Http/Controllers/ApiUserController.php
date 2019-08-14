@@ -18,9 +18,7 @@ class ApiUserController extends Controller
     public function setSecretInvitation(Request $request)
     {
 
-        Info("*******************");
         Info('setSecretInvitation');
-
         $retcid = $request->input('retcid');
         $secret_a = $request->input('secret_a');
         $secret_b = $request->input('secret_b');
@@ -82,6 +80,7 @@ class ApiUserController extends Controller
             return abort(404,'Error: UserAccess');
         }
     }
+    
     public function setUserVue(Request $request){
        $user = Auth::user();
        $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get();

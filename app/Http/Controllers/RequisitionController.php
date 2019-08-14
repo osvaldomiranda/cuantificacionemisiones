@@ -19,7 +19,9 @@ use App\UserEstablishment;
 class RequisitionController extends Controller
 {
     public function index(Request $request){
-    	$requisitions = Requisition::all();
+
+    	$requisitions = Requisition::all()->toArray();
+
     	return response()->json($requisitions);
     }
     
@@ -27,36 +29,42 @@ class RequisitionController extends Controller
 
     	$retc_id =$request->input('retc_id');
 
-    	Info('approve');
+    //	Info('approve');
 
     	$client = new Client();
     	$res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/access/token',['form_params' => ['client'=>'1', 'secret'=>'123']]);
         $jsonData = json_decode((string) $res->getBody()->getContents()) ;
         $token =  $jsonData->token;
 
-        Info($token);
+       // Info($token);
 
         $client = new Client();
         $res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/application/' . $retc_id . '/approve',['headers'=>['Authorization'=>$token]] );
-        $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
 
+        $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
+     
         if($res->getStatusCode()==200){
+        	$requisition = Requisition::where('retc_id', $retc_id)->get()->first();
+        	$requisition->aprove_data = json_encode($jsonData);
+        	$requisition->state = 'APROBADA';
+        	$requisition->save();
+
         	$this->userCreate($jsonData);
         }
 
-		Info($res->getBody());
+		//Info($res->getBody());
     }
 
 
 
-    private function userCreate($response){
+    public function userCreate($response){
 
-    		Info($response);
+    	//Info($response);
         
-	        DB::transaction(function() use ($response){
+	    DB::transaction(function() use ($response){
 
-	            $representante_legal = User::where('retcid',$response['empresa']['rretc'])->first();
-	            info($representante_legal);
+	        $representante_legal = User::where('retcid',$response['empresa']['rretc'])->first();
+
 	            //dd($userExists);
 	            if($representante_legal){
 	                $representante_legal->name=$response['empresa']['rnombre'].' '.$response['empresa']['rpaterno'].' '.$response['empresa']['rmaterno'];
@@ -133,8 +141,6 @@ class RequisitionController extends Controller
 	                $userEstablishment->retc_id=$usuarios['retc'];
 	                $userEstablishment->save();
 	            }
-	        });
-
-	        
+	        });   
     }
 }

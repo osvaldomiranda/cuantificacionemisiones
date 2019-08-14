@@ -4,9 +4,9 @@
 
           <v-card color="main_green" class="redondeado">
             <v-layout justify-center class="pa-2 ma-2">
-              <v-flex sm6>
+              <v-flex xs4>
                 <v-layout align-start justify-center column fill-height class="py-2">
-                  <h3 style="color: #fff">Listado de Declaraciones</h3>
+                  <h3 style="color: #fff">Listado de Fuentes a declarar</h3>
                 </v-layout>
               </v-flex>
               <v-flex sm3>
@@ -38,6 +38,9 @@
 
             <v-layout row>
                 <v-flex xs1>
+
+                    <v-btn @click= "sourceRefresh" >Actualizar Fuentes</v-btn>
+
                 </v-flex>
             </v-layout>    
 
@@ -300,13 +303,14 @@
  
 
 
-    <v-toolbar  color="main_green" dark>
+    <v-toolbar v-if="general.length > 0" color="main_green" dark>
       <v-toolbar-title >Fuentes de uso general</v-toolbar-title>
     </v-toolbar>
     <v-data-table
       :headers="headers"
       :items="desserts"
       class="elevation-1"
+      v-if="general.length > 0" 
     >
       <template v-slot:items="props">
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
@@ -334,7 +338,7 @@
     </v-layout> 
 
 
-    <v-toolbar color="main_green" dark>
+    <v-toolbar v-if="energy.length > 0" color="main_green" dark>
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
         
@@ -345,23 +349,23 @@
 
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="energy"
       class="elevation-1"
+      v-if="energy.length > 0"
     >
       <template v-slot:items="props">
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="text-xs-right">{{ props.item.source_type_name }}</td>
+        <td class="text-xs-right">{{ props.item.register_number }}</td>
+        <td class="text-xs-right">{{ props.item.brand }}</td>
+        <td class="text-xs-right">{{ props.item.internal_number }}</td>
+        <td class="text-xs-right">{{ props.item.serial_number }}</td>
+        <td class="text-xs-right">{{ props.item.ccf8 }}</td>
 
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
-            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
-            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
+        <td small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
+ <!--            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
             > Registrado
               <v-icon right>check</v-icon>
-            </v-btn>
+            </v-btn> -->
         </td>   
       </template>
     </v-data-table>
@@ -376,11 +380,11 @@
     
       
     
-    <v-toolbar color="main_green" dark>
+    <v-toolbar v-if="transformMp.length > 0"  color="main_green" dark>
         <v-toolbar-title>Procesos con Transformación de Materia Prima</v-toolbar-title>
     </v-toolbar>
 
-    <v-toolbar color="secondary_green" dark>
+    <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
         <v-toolbar-title>Producción de Celulosa</v-toolbar-title>
         <v-spacer></v-spacer>
         <production></production>
@@ -391,6 +395,7 @@
       :headers="headers"
       :items="desserts"
       class="elevation-1"
+      v-if="transformMp.length > 0" 
     >
         <template v-slot:items="props">
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
@@ -416,13 +421,14 @@
         </v-flex>
     </v-layout> 
 
-    <v-toolbar color="main_green" dark>
+    <v-toolbar v-if="pda.length > 0" color="main_green" dark>
       <v-toolbar-title>Fuentes Plan de Descontaminación</v-toolbar-title>
     </v-toolbar>
     <v-data-table
       :headers="headers"
       :items="desserts"
       class="elevation-1"
+      v-if="pda.length > 0"
     >
       <template v-slot:items="props">
         <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
@@ -470,7 +476,11 @@
             { text: 'CCF8', value: 'ccf8' },
 
         ],
-      desserts: [],
+        energy:[],
+        general:[],
+        pda:[],
+        transformMp:[],
+        desserts: [],
         company:{
             name: 'Empresa Prueba',
             rut: '76200200',
@@ -560,134 +570,34 @@
 
     methods: {
       initialize () {
-        this.desserts = [
-            {
-            source_id:345,
-            name: 'Equipo 1',
-            source_type_name: 'Grupo Electrógeno',
-            kva: 1,
-            register_number: 65465,
-            model: 'Prueba',
-            brand: 'Prueba',
-            serial_number: 19384759,
-            internal_number: 1,
-            nominal_consume: 1,
-            nominal_consume_unity: 'Lt',
-            first_statement_date: new Date().toISOString().substr(0, 10),
-            incription_date: new Date().toISOString().substr(0, 10),
-            manufacturing_year: 2019,
-            installation_year: 2019,
-            source_type_id: 1,
-            primary_fuel_id: 1,
-            primary_fuel_name: 'Bencina',
-            establishment_id: 1,
-            state:'PENDIENTE',
-            ccf8:'34878670',
-            fuel_consume:0,
-            raw_material:'',
-            raw_material_consume: 0,
-            raw_material_unit: '',
-            product:'',
-            production:0 ,
-            pruduction_unit: '',
-            origin_data: ''
+        var app = this;
+        axios.get('/api/sources/byprocess?process=ENERGY')
+            .then(function (resp) {    
+                app.energy = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
 
-            },
-            {
-            source_id:345,
-            name: 'Equipo 1',
-            source_type_name: 'Grupo Electrógeno',
-            kva: 1,
-            register_number: 65465,
-            model: 'Prueba',
-            brand: 'Prueba',
-            serial_number: 19384759,
-            internal_number: 1,
-            nominal_consume: 1,
-            nominal_consume_unity: 'Lt',
-            first_statement_date: new Date().toISOString().substr(0, 10),
-            incription_date: new Date().toISOString().substr(0, 10),
-            manufacturing_year: 2019,
-            installation_year: 2019,
-            source_type_id: 1,
-            primary_fuel_id: 1,
-            primary_fuel_name: 'Bencina',
-            establishment_id: 1,
-            state:'PENDIENTE',
-            ccf8:'34878670',
-            fuel_consume:0,
-            raw_material: '',
-            raw_material_consume: 0 ,
-            raw_material_unit: 'T',
-            product:'',
-            production:0,
-            pruduction_unit: 'T',
-            origin_data:''
-            },
-            {
-            source_id:345,
-            name: 'Equipo 1',
-            source_type_name: 'Convertidor Teniente',
-            kva: 1,
-            register_number: 65465,
-            model: 'Prueba',
-            brand: 'Prueba',
-            serial_number: 19384759,
-            internal_number: 1,
-            nominal_consume: 1,
-            nominal_consume_unity: 'Lt',
-            first_statement_date: new Date().toISOString().substr(0, 10),
-            incription_date: new Date().toISOString().substr(0, 10),
-            manufacturing_year: 2019,
-            installation_year: 2019,
-            source_type_id: 1,
-            primary_fuel_id: 1,
-            primary_fuel_name: 'Petroleo 2',
-            establishment_id: 1,
-            state:'PENDIENTE',
-            ccf8:'34878670',
-            fuel_consume:5000,
-            raw_material:'Concentrado Cobre',
-            raw_material_consume:4345 ,
-            raw_material_unit: 'T',
-            product: 'Catodo de Cobre',
-            production:23,
-            pruduction_unit: 'T',
-            origin_data:'SICTER'
+        axios.get('/api/sources/byprocess?process=GENERAL_PURPOSE')
+            .then(function (resp) {    
+                app.general = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
 
-            },
-            {
-            source_id:345,
-            name: 'Equipo 1',
-            source_type_name: 'Grupo Electrógeno',
-            kva: 1,
-            register_number: 65465,
-            model: 'Prueba',
-            brand: 'Prueba',
-            serial_number: 19384759,
-            internal_number: 1,
-            nominal_consume: 1,
-            nominal_consume_unity: 'Lt',
-            first_statement_date: new Date().toISOString().substr(0, 10),
-            incription_date: new Date().toISOString().substr(0, 10),
-            manufacturing_year: 2019,
-            installation_year: 2019,
-            source_type_id: 1,
-            primary_fuel_id: 1,
-            primary_fuel_name: 'Bencina',
-            establishment_id: 1,
-            state:'ACTIVO',
-            ccf8:'34878670',
-            fuel_consume:5000,
-            raw_material:'',
-            raw_material_consume:4345 ,
-            aw_material_unit: 'T',
-            product:'',
-            production:23,
-            pruduction_unit: 'T',
-            origin_data:'DS13'
-            },
-        ]
+        axios.get('/api/sources/byprocess?process=PDA')
+            .then(function (resp) {    
+                app.pda = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
       },
 
       editItem (item) {
@@ -724,7 +634,27 @@
           this.desserts.push(this.editedItem)
         }
         this.close()
+      },
+
+      sourceRefresh (){
+
+        axios.get('/api/diagram/refresh')
+            .then(function (resp) {    
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+        
+        axios.get('/api/diagram/refresh')
+            .then(function (resp) {    
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
       }
+
     }
   }
 </script>

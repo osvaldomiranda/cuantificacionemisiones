@@ -1,4 +1,4 @@
-ed<?php
+<?php
 
 use Illuminate\Http\Request;
 
@@ -30,8 +30,9 @@ Route::post('/requisition/reject', 'RequisitionController@reject');
 	Route::get('/set_user', 'ApiUserController@setUserVue');
 // }
 
-
-
 Route::get('/requisitions', 'RequisitionController@index');
+Route::get('/sources/refresh', 'SourceController@refresh');
+Route::get('/sources/byprocess', 'SourceController@sourcesByProcess');
 
-
+Route::get('/diagram/refresh', 'DiagramController@refresh');
+Route::get('/diagram/byestablishment', 'DiagramController@byEstablishment');
