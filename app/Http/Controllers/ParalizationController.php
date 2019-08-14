@@ -82,4 +82,13 @@ class ParalizationController extends Controller
     {
         //
     }
+
+    public function bySource(Request $request){
+        $source_id      = $request->input('source_id');
+        $declaration_id = $request->input('declaration_id');
+
+        $paralizations = Paralization::where('source_id', $source_id).where('declaration_id', $declaration_id)->get();
+        
+        return response()->json($paralizations);  
+    }
 }

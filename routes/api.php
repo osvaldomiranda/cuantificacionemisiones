@@ -36,3 +36,7 @@ Route::get('/sources/byprocess', 'SourceController@sourcesByProcess');
 
 Route::get('/diagram/refresh', 'DiagramController@refresh');
 Route::get('/diagram/byestablishment', 'DiagramController@byEstablishment');
+
+Route::get('/consumption/bysource','ConsumptionController@bySource');
+Route::get('/paralization/bysource','ParalizationController@bySource');
+Route::get('/operatingcicle/bysource','OperatingCicleController@bySource');
