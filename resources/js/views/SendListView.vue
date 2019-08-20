@@ -59,13 +59,13 @@
                 </v-flex>
                 <v-flex xs3>
                     <router-link to="/source_list">
-                        <v-btn  round color="main_green" class="white--text">Editar declaración D.S 138</v-btn>
+                        <v-btn round color="main_green" class="white--text">Editar declaración D.S 138</v-btn>
                     </router-link>
                 </v-flex>
                 <v-flex xs1>      
                 </v-flex>                
                 <v-flex xs3>  
-                    <router-link  to="/readings">
+                    <router-link to="/readings">
                         <v-btn round color="main_green" class="white--text">Registrar Mediciones</v-btn>
                     </router-link>    
                 </v-flex>
