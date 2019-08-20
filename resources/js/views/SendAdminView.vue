@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-card>
-        
         <!--<v-img :src="require('/Users/Fran/Desktop/cuantificacionemisiones/resources/assets/images/logo138.png')"  
           aspect-ratio="6"
         ></v-img>-->

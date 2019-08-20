@@ -17,10 +17,10 @@ class CreateSourcesTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name')->nullable();
-            $table->integer('source_type_id')->references('id')->on('source_type')->nullable();
+            $table->integer('source_type_id')->nullable();
             $table->string('source_type_name');
             $table->integer('establishment_id')->references('id')->on('establishment');            
-            $table->integer('cell_id');
+            $table->integer('cell_id')->nullable();
             $table->string('description')->nullable();
             $table->string('register_number')->nullable();
             $table->string('brand')->nullable();
@@ -34,7 +34,13 @@ class CreateSourcesTable extends Migration
             $table->string('longitude')->nullable();
             $table->string('location')->nullable();
             $table->string('ccf8')->nullable();
+            $table->string('ccf8_secondary')->nullable();
+            $table->string('name_ccf8_secondary')->nullable();
+            $table->string('name_ccf8')->nullable();
+            
             $table->string('process')->nullable();
+            $table->string('pipeline_code')->nullable();
+            $table->string('kva')->nullable();            
             $table->integer('manufacturing_year')->nullable();
             $table->integer('installation_year')->nullable();
 
@@ -42,10 +48,10 @@ class CreateSourcesTable extends Migration
             $table->date('incription_date')->nullable();
             $table->date('initial_operation_date')->nullable();
 
-            $table->integer('primary_fuel_id')->nullable()->references('id')->on('fuel');
+            $table->integer('primary_fuel_id')->nullable();
             $table->string('primary_fuel_name')->nullable();
 
-            $table->integer('secondary_fuel_id')->nullable()->references('id')->on('fuel');
+            $table->integer('secondary_fuel_id')->nullable();
             $table->string('secondary_fuel_name')->nullable();
             $table->string('nominal_consume_secondary')->nullable();
             $table->string('nominal_consume_unity_secondary')->nullable();
@@ -61,6 +67,7 @@ class CreateSourcesTable extends Migration
             $table->string('nominal_power_unity')->nullable();
             $table->string('installed_power_unity')->nullable();
             $table->string('state');
+
 
             $table->timestamps();
         });

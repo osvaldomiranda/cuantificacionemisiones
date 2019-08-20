@@ -43,263 +43,6 @@
 
                 </v-flex>
             </v-layout>    
-
-
-    <v-dialog v-model="dialog"  hide-overlay transition="dialog-bottom-transition">  
-
-        <v-card>
-          <v-card-title>
-            <span class="headline">Tipo Fuente: {{editedItem.source_type_name}}</span> 
-          </v-card-title>
-
-
-          <v-card-text>
-
-            <v-btn v-if=" editedItem.raw_material!='' " color="blue darken-1" flat @click="abatimiento">Abatimientos</v-btn>
-
-
-            <v-container grid-list-md>
-            
-
-                <v-layout row>
-                    <span class="title">Consumos mensuales</span>
-                </v-layout>
-
-                <v-layout row>
-
-                    <v-flex xs12 sm6 md3>
-                        <v-text-field readonly='true' v-model="editedItem.primary_fuel_name" label="Combustible"></v-text-field>
-                </v-flex>              
-                <v-flex xs12 sm6 md3>
-                  <v-text-field readonly='true' v-model="editedItem.nominal_consume_unity" label="Unidad"></v-text-field>
-                </v-flex>  
-              </v-layout>
-
-              <v-layout row>
-
-                
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Ene"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Feb"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Mar"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Abr"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="May"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Jun"></v-text-field>
-                  </v-flex>
-              </v-layout>
-              <v-layout row>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Jul"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Ago"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Sep"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Oct"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Nov"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-model="editedItem.fuel_consume" label="Dic"></v-text-field>
-                  </v-flex>
-                </v-layout>
-                
-                <v-layout row>
-                  <span v-if=" editedItem.product!='' "  class="title">Consumos Materias Primas</span>
-                </v-layout>
-
-                <v-layout wrap roe>
-                  <v-flex v-if=" editedItem.raw_material!='' "  xs12 sm6 md3>
-                    <v-text-field v-if=" editedItem.raw_material!='' " readonly='true' v-model="editedItem.raw_material" label="Materias Primas"></v-text-field>
-                  </v-flex>
-                  <v-flex v-if=" editedItem.raw_material!='' "  xs12 sm6 md3>
-                    <v-text-field v-if=" editedItem.raw_material!='' "  readonly='true' v-model="editedItem.raw_material_unit" label="Unidad"></v-text-field>
-                  </v-flex>
-                </v-layout>  
-
-              <v-layout row>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Ene"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Feb"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Mar"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Abr"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="May"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Jun"></v-text-field>
-                  </v-flex>
-              </v-layout>
-              <v-layout row>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Jul"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Ago"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Sep"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Oct"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Nov"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Dic"></v-text-field>
-                  </v-flex>
-                </v-layout>
-
-
-                <v-layout row>
-                  <span v-if=" editedItem.product!='' "  class="title">Producción Mensual</span>
-                </v-layout>
-
-                <v-layout row>
-                  <v-flex v-if=" editedItem.product!='' "  xs12 sm6 md3>
-                    <v-text-field v-if=" editedItem.product!='' "  readonly='true' v-model="editedItem.product" label="Producto"></v-text-field>
-                  </v-flex>
-                  <v-flex v-if=" editedItem.product!='' "  xs12 sm6 md3>
-                    <v-text-field v-if=" editedItem.product!='' "   readonly='true' v-model="editedItem.pruduction_unit" label="Unidad"></v-text-field>
-                  </v-flex>
-                </v-layout>
-
-              <v-layout row>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Ene"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Feb"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Mar"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Abr"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="May"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Jun"></v-text-field>
-                  </v-flex>
-              </v-layout>
-              <v-layout row>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Jul"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Ago"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Sep"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Oct"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Nov"></v-text-field>
-                  </v-flex>
-                  <v-flex xs1>
-                    <v-text-field v-if=" editedItem.product!='' "  v-model="editedItem.fuel_consume" label="Dic"></v-text-field>
-                  </v-flex>
-                </v-layout>
-
-              <span class="title">Periodos de Paralización</span>
-              <v-layout wrap row>
-                <v-flex xs12 sm6 md2>
-                  <v-text-field  v-model="editedItem.desde" label="Desde"></v-text-field>   
-                </v-flex>
-                <v-flex xs12 sm6 md2>
-                  <v-text-field  v-model="editedItem.desde" label="Hasta"></v-text-field>   
-                </v-flex>
-
-
-                <v-flex xs1>                  
-                </v-flex>
-
-
-              </v-layout> 
-              <span class="title">Ciclo de Funcionamiento semanal</span>
-              <v-layout wrap row>
-                <v-flex xs12 sm6 md2>
-                    <v-select
-                        :items="dias"
-                        label="Día Desde"
-                    ></v-select> 
-                </v-flex>
-                <v-flex xs12 sm6 md2>
-                    <v-select
-                        :items="dias"
-                        label="Día Hasta"
-                    ></v-select>   
-                </v-flex>
-                <v-flex xs12 sm6 md2>
-                  <v-text-field  v-model="editedItem.horadesde" label="Hora Desde"></v-text-field>   
-                </v-flex>
-                <v-flex xs12 sm6 md2>
-                  <v-text-field  v-model="editedItem.horahasta" label="Hora Hasta"></v-text-field>   
-                </v-flex>
-              </v-layout>  
-
-            </v-container>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cerrar</v-btn>
-            <v-btn v-if=" editedItem.state == 'PENDIENTE' " color="blue darken-1" flat @click="save">Cuardar</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-
-      <v-dialog v-model="dialog2" max-width="500px">
-
-        <v-card>
-          <v-card-title>
-            <span class="headline">Abatimientos</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-flex xs12 sm6 md4>
-                <p>PEL: 98%</p>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <p>FM: 98%</p>
-              </v-flex>
-              
-            </v-container>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="cerrar_abatimiento">Cerrar</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
  
 
 
@@ -361,7 +104,7 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
 
-        <td small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
+        <td small @click="consumptionClick(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
  <!--            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
             > Registrado
               <v-icon right>check</v-icon>
@@ -457,14 +200,21 @@
     </router-link>
     
 
+    <div ref="container">
+    </div>    
+
   </div>
 </template>
 
 <script>
+
+  import { mapState } from 'vuex';  
+  import Vue from 'vue';  
+  import ConsumptionComponent  from './../components/ConsumptionComponent';
+
+
   export default {
     data: () => ({
-        dialog: false,
-        dialog2: false,
         dias: ['Lunes', 'Martes', 'Miercoles', 'Jueves','Viernes', 'Sabado', 'Domingo'],
         headers: [
 
@@ -569,92 +319,101 @@
     },
 
     methods: {
-      initialize () {
-        var app = this;
-        axios.get('/api/sources/byprocess?process=ENERGY')
-            .then(function (resp) {    
-                app.energy = resp.data;
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
+        initialize () {
+            var app = this;
+            axios.get('/api/sources/byprocess?process=ENERGY')
+                .then(function (resp) {    
+                    app.energy = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
 
-        axios.get('/api/sources/byprocess?process=GENERAL_PURPOSE')
-            .then(function (resp) {    
-                app.general = resp.data;
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
+            axios.get('/api/sources/byprocess?process=GENERAL_PURPOSE')
+                .then(function (resp) {    
+                    app.general = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
 
-        axios.get('/api/sources/byprocess?process=PDA')
-            .then(function (resp) {    
-                app.pda = resp.data;
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
+            axios.get('/api/sources/byprocess?process=PDA')
+                .then(function (resp) {    
+                    app.pda = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
 
-      },
+        },
 
-      editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
+        editItem (item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialog = true
+        },
 
-      deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      },
+        deleteItem (item) {
+            const index = this.desserts.indexOf(item)
+            confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        },
 
-      abatimiento(){
-        this.dialog2 = true
-      },
+        abatimiento(){
+            this.dialog2 = true
+        },
 
-      cerrar_abatimiento(){
-        this.dialog2 = false
-      },
+        cerrar_abatimiento(){
+            this.dialog2 = false
+        },
 
-      close () {
-        this.dialog = false
-        setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        }, 300)
-      },
+        close () {
+            this.dialog = false
+            setTimeout(() => {
+              this.editedItem = Object.assign({}, this.defaultItem)
+              this.editedIndex = -1
+            }, 300)
+        },
 
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
+        save () {
+            if (this.editedIndex > -1) {
+              Object.assign(this.desserts[this.editedIndex], this.editedItem)
+            } else {
+              this.desserts.push(this.editedItem)
+            }
+            this.close()
+        },
+
+        sourceRefresh (){
+            axios.get('/api/sources/refresh')
+                .then(function (resp) {    
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+            
+            axios.get('/api/diagram/refresh')
+                .then(function (resp) {    
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+        },
+        consumptionClick (a){
+            alert(JSON.stringify(a));
+
+            var ComponentReserv = Vue.extend(ConsumptionComponent)
+            var instance = new ComponentReserv({store: this.$store, propsData: {
+            source: a,
+             
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
         }
-        this.close()
-      },
-
-      sourceRefresh (){
-
-        axios.get('/api/diagram/refresh')
-            .then(function (resp) {    
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
-        
-        axios.get('/api/diagram/refresh')
-            .then(function (resp) {    
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
-      }
-
     }
-  }
+}
 </script>

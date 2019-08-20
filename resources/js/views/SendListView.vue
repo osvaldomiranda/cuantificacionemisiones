@@ -10,10 +10,10 @@
 <template>
 
 
-    <v-layout align-center row>
+    <v-layout>
 
 
-        <v-flex xs8> 
+        <v-flex xs8 class="px-1"> 
 
             
             <v-card  color="main_green" style="border-radius:0px;">
@@ -54,33 +54,26 @@
               </template>
             </v-data-table>
 
-            <v-layout align-center row>
-                <v-flex xs1>      
-                </v-flex>
-                <v-flex xs3>
+            <v-layout>
+                <v-flex xs4 class="px-4">
                     <router-link to="/source_list">
-                        <v-btn round color="main_green" class="white--text">Editar declaración D.S 138</v-btn>
+                        <v-btn round color="main_green" class="white--text px-4">Editar declaración D.S 138</v-btn>
                     </router-link>
                 </v-flex>
-                <v-flex xs1>      
-                </v-flex>                
-                <v-flex xs3>  
-                    <router-link to="/readings">
-                        <v-btn round color="main_green" class="white--text">Registrar Mediciones</v-btn>
+               
+                <v-flex xs4 class="px-4">  
+                    <router-link  to="/readings">
+                        <v-btn round color="main_green" class="white--text px-4">Registrar Mediciones</v-btn>
                     </router-link>    
                 </v-flex>
-                <v-flex xs1>      
-                </v-flex>
-                <v-flex xs3>
+                <v-flex xs4 class="px-4">
                     <covs></covs>      
                 </v-flex>
 
             </v-layout>
 
         </v-flex>
-        <v-flex xs1>
-        </v-flex>
-        <v-flex xs3> 
+        <v-flex xs4 class="px-1"> 
             <v-card color="main_green" style="border-radius:0px;">
                 <v-card-title class="mx-2 white--text" style="padding: 10px;">
                     <h5 style="font: #FFF">DATOS DEL ESTABLECIMIENTO</h5>

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class OperatingCicle extends Model
 {
+
+	protected $guarded = [];
+
     public function declaration()
 	{
 	   	return $this->belongsTo(Declaration::class, 'declaration_id');

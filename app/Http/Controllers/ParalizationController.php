@@ -82,4 +82,30 @@ class ParalizationController extends Controller
     {
         //
     }
+
+    public function bySource(Request $request){
+        $source_id      = $request->input('source_id');
+        $declaration_id = $request->input('declaration_id');
+
+
+        $paralizations = Paralization::where('source_id', $source_id)->where('declaration_id', $declaration_id)->get()->toArray();
+
+
+        return response()->json($paralizations);  
+    }
+
+
+    public function save(Request $request){
+        $paralizations = $request->all();
+
+        $first = $paralizations[0];
+        Paralization::where('source_id', $first['source_id'])->where('declaration_id', $first['declaration_id'])->delete();
+
+        foreach($paralizations as $data){
+            $paralization = new Paralization($data);
+            $paralization->save();    
+        }
+        
+        return response()->json($paralizations);  
+    }
 }
