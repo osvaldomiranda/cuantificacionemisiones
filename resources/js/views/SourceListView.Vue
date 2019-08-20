@@ -387,7 +387,7 @@
         },
 
         sourceRefresh (){
-            axios.get('/api/diagram/refresh')
+            axios.get('/api/sources/refresh')
                 .then(function (resp) {    
                 })
                 .catch(function (resp) {
@@ -404,8 +404,13 @@
                 });
         },
         consumptionClick (a){
+            alert(JSON.stringify(a));
+
             var ComponentReserv = Vue.extend(ConsumptionComponent)
-            var instance = new ComponentReserv({store: this.$store});
+            var instance = new ComponentReserv({store: this.$store, propsData: {
+            source: a,
+             
+          }});
             instance.$mount();
             this.$refs.container.appendChild(instance.$el);
         }

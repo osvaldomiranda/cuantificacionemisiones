@@ -130,6 +130,7 @@ class SourceController extends Controller
                     // eliminar ciclo de funcionamiento
                     OperatingCicle::where('source_id', $source->id)->delete();
 
+
                     //update source
                     $source->external_id        =  $response['id'];
                     $source->name               =  $response['name'];
@@ -150,10 +151,18 @@ class SourceController extends Controller
                     $source->longitude          =  $response['longitude'];
                     $source->location           =  $response['location'];
                     $source->ccf8               =  $response['ccf8'];
+
+            $source->ccf8_secondary      =  $response['ccf8_secondary'];
+            $source->name_ccf8_secondary =  $response['name_ccf8_secondary'];
+            $source->name_ccf8           =  $response['name_ccf8'];
+            $source->pipeline_code  =  $response['pipeline_code'];
+            $source->kva            =  $response['kva'];
+
+
                     $source->process            =  $response['process'];    
                     $source->manufacturing_year =  $response['manufacturing_year'];    
                     $source->installation_year  =  $response['installation_year'];
-
+        
                     $source->first_statement_date       =  $response['first_statement_date'];
                     $source->incription_date            =  $response['incription_date'];
                     $source->initial_operation_date     =  $response['initial_operation_date'];
@@ -207,6 +216,12 @@ class SourceController extends Controller
                 $new_source->process            =  $response['process'];    
                 $new_source->manufacturing_year =  $response['manufacturing_year'];    
                 $new_source->installation_year  =  $response['installation_year'];
+
+            $new_source->ccf8_secondary      =  $response['ccf8_secondary'];
+            $new_source->name_ccf8_secondary =  $response['name_ccf8_secondary'];
+            $new_source->name_ccf8           =  $response['name_ccf8'];
+            $new_source->pipeline_code  =  $response['pipeline_code'];
+            $new_source->kva            =  $response['kva'];
 
                 $new_source->first_statement_date       =  $response['first_statement_date'];
                 $new_source->incription_date            =  $response['incription_date'];

@@ -2,9 +2,9 @@
   <div>
     <v-card>
         
-        <v-img :src="require('/Users/osvaldo/cuantificacion_emisiones/resources/assets/images/logo138.png')"  
+<!--         <v-img :src="require('/Users/osvaldo/cuantificacion_emisiones/resources/assets/images/logo138.png')"  
           aspect-ratio="6"
-        ></v-img>
+        ></v-img> -->
     </v-card>
 
         <v-card>

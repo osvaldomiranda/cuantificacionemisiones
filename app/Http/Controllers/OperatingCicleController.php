@@ -86,8 +86,31 @@ class OperatingCicleController extends Controller
         $source_id      = $request->input('source_id');
         $declaration_id = $request->input('declaration_id');
 
-        $operatingcicle = OperatingCicle::where('source_id', $source_id).where('declaration_id', $declaration_id)->get()->first();
-        
+        $operatingcicle = OperatingCicle::where('source_id', $source_id)->where('declaration_id', $declaration_id)->get()->first();
+
+        return response()->json($operatingcicle);  
+    }
+
+    public function save(Request $request){
+
+
+        $source_id      = $request->input('source_id');
+        $declaration_id = $request->input('declaration_id');
+
+        $operatingcicle = OperatingCicle::where('source_id', $source_id)->where('declaration_id', $declaration_id)->get()->first();
+
+        if($operatingcicle){
+            $operatingcicle->day_from  = $request->input('day_from');
+            $operatingcicle->day_to    = $request->input('day_to');
+            $operatingcicle->time_from = $request->input('time_from');
+            $operatingcicle->time_to   = $request->input('time_to');
+            $operatingcicle->save();
+
+        } else {
+            $operatingcicle = new OperatingCicle($request->all());
+            $operatingcicle->save();            
+        }
+
         return response()->json($operatingcicle);  
     }
 }

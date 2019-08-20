@@ -9,11 +9,21 @@
           			<v-toolbar-title>Registrar consumos y niveles de actividad</v-toolbar-title>
           			<v-spacer></v-spacer>
           			<v-toolbar-items>
-            			<v-btn flat color="main_green" @click="dialog = false">Guardar</v-btn>
+            			<v-btn flat color="main_green" @click="save_all">Guardar</v-btn>
           			</v-toolbar-items>
         		</v-toolbar>
  				<br>
 				<v-container>
+
+
+				<v-card class="px-5">
+					<br>
+					<v-layout>
+		                <span  class="title">{{ this.source.source_type_name }}</span>
+		            </v-layout>
+		            <br>
+		        </v-card>
+		        <br>
 				  
 				
 				<v-card class="px-5">
@@ -24,10 +34,10 @@
 
 		            <v-layout>
 		                <v-flex  xs12 sm6 md3 class="pr-1">
-		                    <v-text-field  readonly='true' label="Combustible"></v-text-field>
+		                    <v-text-field v-model="this.source.primary_fuel_name"  readonly='true' label="Combustible"></v-text-field>
 		                </v-flex>
 		                <v-flex  xs12 sm6 md3 class="px-1">
-		                    <v-text-field  readonly='true' label="Unidad"></v-text-field>
+		                    <v-text-field  v-model="this.source.nominal_consume_unity" readonly='true' label="Unidad"></v-text-field>
 		                </v-flex>
 		            </v-layout>  
 
@@ -73,8 +83,69 @@
 		            </v-layout>	
 		         
 				</v-card>
+				<br>
+
+				<v-card v-if="this.source.secondary_fuel_name" class="px-5">
+					<br>
+					<v-layout>
+		                <span  class="title">Consumo combustible secundario mensual</span>
+		            </v-layout>
+
+		            <v-layout>
+		                <v-flex  xs12 sm6 md3 class="pr-1">
+		                    <v-text-field v-model="this.source.secondary_fuel_name"  readonly='true' label="Combustible"></v-text-field>
+		                </v-flex>
+		                <v-flex  xs12 sm6 md3 class="px-1">
+		                    <v-text-field  v-model="this.source.nominal_consume_unity_secondary" readonly='true' label="Unidad"></v-text-field>
+		                </v-flex>
+		            </v-layout>  
+
+		            <v-layout>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_ene" label="Enero"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_feb" label="Febrero"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_mar" label="Marzo"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_abr" label="Abril"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_may" label="Mayo"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_jun" label="Junio"></v-text-field>
+		                </v-flex>
+		            </v-layout>
+		            <v-layout>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field  v-model="sec_jul" label="Julio"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field  v-model="sec_ago" label="Agosto"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field  v-model="sec_sep" label="Septiembre"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_oct" label="Octubre"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_nov" label="Noviembre"></v-text-field>
+		                </v-flex>
+		                <v-flex xs2 class="px-1">
+		                    <v-text-field v-model="sec_dic" label="Diciembre"></v-text-field>
+		                </v-flex>
+		            </v-layout>	
+		         
+				</v-card>
 
 				<br>
+
+
 				<v-card class="px-5">
 					<br>
 					<v-layout>
@@ -230,7 +301,7 @@
                 		<v-flex xs1>
                 		</v-flex>
                 		<v-flex xs4>
-                			<v-btn @click="saveItem" class="ma-2" tile outlined color="main_green">Ingresar Paralización</v-btn>	
+                			<v-btn @click="saveItem" class="ma-2" tile outline color="main_green">Ingresar Paralización</v-btn>	
                 		</v-flex>
                 	</v-layout>	
 		            <br>
@@ -265,8 +336,13 @@
 
 <script>
   export default {
+  	props: {
+  		source: Object
+  	},
     data () {
       return {
+
+      	declaration_id: 1,
         dialog: true,
 
         time1: null,
@@ -303,8 +379,23 @@
         fuel_oct: 0,
         fuel_nov: 0,
         fuel_dic: 0,
+
+        sec_ene: 0,
+        sec_feb: 0,
+        sec_mar: 0,
+        sec_abr: 0,
+        sec_may: 0,
+        sec_jun: 0,
+        sec_jul: 0,
+        sec_ago: 0,
+        sec_sep: 0,
+        sec_oct: 0,
+        sec_nov: 0,
+        sec_dic: 0,
       }
     },
+
+
 
     created () {
       this.initialize()
@@ -313,40 +404,152 @@
     methods: {
       	initialize () {
       		var app = this;
-            axios.get('/api//consumption/bysource')
+
+
+
+            axios.get('/api/consumption/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
                 .then(function (resp) { 
-                   
+                	app.fuel_ene = resp.data.jan;
+			        app.fuel_feb = resp.data.feb;
+			        app.fuel_mar = resp.data.mar;
+			        app.fuel_abr = resp.data.apr;
+			        app.fuel_may = resp.data.may;
+			        app.fuel_jun = resp.data.jun;
+			        app.fuel_jul = resp.data.jul;
+			        app.fuel_ago = resp.data.aug;
+			        app.fuel_sep = resp.data.sep;
+			        app.fuel_oct = resp.data.oct;
+			        app.fuel_nov = resp.data.nov;
+			        app.fuel_dic = resp.data.dic;
+
+			        app.sec_ene = resp.data.sec_jan;
+			        app.sec_feb = resp.data.sec_feb;
+			        app.sec_mar = resp.data.sec_mar;
+			        app.sec_abr = resp.data.sec_apr;
+			        app.sec_may = resp.data.sec_may;
+			        app.sec_jun = resp.data.sec_jun;
+			        app.sec_jul = resp.data.sec_jul;
+			        app.sec_ago = resp.data.sec_aug;
+			        app.sec_sep = resp.data.sec_sep;
+			        app.sec_oct = resp.data.sec_oct;
+			        app.sec_nov = resp.data.sec_nov;
+			        app.sec_dic = resp.data.sec_dic;
+
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('/api/paralization/bysource')
-                .then(function (resp) {    
+            axios.get('api/operatingcicle/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
+                .then(function (resp) { 
+
+		            app.day_from = resp.data.day_from;
+		            app.day_to   = resp.data.day_to;
+		            app.time1 	  = resp.data.time_from;
+		            app.time2    = resp.data.time_to;
+
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('api/operatingcicle/bysource')
-                .then(function (resp) {    
+            axios.get('/api/paralization/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
+                .then(function (resp) {  
+                	app.paralizations = resp.data; 
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
+
+
       	},
 	    deleteItem (item) {
 	        const index = this.paralizations.indexOf(item)
 	        confirm('Are you sure you want to delete this item?') && this.paralizations.splice(index, 1)
 	    },
 	    saveItem () {
-	    	var item = {'declaration_id':1  ,'source_id':1, 'date_from':this.paralization_from, 'date_to':this.paralization_to};
+	    	var item = {'declaration_id':1  ,'source_id':this.source.id, 'date_from':this.paralization_from, 'date_to':this.paralization_to};
 
 	        this.paralizations.push(item);
 	    },
+	    save_all (){
+	    	this.dialog = false;
+	    	var app = this;
+	    	// Guardar consumo
+	    	var consumos = {
+			            'source_id': this.source.id,
+			            'declaration_id': 1,
+			            'fuel_id': this.source.primary_fuel_id,
+			            'fuel': this.source.primary_fuel_name,
+			            'unity': this.source.nominal_consume_unity,
+			            'secondary_fuel_id': this.source.secondary_fuel_id,
+			            'secondary_fuel': this.source.secondary_fuel_name,
+			            'secondary_unity': this.source.nominal_consume_unity_secondary,
+	    		        'jan':  this.fuel_ene,
+        				'feb':  this.fuel_feb,
+				        'mar':  this.fuel_mar,
+				        'apr':  this.fuel_abr,
+				        'may':  this.fuel_may,
+				        'jun':  this.fuel_jun,
+				        'jul':  this.fuel_jul,
+				        'aug':  this.fuel_ago,
+				        'sep':  this.fuel_sep,
+				        'oct':  this.fuel_oct,
+				        'nov':  this.fuel_nov,
+				        'dic':  this.fuel_dic,
+				        'sec_jan':  this.sec_ene,
+				        'sec_feb':  this.sec_feb,
+				        'sec_mar':  this.sec_mar,
+				        'sec_apr':  this.sec_abr,
+				        'sec_may':  this.sec_may,
+				        'sec_jun':  this.sec_jun,
+				        'sec_jul':  this.sec_jul,
+				        'sec_aug':  this.sec_ago,
+				        'sec_sep':  this.sec_sep,
+				        'sec_oct':  this.sec_oct,
+				        'sec_nov':  this.sec_nov,
+				        'sec_dic':  this.sec_dic,
+	    	};
+	    	axios.post('/api/consumption/save', consumos)
+				.then(response => {
+					
+				}).catch(error => {
+					alert("ERROR save consumos " + error)
+					console.log(error);
+				});
+
+	    	// Guardar Ciclos
+	    	var ciclos = {
+            'source_id': this.source.id,
+            'declaration_id':1,
+            'day_from': this.day_from,
+            'day_to': this.day_to,
+            'time_from': this.time1,
+            'time_to': this.time2,
+        	};
+
+	    	axios.post('/api/operatingcicle/save', ciclos)
+				.then(response => {
+					
+				}).catch(error => {
+					alert("ERROR save ciclos " + error)
+					console.log(error);
+				});
+
+
+
+	    	// Guardar paralización
+	    	axios.post('/api/paralization/save', this.paralizations)
+				.then(response => {
+					
+				}).catch(error => {
+					alert("ERROR save paralizacion " + error)
+					console.log(error);
+				});
+	    }
 
     }
   }

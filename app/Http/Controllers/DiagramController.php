@@ -97,8 +97,6 @@ class DiagramController extends Controller
         Info($jsonData);
 
         foreach($jsonData as $data){
-            Info("******************");
-            Info($data);
             $this->create_diagram($data);
         }
     }
