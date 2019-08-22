@@ -29,14 +29,14 @@ class RequisitionController extends Controller
 
     	$retc_id =$request->input('retc_id');
 
-    //	Info('approve');
+    	Info('approve');
 
     	$client = new Client();
     	$res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/access/token',['form_params' => ['client'=>'1', 'secret'=>'123']]);
         $jsonData = json_decode((string) $res->getBody()->getContents()) ;
         $token =  $jsonData->token;
 
-       // Info($token);
+        Info($token);
 
         $client = new Client();
         $res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/application/' . $retc_id . '/approve',['headers'=>['Authorization'=>$token]] );
@@ -52,7 +52,7 @@ class RequisitionController extends Controller
         	$this->userCreate($jsonData);
         }
 
-		//Info($res->getBody());
+		Info($res->getBody());
     }
 
 
