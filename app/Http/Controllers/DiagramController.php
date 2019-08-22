@@ -47,9 +47,16 @@ class DiagramController extends Controller
      * @param  \App\Diagram  $diagram
      * @return \Illuminate\Http\Response
      */
-    public function show(Diagram $diagram)
+    public function show(Request $request)
     {
-        //
+
+        if ($request->input("process") == ''){
+            $diagram = Diagram::where("establishment", $request->input("establishment"))->get();
+        }else{
+            $diagram = Diagram::where("establishment", $request->input("establishment") )->where("process", $request->input("process"))->get();
+        }
+        
+        return $diagram;//response()->json($diagram);
     }
 
     /**
@@ -85,6 +92,9 @@ class DiagramController extends Controller
     {
         //
     }
+
+ 
+
 
     public function refresh(){
         //  10.100.2.48:8081/api/diagram/byestablishment?id=1

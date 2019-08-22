@@ -1,98 +1,118 @@
-<style>
-button {
-  padding: 0px 10px;
-  border: 1px solid #ddd;
-  color: #333;
-  background-color:#fff;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-}
-.rowDiagram{
-  height:100%;
+<style scoped>
+.rowDiagram {
+  height: 100%;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
-body{
+body {
   overflow: scroll;
 }
 *,
 ::before,
 ::after {
-    -webkit-box-sizing: content-box !important;
-    -moz-box-sizing: content-box !important;
-    box-sizing: content-box !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+}
+.tool_btn {
+  max-height: 50px;
+  max-width: 50px;
 }
 
 </style>
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-btn slot="activator" color="#38ACA9" dark>{{title}}</v-btn>
 
-      <v-btn 
-      slot="activator" 
-      flat
-      large
-      >
-       Diagrama de Descarga
-      </v-btn>
       <v-card>
-        <v-toolbar dark color="success">
-          <v-btn icon dark @click="dialog = false">
+        <v-toolbar dark color="#155469" style="z-index: 1">
+          <v-toolbar-title>Herramienta - Diagrama de Descarga</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <!-- 
+          <v-toolbar-items>
+            <v-btn dark flat color="primary" @click="sendDiagram">Enviar</v-btn>
+          </v-toolbar-items>
+          -->
+
+          <v-icon x-large class="mx-3">info</v-icon>
+
+          <v-btn
+            icon
+            color="white"
+            class="mx-3"
+            style="padding-top: 0; padding-bottom; margin: 0"
+            @click="dialog = false"
+          >
+            <v-icon color="#155469">save</v-icon>
+          </v-btn>
+
+          <v-btn icon dark class="ml-3 mr-2" @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title class="white--text">{{title}}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat color="success" @click="sendDiagram">Guardar</v-btn>
-          </v-toolbar-items>
         </v-toolbar>
-        <div>
-          <!-- Creates a container for the splash screen -->
-          <div id="splash"
-            style="position:relative;top:0px;left:0px;width:100%;height:100%;background:white;z-index:1;">
-            <center id="splash" style="padding-top:230px;">
-              <img src="../../../resources/assets/images/loading.gif">
-            </center>
-          </div>
-          
-          <!-- Creates a container for the sidebar -->
-          <div id="toolbarContainer"
-            style='position:relative;white-space:nowrap;overflow:hidden;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;'>
-          </div>
+
+        <v-layout fill-height style="height: 89vh">
+         <!--  <v-flex md2 class="rowDiagram py-2" style="background: #F2F2F2">
+            <v-card flat id="sidebarContainer" class="px-4" style="height: 100%"></v-card>
+          </v-flex>
+ -->
+          <v-flex md12>
+            <v-card id="graphContainer" style="overflow: scroll;"></v-card>
+          </v-flex>
+        </v-layout>
+        <div id="toolbarContainer" style="position:absolute; right: 45px; top: 100px">
+          <v-layout align-center justify-center column>
+            <h4 class="mb-2 blue-grey--text text--darken-3">ZOOM</h4>
+            <v-btn large icon dark color="#456D7D" id="zoomIn" class="ma-1">
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
+            <v-btn large icon dark color="#456D7D" id="zoomOut" class="ma-1">
+              <v-icon>zoom_out</v-icon>
+            </v-btn>
+            <v-btn large icon dark color="#456D7D" id="fit" class="ma-1">
+              <v-icon>crop_free</v-icon>
+            </v-btn>
+            <h4 class="my-2 blue-grey--text text--darken-3">BORRAR</h4>
+            <v-btn large icon dark color="#456D7D" id="delete" class="ma-1">
+              <v-icon class="pr-1">backspace</v-icon>
+            </v-btn>
+          </v-layout>
+        </div>
+        <div style="position:absolute; right: 35px; bottom: 100px">
+          <v-layout align-center justify-center column>
+            <v-btn fab dark large color="#145374">
+              <v-icon style="height:auto"  @click="sendDiagram()" dark>send</v-icon>
+            </v-btn>
+          </v-layout>
+        </div>
 
           <div class="rowDiagram">
-            <!-- Creates a container for the toolboox -->
-            
+            <!--Creates a container for the toolbox-->
+            <!-- <div -->
+              <!-- id="sidebarContainer" -->
+              <!-- style="float: left;position:absolute;overflow-y: scroll;width:20%" -->
+            >
+<!--               <EnergySteamSource ref="EnergySteamSource"></EnergySteamSource>
+              <PipeSource ref="PipeSource"></PipeSource> -->
+            <!-- </div> -->
 
-            <div id="sidebarContainer"
-              style="float: left;position:absolute;overflow-y: scroll;width:20%">
-              <register ref="register"></register>
-            </div>
-
-
-            <!-- Creates a container for the graph -->
-            <div id="graphContainer"
-            style="position:absolute;overflow:scroll;"
-             >
+            <!-- Graph Container -->
+            <div id="graphContainer">
+              <!-- <loading ref="Loading"></loading> -->
             </div>
           </div>
-              <!-- Creates a container for the sidebar -->
-        <div id="statusContainer"
-          style="text-align:right;position:absolute;overflow:hidden;bottom:0px;left:0px;max-height:24px;height:36px;right:0px;color:white;padding:6px;">
-        </div>
-        </div>
+   
       </v-card>
     </v-dialog>
   </v-layout>
- 
 </template>
 <script type="text/javascript">
   import mx from 'mxgraph';
@@ -101,15 +121,16 @@ body{
   mxImageBasePath: 'resources/assets/images/',// "@/node_modules/mxgraph/javascript/src/images",
   mxBasePath: "@/node_modules/mxgraph/javascript/src"
   });
-
-   import register from "../components/RegisterComponent.vue";
+  import Vue from 'vue';  
+  // import modal from "../components/Modal.vue";
   // import EnergySteamSource from "../components/EnergySteamSourceComponent.vue"
   // import PipeSource from "../components/PipeSourceComponent.vue"
+  // import Loading from '../components/Loading.vue'
   import { mapState } from 'vuex';
+  //import $store from '../$store/index';
 
   var count=0;
   var export_xml = false
-
   var vertices = [];
   var information = {}
   var stateForm = {}
@@ -160,11 +181,6 @@ body{
     mxLog,
   } = mxgraph;
 
-
-  /*const editor = new mxEditor();
-  const graph = editor.graph;
-  const model = graph.getModel();*/
-
   const img_grid = require("../../../resources/assets/images/grid.gif")
   const img_toolbar = require("../../../resources/assets/images/toolbar_bg.gif")
   const img_cut = require('../../../resources/assets/images/cut.png')
@@ -193,7 +209,7 @@ body{
 
     props: {
       title: String,
-      sourceType: String,
+      type: String,
     },
     data ()  {
       return{
@@ -203,37 +219,98 @@ body{
         sources: {},
         addInicial : true,
         mapState: window.mapState,
-
         names:[],
-        contador: 0,
         ids: [],
-        counter:0,
         editor : new mxEditor(),
         graph: null,
         model: null,
-
+        //a$store: this.$store,
       }
     },
-
-    computed: mapState(['changeState']),
+    components: {
+//      modal,
+//      EnergySteamSource,
+//      PipeSource,
+//      Loading
+    },
+    computed: mapState(['establishment','changeState','sourceTypeRadio','infoDiagram']),
     created(){
-      this.contador= 0
+      //if (!this.sourceType){
+      this.sourceType =this.$vnode.key//this.type
+      count = 0
       this.graph= this.editor.graph
       this.model = this.graph.getModel()
+      ///alert("inicio "+this.sourceType)
+      //alert(JSON.stringify(this.$store.getters.establishment))
+      var ref = this
+      axios.get('/api/diagram/get/',{
+        params: {
+          establishment: this.$store.getters.establishment,
+          process: this.sourceType
+        }
+      })
+      .then(function (resp) {
+          alert("respuesta "+JSON.stringify(resp.data));
+          //var xmlText = req.getText();
+          if (resp.data.length!=0){
+            var xmlText = resp.data[0]["data"];
+            //console.log(xmlText)
+            // use the DOMParser browser API to convert text to a Document
+            var XML = new DOMParser().parseFromString(xmlText, "text/xml");
+            var parser = require('fast-xml-parser');
+            var he = require('he');
+ 
+            var options = {
+                attributeNamePrefix : "",
+                attrNodeName: "attr", //default is 'false'
+                textNodeName : "#text",
+                ignoreAttributes : false,
+                ignoreNameSpace : false,
+                allowBooleanAttributes : false,
+                parseNodeValue : true,
+                parseAttributeValue : false,
+                trimValues: true,
+                cdataTagName: "__cdata", //default is 'false'
+                cdataPositionChar: "\\c",
+                localeRange: "", //To support non english character in tag/attribute values.
+                parseTrueNumberOnly: false,
+                attrValueProcessor: a => he.decode(a, {isAttributeValue: true}),//default is a=>a
+                tagValueProcessor : a => he.decode(a) //default is a=>a
+            };
+            var tObj = parser.getTraversalObj(xmlText,options);
+            var jsonObj = parser.convertToJson(tObj,options);
+            //console.log(JSON.stringify(jsonObj));
+          //  ref.$refs.Loading.show()
+            ref.readXML(jsonObj)
+          }
+        })
+        .catch(function (resp) {
+            console.log(resp);
+        });
     },
     mounted() {
       /*this.main(document.getElementById('graphContainer'),document.getElementById('outlineContainer'),document.getElementById('toolbarContainer'),document.getElementById('sidebarContainer'),document.getElementById('statusContainer'))*/
-      this.main(document.getElementById('graphContainer'),document.getElementById('toolbarContainer'),document.getElementById('statusContainer'))      
+      // this.main(document.getElementById('graphContainer'),document.getElementById('toolbarContainer'),document.getElementById('sidebarContainer'))      
+      this.main(document.getElementById('graphContainer'),document.getElementById('toolbarContainer'),)      
     }, 
     watch:{
       changeState(newValue, oldValue){
-        console.log("cambio ${oldValue} to ${newValue}")
-        cellchose = this.model.getCell(information[seleccion])
-        this.model.setStyle(cellchose, 'port;image='+img_check+';spacingLeft=18');
+        //console.log("cambio ${oldValue} to ${newValue}")        
+        if (newValue == true){
+          cellchose = this.model.getCell(information[seleccion])
+          this.model.setStyle(cellchose, 'port;image='+img_check+';spacingLeft=18');          
+        }        
       },
+      dialog(newValue, oldValue){
+        if (newValue ==false){
+          this.$store.commit('changeInfoDiagram', {})
+        }
+      }
     },
     methods:{
-       main(container, toolbar, status)
+    
+       // main(container, toolbar, sidebar)
+       main(container, toolbar)
       //main(container, outline, toolbar, sidebar, status)
       {
         var ref = this
@@ -246,33 +323,25 @@ body{
         }
         else
         {
-          //console.log("informacion")
-          //console.log( this.$store.getters.changeState)
-          /*var editor = new mxEditor();
+        //console.log("informacion")
+        //console.log( this.$store.getters.changeState)
+        /*var editor = new mxEditor();
           var graph = editor.graph;
           var model = graph.getModel();*/
-          
-          // Assigns some global constants for general behaviour, eg. minimum
-          // size (in pixels) of the active region for triggering creation of
-          // new connections, the portion (100%) of the cell area to be used
-          // for triggering new connections, as well as some fading options for
-          // windows and the rubberband selection.  
+
+        // Assigns some global constants for general behaviour, eg. minimum
+        // size (in pixels) of the active region for triggering creation of
+        // new connections, the portion (100%) of the cell area to be used
+        // for triggering new connections, as well as some fading options for
+        // windows and the rubberband selection.
           mxConstants.MIN_HOTSPOT_SIZE = 16;
           mxConstants.DEFAULT_HOTSPOT = 1;
           //new mxRubberband(graph);
-          container.style.background  = "url("+img_grid+")"
-          // sidebar.style.background = "#eeeeee"
-          // sidebar.style.height = "85%"
-          // sidebar.style.border = "1px solid #e0e0e0";
-          toolbar.style.background = "whiteSmike"
-          toolbar.style.border = "1px solid #e0e0e0";
-          container.style.width = "90%"
-          container.style.height = "85%"
-          container.style.bottom = "26px"
-          container.style.top = "102px"
-          // sidebar.style.width= "155px"
-          // sidebar.style.float= "left"
-          status.style.background = "url("+img_toolbar+")"
+          container.style.background = "url(" + img_grid + ")";
+          container.style.height = "100%";
+
+          // sidebar.style.background = "#F2F2F2";
+
           // Enables guides
           mxGraphHandler.prototype.guidesEnabled = true;
           mxConnectionHandler.prototype.connectImage = new mxImage(img_connector, 16, 16);
@@ -291,9 +360,8 @@ body{
           {
             document.body.style.overflow = 'hidden';
             new mxDivResizer(container);
-            new mxDivResizer(toolbar);
+            //new mxDivResizer(toolbar);
             // new mxDivResizer(sidebar);
-            new mxDivResizer(status);
           }
           
           // Disable highlight of cells when dragging from toolbar
@@ -313,12 +381,12 @@ body{
           // is supposed to be a cell which is cloned for new cells.
           // The groupBorderSize is used to define the spacing between
           // the children of a group and the group bounds.
-          var group = new mxCell('Group', new mxGeometry(), 'group');
-          group.setVertex(true);
-          group.setConnectable(false);
+          //var group = new mxCell('Group', new mxGeometry(), 'group');
+          //group.setVertex(true);
+          //group.setConnectable(false);
           //group.setConnectable(true);
-          ref.editor.defaultGroup = group;
-          ref.editor.groupBorderSize = 20;
+          //ref.editor.defaultGroup = group;
+          //ref.editor.groupBorderSize = 20;
 
 
           // Disables drag-and-drop into non-swimlanes.
@@ -336,8 +404,10 @@ body{
           // Does not allow selection of locked cells
           ref.graph.isCellSelectable = function(cell)
           {           
-            seleccion = cell.getId()            
-            console.log(ref.$store.getters.changeState)
+            seleccion = cell.getId()
+
+            //console.log(ref.$store.getters.changeState)
+            ref.$store.commit('changeCellSelect',seleccion)
             //console.log(ref.$store.getters.changeState)
             return !this.isCellLocked(cell);
           };
@@ -357,8 +427,7 @@ body{
             }
             else if (this.isCellCollapsed(cell))
             {
-              var index = tmp.indexOf('</h1>');
-              
+              var index = tmp.indexOf('</h1>');              
               if (index > 0)
               {
                 tmp = tmp.substring(0, index+5);
@@ -383,20 +452,20 @@ body{
               axios.get('/api/source_types/sucessor/'+data)  
               .then(response => {
                   var sucessors = response.data
-                  console.log(nameTarget)
-                  console.log(sucessors)
+                  //console.log(nameTarget)
+                  //console.log(sucessors)
                   var find = false
                   for (var val in sucessors){
-                    console.log(val.name)
+                    //console.log(val.name)
                     if (sucessors[val].name==nameTarget){
                       find=true
                       break
                     }
                   }
-                  if (!find){
+                  /*if (!find){
                     alert("no es un sucesor válido")
                     ref.model.remove(edge)
-                  }
+                  }*/
                 }, error => {
                   console.log('error');          
               });
@@ -404,7 +473,7 @@ body{
             var style = ref.graph.getCellStyle(edge);
             var sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
             var targetPortId = style[mxConstants.STYLE_TARGET_PORT];
-            console.log('connect'+source.id+" "+target.id+" "+sourcePortId+" "+targetPortId);
+            //console.log('connect'+source.id+" "+target.id+" "+sourcePortId+" "+targetPortId);
           });
 
           // Removes cells when [DELETE] is pressed
@@ -464,6 +533,7 @@ body{
             mxEvent.consume(evt);
           };
 
+          ref.graph.getSelectionModel().setSingleSelection(true);
           // Enables new connections
           ref.graph.setConnectable(true);
 
@@ -477,44 +547,58 @@ body{
           // be used. For example, the first call to addSidebar icon would
           // be as follows:
           // addSidebarIcon(graph, sidebar, 'Website', 'images/icons48/earth.png');
-          var changeTypeSource = ''
-          // if (this.sourceType){
-          //   var data =  this.sources
-          //   axios.get('/api/source_types/'+this.sourceType)  
-          //   .then(response => {
-          //       this.sources = response                 
-          //       for (var key in this.sources.data){                     
-          //         this.names.push(this.sources.data[key].name)
-          //         var fuente = this.sources.data[key].name
-          //         var type = this.sources.data[key].type
-          //         var sourceId = this.sources.data[key].id
-          //         var color = this.sources.data[key].color
-          //         var config = {}
-          //         config.button = '<button class="generate" '
-          //         config.nameSource = fuente
-          //         config.sourceId = sourceId
-          //         config.style= "fillColor="+color
-          //         config.color=color
-          //         config.type=type
-          //         config.process=this.sources.data[key].process
-          //         if (changeTypeSource != type){
-          //           // ref.addTypeSourceSidebar(sidebar,type,'h4')
-          //           changeTypeSource=type
-          //         }
-          //         var fuenteText = fuente
-          //         if (fuente.length>18){
-          //           fuente = this.addBrText(fuente)
-          //         }
-          //         if (type == "PROCESO"){
-          //           config.button=''
-          //         }
-          //         ref.addSidebarIcon(ref.graph, sidebar,'<h4 style="margin:0px;">'+fuente+'</h4><br>',            
-          //         fuenteText,config);
-          //       }       
-          //     }, error => {
-          //       console.log('error');          
-          //   });
-          // }
+          var changeTypeSource = "";
+            if (this.sourceType) {
+              var data = this.sources;
+              axios.get("/api/source_types/" + this.sourceType).then(
+                response => {
+                  this.sources = response;
+                  console.log("type source: "+JSON.stringify(this.sources))
+                  //this.sources = this.$store.getters.sourceTypeRadio
+                  for (var key in this.sources.data) {
+                    this.names.push(this.sources.data[key].name);
+                    var fuente = this.sources.data[key].name;
+                    var type = this.sources.data[key].type;
+                    var sourceId = this.sources.data[key].id;
+                    var color = this.sources.data[key].color;
+                    var config = {};
+                    config.button = '<button class="generate ';
+                    config.nameSource = fuente;
+                    config.sourceId = sourceId;
+                    config.style =
+                      "fillColor=" +
+                      "white;" +
+                      "strokeColor=" +
+                      color +
+                      ";strokeWidth=3;";
+                    config.color = color;
+                    config.type = type;
+                    config.process = this.sources.data[key].process;
+                    if (changeTypeSource != type) {
+                      // ref.addTypeSourceSidebar(sidebar, type, "h4");
+                      changeTypeSource = type;
+                    }
+                    var fuenteText = fuente;
+                    if (fuente.length > 18) {
+                      fuente = this.addBrText(fuente);
+                    }
+                    if (type == "PROCESO") {
+                      config.button = "";
+                    }
+                    // ref.addSidebarIcon(
+                    //   ref.graph,
+                    //   sidebar,
+                    //   '<h4 style="margin: 3px; font-weight: 400; color: #404040;">' + fuente + "</h4>",
+                    //   fuenteText,
+                    //   config
+                    // );
+                  }
+                },
+                error => {
+                  console.log("error");
+                }
+              );
+            }
           // Displays useful hints in a small semi-transparent box.
           
           // Creates a new DIV that is used as a toolbar and adds
@@ -539,95 +623,28 @@ body{
             }
           });
 
-          ref.addToolbarButton(ref.editor, toolbar, 'delete', 'Eliminar', img_delete2);
-          
-          toolbar.appendChild(spacer.cloneNode(true));
-          
-          /*ref.addToolbarButton(ref.editor, toolbar, 'cut', 'Cortar', img_cut);
-          ref.addToolbarButton(ref.editor, toolbar, 'copy', 'Copiar', img_copy);
-          ref.addToolbarButton(ref.editor, toolbar, 'paste', 'Pegar', img_paste);
+          ref.addActionButton(ref.editor,'delete')
+          ref.addActionButton(ref.editor,'zoomIn')
+          ref.addActionButton(ref.editor,'zoomOut')
+          ref.addActionButton(ref.editor,'fit')
 
-          toolbar.appendChild(spacer.cloneNode(true));*/
-          
-          //ref.addToolbarButton(editor, toolbar, 'undo', '', img_undo);
-          //ref.addToolbarButton(editor, toolbar, 'redo', '', img_redo);
-          
-          toolbar.appendChild(spacer.cloneNode(true));
-          
+          /*
           ref.addToolbarButton(ref.editor, toolbar, 'show', 'Mostrar', img_camera);
           ref.addToolbarButton(ref.editor, toolbar, 'print', 'Imprimir', img_printer);
-          ref.addToolbarButton(ref.editor, toolbar, 'save', 'Guardar', img_printer);
+          ref.addToolbarButton(ref.editor, toolbar, 'save', 'Guardar', img_printer);*/
+
           ref.editor.addAction('save', function(editor, cell)
           {
             var enc = new mxCodec(mxUtils.createXmlDocument());
             var node = enc.encode(ref.editor.graph.getModel());
-            //console.log(mxUtils.getPrettyXml(node));  
           });
 
-          toolbar.appendChild(spacer.cloneNode(true));
+          //toolbar.appendChild(spacer.cloneNode(true));
 
-          // Defines a new export action
-          // ref.editor.addAction('export', function(editor, cell)
-          // {
-            ref.addInicial=false
-            var enc = new mxCodec(mxUtils.createXmlDocument());
-            var node = enc.encode(ref.editor.graph.getModel());
-            //console.log(mxUtils.getPrettyXml(node));       
-            var req = mxUtils.load("../../../xml/xml.xml");
-            var xmlText = req.getText();
-            //console.log(xmlText)
-            // use the DOMParser browser API to convert text to a Document
-            var XML = new DOMParser().parseFromString(xmlText, "text/xml");
-            var parser = require('fast-xml-parser');
-            var he = require('he');
- 
-            var options = {
-                attributeNamePrefix : "",
-                attrNodeName: "attr", //default is 'false'
-                textNodeName : "#text",
-                ignoreAttributes : false,
-                ignoreNameSpace : false,
-                allowBooleanAttributes : false,
-                parseNodeValue : true,
-                parseAttributeValue : false,
-                trimValues: true,
-                cdataTagName: "__cdata", //default is 'false'
-                cdataPositionChar: "\\c",
-                localeRange: "", //To support non english character in tag/attribute values.
-                parseTrueNumberOnly: false,
-                attrValueProcessor: a => he.decode(a, {isAttributeValue: true}),//default is a=>a
-                tagValueProcessor : a => he.decode(a) //default is a=>a
-            };
-            var tObj = parser.getTraversalObj(xmlText,options);
-            var jsonObj = parser.convertToJson(tObj,options);
-            //console.log(JSON.stringify(jsonObj));
-            ref.readXML(jsonObj)
-            //export_xml=true
 
-          // });
-          
-          ref.addToolbarButton(ref.editor, toolbar, 'export', 'Exportar', img_export);
-
-          // ---
           this.editEdges = false
           ref.graph.setCellsResizable(false)
           //raph.setCellsEditable(false)
-          // Adds toolbar buttons into the status bar at the bottom
-          // of the window.
-          ref.addToolbarButton(ref.editor, status, 'collapseAll', 'Collapse All', img_minus, true);
-          ref.addToolbarButton(ref.editor, status, 'expandAll', 'Expand All', img_plus, true);
-
-          status.appendChild(spacer.cloneNode(true));
-          
-          ref.addToolbarButton(ref.editor, status, 'enterGroup', 'Enter', img_view_next, true);
-          ref.addToolbarButton(ref.editor, status, 'exitGroup', 'Exit', img_view_previous, true);
-
-          status.appendChild(spacer.cloneNode(true));
-
-          ref.addToolbarButton(ref.editor, status, 'zoomIn', '', img_zoom_in, true);
-          ref.addToolbarButton(ref.editor, status, 'zoomOut', '',  img_zoom_out, true);
-          ref.addToolbarButton(ref.editor, status, 'actualSize', '', img_view_1_1, true);
-          ref.addToolbarButton(ref.editor, status, 'fit', '', img_fit_to_size, true);
           
           // Creates the outline (navigator, overview) for moving
           // around the graph in the top, right corner of the window.
@@ -710,12 +727,12 @@ body{
       },
       addBrText(text)
       {
-         var arrayText= text.split(" ")
-         var sum = 0
-         var i=0
-         var n=arrayText.length
-         var newText=""
-         while (i<n){
+        var arrayText= text.split(" ")
+        var sum = 0
+        var i=0
+        var n=arrayText.length
+        var newText=""
+        while (i<n){
           sum+=arrayText[i].length
           if (sum > 18){
             newText+="<br>"
@@ -743,20 +760,15 @@ body{
         // the graph. The cell argument points to the cell under
         // the mousepointer if there is one.
         var ref=this
-        //var model = ref.graph.getModel();
-
-        //ref.mapState.initMap = false
-
         var funct = function(graph, evt, cell, x, y)
         {
           var parent = ref.graph.getDefaultParent();
-          //var model = graph.getModel();
-          
           var v1 = null;
           ref.model.beginUpdate();
           try
           {
 
+            if (count == 0) ref.addInicial = true
             // NOTE: For non-HTML labels the image must be displayed via the style
             // rather than the label markup, so use 'image=' + image for the style.
             // as follows: v1 = graph.insertVertex(parent, null, label,
@@ -764,14 +776,15 @@ body{
             //
             var html = label
             if (config.button){
-              html+=config.button+'source='+config.sourceId+' id="id'+count+'">Registrar</button>'
+              html+=config.button+' boton_ddd" source='+config.sourceId+' id="id'+count+'">Caracterizar</button>'
             }
-            v1 = ref.graph.insertVertex(parent,null, html, x, y, 120, 80,config.style);
-            v1.setAttribute('label', 'hola');
+            v1 = ref.graph.insertVertex(parent,null, html, x, y, 160, 80,config.style);
             vertices[v1.getId()]=v1 
+            //console.log("vertices "+JSON.stringify(vertices[v1.getId()]))
             //v1.setConnectable(false);            
             if (ref.addInicial){                          
-              var v2 = ref.graph.insertVertex(parent, null, 'Inicio', 200, 200, 80, 60,'shape=ellipse;perimeter=ellipsePerimeter'); 
+              var v2 = ref.graph.insertVertex(parent, null, 'Inicio', 200, 200, 80, 60,
+                "shape=ellipse;perimeter=ellipsePerimeter;fillColor=#456D7D;strokeColor=black;strokeWidth=3;"); 
               lastId = v2.getId()
               ref.addInicial=false
               ref.graph.insertEdge(parent, null, "", v2, v1); 
@@ -793,9 +806,7 @@ body{
           {
             ref.model.endUpdate();
             if (config.button){
-              //alert(count)
               var generate = document.getElementById('id'+count)
-              v1.setAttribute('firstName', 'ignacioo');
               if (generate.addEventListener) {  // all browsers except IE before version 9
                   try{
                     generate.addEventListener("click", function(){ 
@@ -815,27 +826,26 @@ body{
                   }else{
                     generate.attachEvent("click", ref.openModal);  
                   }
-                  
-                  //generateId.attachEvent("click", ref.showModalWindow);
                 }
               }             
-              console.log(ref.counter)
+              //console.log(ref.counter)
             }
             count++;
-            ref.counter++;
-            ref.contador++;
-          }          
+            //alert(count)
+            ref.sendDiagram("EDICIÓN")
+          }
         }
-          // Creates the p which is used as the sidebar icon (drag source)
+
+        // Creates the p which is used as the sidebar icon (drag source)
         var para = document.createElement("p");
         var t = document.createTextNode(text);
         para.appendChild(t);
-        para.className="noselect"
-        para.style.border="dashed black 1px"
-        para.style.background=config.color
-        para.style.margin="5px"
-        para.style.padding="5px"
-        sidebar.appendChild(para);
+        para.className = "noselect";
+        para.style.borderLeft = "solid " + config.color + " 10px";
+        para.style.background = "white";
+        para.style.margin = "5px";
+        para.style.padding = "10px";
+        // sidebar.appendChild(para);
 
         var dragElt = document.createElement('div');
         dragElt.style.border = 'dashed black 1px';
@@ -848,7 +858,7 @@ body{
 
       addEventClick(config){
         var ref=this
-        console.log(JSON.stringify(config))
+        //console.log(JSON.stringify(config))
         //alert("id"+config.idHtmlCell)        
         //var generation = document.getElementById("id2")
         for (var c in config){
@@ -861,13 +871,12 @@ body{
         var i = 0;
         for (i; i<generation.length;i++){
 
-          console.log(" aqui : "+config[i].idHtmlCell)
+          //console.log(" aqui : "+config[i].idHtmlCell)
           //var ca = document.getElementById(config[i].idHtmlCell)
           //alert(ca[generate].idHtmlCell)
           if (generation[i].addEventListener) {  // all browsers except IE before version 9
               (function(x){
                 generation[x].addEventListener("click", function(){ 
-
                   ref.openModal(config[x],config[x])
                   /*if (config[i].type == "CHIMENEA"){
                     alert("es chimenea")
@@ -889,8 +898,44 @@ body{
           }  
         }         
         /*count++;
-        ref.counter++;
-        ref.contador++;*/
+        ref.counter++;*/
+      },
+      addActionButton(editor,action){
+        var ref= this        
+        var button = document.getElementById(action);
+        mxEvent.addListener(button, 'click', function(evt)
+        {
+          var deletion = true
+          if (action=="delete"){
+            if (count>=1){
+              count--;
+              var cell = editor.graph.getSelectionCell();
+              var cellSelected = ref.$store.getters.cellSelect
+              var infoDiagram =  ref.$store.getters.infoDiagram
+              delete  (vertices[cell.getId()]);
+              delete  (information[cell.getId()])
+             //alert(ref.model.getCell(cellSelected).value.search(/Inicio/))
+              if (ref.model.getCell(cellSelected).value.search(/Inicio/)==-1){
+                if (cellSelected in infoDiagram){
+                    delete (infoDiagram[cellSelected])
+                    /*axios.delete('/api/source/'+cellSelected)
+                    .then(response => {
+                        alert("Fuente eliminada")
+                        ref.sendDiagram("EDICIÓN")
+                      }, error => {
+                        console.log('error');
+                    });*/
+                }
+              }else{
+                deletion = false
+              }
+
+            }
+          }
+          if (deletion == true){
+            editor.execute(action);  
+          }
+        });
       },
       addToolbarButton(editor, toolbar, action, label, image, isTransparent)
       {
@@ -912,52 +957,103 @@ body{
           button.style.color = '#FFFFFF';
           button.style.border = 'none';
         }
+        var ref= this
+        
         mxEvent.addListener(button, 'click', function(evt)
         {
+          var deletion = true
           if (action=="delete"){
             if (count>=1){
-              count--; 
+              count--;
               var cell = editor.graph.getSelectionCell();
-              for (var propiedad in vertices) {
-                  //console.log(propiedad)
-              }  
+              var cellSelected = ref.$store.getters.cellSelect
+              var infoDiagram =  ref.$store.getters.infoDiagram
               delete  (vertices[cell.getId()]);
+              delete  (information[cell.getId()])
+              //alert(ref.model.getCell(cellSelected).value.search(/Inicio/))
+              if (ref.model.getCell(cellSelected).value.search(/Inicio/)==-1){
+                if (cellSelected in infoDiagram){
+                    delete (infoDiagram[cellSelected])
+                    /*axios.delete('/api/source/'+cellSelected)
+                    .then(response => {
+                        alert("Fuente eliminada")
+                        ref.sendDiagram("EDICIÓN")
+                      }, error => {
+                        console.log('error');
+                    });*/
+                }
+              }else{
+                deletion = false
+              }
+
             }
           }
-          editor.execute(action);          
+          if (deletion == true){
+            editor.execute(action);  
+          }
+          
         });
         mxUtils.write(button, label);
         toolbar.appendChild(button);
       },
       openModalPipeSource(value){
         var ref=this
+        ref.$store.commit('changeStateCell', false)
         ref.$refs.PipeSource.showSpecific(value) 
       },
-      openModal(value,config) {
+      async openModal(value,config) {
         var ref=this
-        ref.$store.commit('changeStateCell', false)
-        if (export_xml){          
-          ref.$refs.register.show(value,this.AllData)           
-        }else{          
-          ref.$refs.register.showSpecific(value,config)
-        }        
-      },
-      readXML(arr){
-        var ref=this
-        var parent = ref.graph.getDefaultParent();
-        var rec =arr["mxGraphModel"]["root"]["mxCell"]        
-         var ca = null
+        config.FuelType = []
+        await axios.get('api/source_types/fuels/'+config.sourceId)
+        .then(function (resp) {
+              for (var fuel in resp.data[0].fuels){
+                config.FuelType.push({
+                  name: resp.data[0].fuels[fuel].name, 
+                  natural_state_id: resp.data[0].fuels[fuel].natural_state_id,
+                  fuel_id: resp.data[0].fuels[fuel].pivot.fuel_id,
+                  source_type_id: resp.data[0].fuels[fuel].pivot.source_type_id,
+                });
+              }
+        })
+        .catch(function (resp) {
+            console.log(resp);
+            alert("Error source_types :" + resp);
+        }); 
+      
+      //// agregado
+          /*var energySteam = Vue.extend(EnergySteamSource)
+          var instanceEnergy = new energySteam({
+          propsData: {
+             $storeEnergy: this.$store, config: config
+          }
+        });
+        instanceEnergy.$mount() // pass nothing
+        this.$refs.containerEnergy.appendChild(instanceEnergy.$el)*/
+      //// fin agregado
 
+        ref.$store.commit('changeStateCell', false)
+        config.process = this.sourceType 
+        ref.$refs.EnergySteamSource.showSpecific(config)
+      },
+      async readXML(arr){
+        var ref=this
+        
+        var parent = ref.graph.getDefaultParent();
+        var rec =arr["mxGraphModel"]["root"]["mxCell"]  
+
+        //alert(JSON.stringify(rec));
+
+        var ca = null
+        var info = {}
+        var idss = []
         for (var key in rec){
           var value = ""
           var id = ""
           var style = ""
-          
           var idParent = ""
           ref.model.beginUpdate();
           try
-          { 
-            
+          {
             for (var key2 in rec[key]){
               var valueKey = rec[key][key2]
               var needAction = false
@@ -978,39 +1074,39 @@ body{
                     if (idParent != "1"){
                       var xx = valueKey.mxPoint.attr.x
                       var yy = valueKey.mxPoint.attr.y 
-                      style ='port;image='+img_warning+';spacingLeft=18'
-                      var port = ref.graph.insertVertex(vertices[idParent], id, value, Number(x), Number(y), Number(width), Number(height), style,true) 
+                      //style ='port;image='+img_warning+';spacingLeft=18'                      
+                      var port = ref.graph.insertVertex(vertices[idParent], id.toString(), value, Number(x), Number(y), Number(width), Number(height), style,true)
                       information[idParent]=port.id
                       vertices[id]=port
-                      console.log(JSON.stringify(valueKey))
+                      //console.log(JSON.stringify(valueKey))
                       port.geometry.offset = new mxPoint(Number(xx), Number(yy));
                       port.setConnectable(false)
-                      needAction=true 
+                      needAction=true
                     }else{                  
-                      var config = {}   
-                      vertices[id] = ref.graph.insertVertex(parent, id, value, x, y, width, height, style);
+                      var config = {}
+                      //alert(id+" "+value)
+                      vertices[id] = ref.graph.insertVertex(parent, id.toString(), value, x, y, width, height, style);
                       var res=value.search(/id=\"id/)
-                      count++
-                    
-                      if (res!=-1){    
-                        config.sourceId= value.match(/source=([0-9]+)/)[1];                    
+                      count++                      
+                      var burners = []
+                      if (value != "Inicio"){
+                        //alert(id)
+                        ref.addInicial=false
+                        var data = null;
+                        idss.push(id)
+                      }
+                      if (res!=-1){
+                        config.sourceId= value.match(/source=([0-9]+)/)[1];
                         config.idHtmlCell='id'+value.match(/id([0-9]+)/)[1];
                         config.nameSource = value.match(/>(.*?)<\/h4>/)[1].replace('<br>','').replace(/^\s+|\s+$/g, '')
                         config.idCell = id
-                       // alert(config.sourceId)
+                        //alert(config.sourceId)
                         var esChimenea=value.search(/Chimenea/)
                         if (esChimenea!=-1){
                           config.type='CHIMENEA'
                         }else{
                           config.type=''
                         }
-
-                        /*await axios.get('/api/source_types/id_source/'+config.nameSource)  
-                        .then(response => {
-                            config.sourceId=response.data
-                          }, error => {
-                            console.log('error');          
-                        });*/
                         ref.ids.push(config)
                       }
                       vertices[id].setConnectable(true);
@@ -1022,26 +1118,19 @@ body{
                 var source= vertices[valueKey.source]
                 var target= vertices[valueKey.target]
                 var value = valueKey.value
-                if (source != "" && target != ""){
-                  ref.graph.insertEdge(parent, null, value, source, target);  
-                  console.log("aqui ")
-                 // 
+                var id= valueKey.id
+                if (source != "" && target != ""){                
+                  ref.graph.insertEdge(parent, id.toString(), value, source, target);
                 }
               }
             }
           }
           finally{            
             ref.model.endUpdate();
-            console.log("Fin")
-            
             if (needAction){
-
-              /*console.log("aquiiiii: "+document.getElementById("id0"))
-              alert(config.idHtmlCell)
-              console.log(JSON.stringify(config))*/
-  // all browsers except IE before version 9
+             // all browsers except IE before version 9
                 (function(x){
-                                ca = document.getElementById(x.idHtmlCell)
+                  ca = document.getElementById(x.idHtmlCell)
                   if (ca.addEventListener) {
                   ca.addEventListener("click", function(){                     
                     if (x.type == "CHIMENEA"){
@@ -1067,25 +1156,67 @@ body{
           }
         }
         //ref.model.endUpdate();
-        /*if (needAction){
-              console.log(JSON.stringify(config));
-              
-              
-             }*/
-
-
         //ref.addEventClick(ref.ids) 
+        for (var vals in idss){
+          //console.log("ids "+idss)
+          //console.log("ishdsjkdjksh "+idss[vals])
+          await axios.get('/api/source/get_establishment/',{
+            params: {
+              establishment: this.$store.getters.establishment.id,
+              cell_id:idss[vals],
+              process: this.sourceType,
+            }
+          })
+          .then(function (response){
+            //alert("exito inicio")
+            //console.log("exitoskdjsk")
+            //console.log("ID "+idss[vals])
+            if (response.data.length!=0){
+              //console.log("repsuestassssssss "+JSON.stringify(response.data))
+              var burners = response.data[0].burners
+              delete response.data[0].burners;
+              //console.log("burners "+burners)         
+              info[idss[vals]] = {source: response.data[0],burners: burners}                
+            }
+          })
+          .catch(function (resp) {
+            console.log(resp);
+          });  
+        }        
+        ref.$store.commit('changeInfoDiagram', info)
+        ref.$refs.Loading.hide()
     },
-    sendDiagram(){
-      this.dialog=false 
+    sendDiagram(estado="ENVIADO"){
+      var data = {}
+      data.process = this.sourceType
+      if (estado == "ENVIADO"){
+        this.dialog=false
+        data.state="ENVIADO"
+      }
       this.$store.commit('changeCurrentWizardStep', 2);
+      
+      data.establishment = this.$store.getters.establishment.id;      
+      data.send = new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0].replace('T',' ')
+      var enc = new mxCodec(mxUtils.createXmlDocument());
+      var node = enc.encode(this.editor.graph.getModel());      
+      data.data = mxUtils.getPrettyXml(node)
+      
+      data.state = estado
+      //alert(JSON.stringify(data.state))
+      //console.log("Diagrama "+JSON.stringify(data))
+      axios.post('/api/diagram',data)
+        .then(response => {
+            if (estado == "ENVIADO") alert("exito")
+          }, error => {
+            console.log('error');
+        });
     },
     getIdSource(value){
-      return axios.get('/api/source_types/id_source/'+value)  
+      return axios.get('/api/source_types/id_source/'+value)
       .then(response => {
-          return response.data       
+          return response.data
         }, error => {
-          console.log('error');          
+          console.log('error');
       });
     },
   }

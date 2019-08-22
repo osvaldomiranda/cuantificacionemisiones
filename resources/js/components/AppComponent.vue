@@ -17,7 +17,7 @@
             row
             align-center
           >
-            <v-flex xs6>
+            <v-flex xs4>
               <v-subheader v-if="item.heading">
                 {{ item.heading }}
               </v-subheader>
@@ -111,13 +111,12 @@
       establishment: null,
       naturalStates:[],
       items: [
-        { icon: 'contacts', text: 'Datos del Establecimiento', link: '/' },
-        { icon: 'wrap_text', text: 'Listado de Declaraciones', link: '/send_list'}, 
-        { icon: 'settings', text: 'Cuantificacion de Emisiones', link: '/source_list' },
-        { icon: 'wrap_text', text: 'Preguntas Frecuentes', link: '/'},
-        { icon: 'wrap_text', text: 'Tutoriales', link: '/'},
+        { icon: 'contacts', text: 'Establecimiento', link: '/' },
+        { icon: 'wrap_text', text: 'Declaraciones', link: '/send_list'}, 
         { icon: 'wrap_text', text: 'Administrar Declaraciones', link: '/send_admin'}, 
         { icon: 'wrap_text', text: 'Administrar Solicitudes', link: '/requisition_list'},     
+        { icon: 'wrap_text', text: 'Preguntas Frecuentes', link: '/'},
+        { icon: 'wrap_text', text: 'Tutoriales', link: '/'},
       ]
     }),
     props: {
@@ -129,11 +128,13 @@
     methods: {
       initialize () {
         var app = this;
+        app.$store.commit('changeEstablishment',1);
         axios.get('/api/set_user')
             .then(function (resp) {
 
               app.$store.commit('changeUser',resp.data[0]['user']);
-              app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
+              //app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
+              
 
               alert(JSON.stringify(app.$store.getters.establishment));
 

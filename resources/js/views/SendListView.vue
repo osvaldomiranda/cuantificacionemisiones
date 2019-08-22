@@ -13,7 +13,7 @@
     <v-layout>
 
 
-        <v-flex xs8 class="px-1"> 
+        <v-flex xs8> 
 
             
             <v-card  color="main_green" style="border-radius:0px;">
@@ -24,41 +24,32 @@
 
             <v-data-table
               :headers="headers"
-              :items="desserts"
+              :items="declarations"
               class="elevation-1"
               hide-actions
             >
               <template v-slot:items="props">
 
-                <td class="text-xs-right">{{ props.item.reporting_period }}</td>
+                <td class="text-xs-right">{{ props.item.period }}</td>
                 <td class="text-xs-right">{{ props.item.type }}</td>
-                <td class="text-xs-right">{{ props.item.report_date }}</td>
-                <td class="text-xs-right">{{ props.item.user }}</td>
+                <td class="text-xs-right">{{ props.item.created_at }}</td>
                 <td class="text-xs-right">{{ props.item.state }}</td>
                 <td class="justify-center layout px-0">
-                    <v-btn flat v-if= "props.item.report_date!=''" small @click="" color="side_bar_gray">
-                        Revisar
-                        <v-icon color="side_bar_gray" right dark>visibility</v-icon>    
-                    </v-btn>  
+   
 
-                    <router-link
-                        to="/source_list"
-                    >
-                        <v-btn flat v-if= "props.item.report_date==''" small @click="" color="side_bar_gray">
-                            Editar
-                            <v-icon color="side_bar_gray" right dark>edit</v-icon>
-                        </v-btn>
-                    </router-link>       
+                    <v-btn flat @click='toDeclaration(props.item)' small color="side_bar_gray">
+                        Editar
+                        <v-icon color="side_bar_gray" right dark>edit</v-icon>
+                    </v-btn>
+                      
                 </td>   
 
               </template>
             </v-data-table>
 
             <v-layout>
-                <v-flex xs4 class="px-4">
-                    <router-link to="/source_list">
-                        <v-btn round color="main_green" class="white--text px-4">Editar declaración D.S 138</v-btn>
-                    </router-link>
+                <v-flex xs4>
+                    <v-btn @click='new138' round color="main_green" class="white--text px-4">Nueva Declaración D.S 138</v-btn>
                 </v-flex>
                
                 <v-flex xs4 class="px-4">  
@@ -96,12 +87,15 @@
             </v-card>     
         </v-flex>
 
-
+    <div ref="container">
+    </div>   
     </v-layout>    
 
 </template>
 
 <script>
+  import Vue from 'vue'; 
+  import SourceList  from './../views/SourceListView';
   export default {
     data: () => ({
         dialog: false,
@@ -111,10 +105,9 @@
             { text: 'Periodo declaración', value: 'reporting_period' }, 
             { text: 'Tipo', value: 'type' },            
             { text: 'Fecha Declaración', value: 'report_date' },
-            { text: 'Usuario', value: 'user' },
             { text: 'Estado', value: 'state' },
         ],
-      desserts: [],
+      declarations: [],
         company:{
             name: 'Empresa Prueba',
             rut: '76200200',
@@ -139,30 +132,50 @@
 
     methods: {
       initialize () {
-        this.desserts = [
-            {
-                reporting_period: 2017,
-                report_date: '01/01/2016',
-                state: 'Aceptada',
-                type: 'COVs',
-                user: 'Ignacio Saravia',
-            },
-            {
-                reporting_period: 2018,
-                report_date: '01/01/2016',
-                state: 'Aceptada',
-                type: 'Medición',
-                user: 'Ignacio Saravia',
-            },
-            {
-                reporting_period: 2019,
-                report_date: '',
-                state: 'En Proceso',
-                type: 'D.S.138',
-                user: 'Ignacio Saravia',
-            },
-        ]
+
+        var app = this;
+
+        axios.get('/api/declarations?establishment_id=1')
+            .then(function (resp) {    
+                app.declarations = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
+
       },
+      new138(){
+        var app = this;
+
+        axios.post('/api/declaration/new?establishment_id=1&type=DS138')
+            .then(function (resp) {    
+                app.declaration = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
+        axios.get('/api/declarations?establishment_id=1')
+            .then(function (resp) {    
+                app.declarations = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
+      },
+      toDeclaration (a){
+            var Graphics = Vue.extend(SourceList)
+            var instance = new Graphics({store: this.$store, propsData: {
+            declaration_id: a.id,
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
     }
   }
 </script>

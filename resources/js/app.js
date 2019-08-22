@@ -16,7 +16,6 @@ import VueApexCharts    from 'vue-apexcharts'
 
 import Discharge            from './components/Discharge' 
 import AppComponent         from './components/AppComponent'
-import GraphicsComponent    from './components/GraphicsComponent'
 import Register             from './components/RegisterComponent'
 
 import Covs                 from './components/CovsComponent'
@@ -76,7 +75,6 @@ Vue.use(Vuetify, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
-Vue.component('graphics', GraphicsComponent);
 Vue.component('discharge', Discharge);
 Vue.component('register', Register);
 

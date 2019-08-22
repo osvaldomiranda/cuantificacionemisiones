@@ -37,7 +37,7 @@
 		                    <v-text-field v-model="this.source.primary_fuel_name"  readonly='true' label="Combustible"></v-text-field>
 		                </v-flex>
 		                <v-flex  xs12 sm6 md3 class="px-1">
-		                    <v-text-field  v-model="this.source.nominal_consume_unity" readonly='true' label="Unidad"></v-text-field>
+		                    <v-text-field  v-model="this.source.nominal_consume_unity.split('/',2)[0]" readonly='true' label="Unidad"></v-text-field>
 		                </v-flex>
 		            </v-layout>  
 
@@ -96,7 +96,7 @@
 		                    <v-text-field v-model="this.source.secondary_fuel_name"  readonly='true' label="Combustible"></v-text-field>
 		                </v-flex>
 		                <v-flex  xs12 sm6 md3 class="px-1">
-		                    <v-text-field  v-model="this.source.nominal_consume_unity_secondary" readonly='true' label="Unidad"></v-text-field>
+		                    <v-text-field  v-model="this.source.nominal_consume_unity_secondary.split('/',2)[0]" readonly='true' label="Unidad"></v-text-field>
 		                </v-flex>
 		            </v-layout>  
 

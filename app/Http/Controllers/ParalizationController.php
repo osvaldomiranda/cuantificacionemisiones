@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Paralization;
+use App\Source;
 use Illuminate\Http\Request;
+
 
 class ParalizationController extends Controller
 {
@@ -106,6 +108,10 @@ class ParalizationController extends Controller
             $paralization->save();    
         }
         
+        $source = Source::where('id', $first['source_id'])->get()->first();
+        $source->state = 'REGISTERED';
+        $source->save();
+
         return response()->json($paralizations);  
     }
 }

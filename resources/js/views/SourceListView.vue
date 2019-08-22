@@ -1,8 +1,24 @@
 <template>
-  <div>
+    <v-layout row>
+        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+                <v-toolbar dark color="main_green">
+                    <v-btn icon dark @click="dialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Registrar consumos y niveles de actividad</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn flat color="main_green" @click="save_all">Guardar</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <br>
+                <v-container>
+
+        <div>
 
 
-          <v-card color="main_green" class="redondeado">
+<!--           <v-card color="main_green" class="redondeado">
             <v-layout justify-center class="pa-2 ma-2">
               <v-flex xs4>
                 <v-layout align-start justify-center column fill-height class="py-2">
@@ -23,16 +39,16 @@
                 <v-layout align-start justify-center column>
                   <v-flex>
                     <h5 style="color: #fff" class="listado_text">Establecimiento</h5>
-                    <!-- {{ $store.getters.user['name'] }}  -->
+                    {{ $store.getters.user['name'] }} 
                   </v-flex>
                   <v-flex>
                     <h4 style="color: #fff" class="listado_text">Nombre Establecimiento</h4>
-                    <!-- {{ $store.getters.establishment['name'] }} -->
+                    {{ $store.getters.establishment['name'] }}
                   </v-flex>
                 </v-layout>
               </v-flex>
             </v-layout>
-          </v-card>
+          </v-card>  -->
 
 
 
@@ -51,24 +67,21 @@
     </v-toolbar>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="general"
       class="elevation-1"
       v-if="general.length > 0" 
     >
       <template v-slot:items="props">
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
-            <register v-if= "props.item.state=='PENDIENTE'"></register>
-
-            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
-            > Registrado
-              <v-icon right>check</v-icon>
-            </v-btn>
+        <td class="text-xs-right">{{ props.item.source_type_name }}</td>
+        <td class="text-xs-right">{{ props.item.register_number }}</td>
+        <td class="text-xs-right">{{ props.item.brand }}</td>
+        <td class="text-xs-right">{{ props.item.internal_number }}</td>
+        <td class="text-xs-right">{{ props.item.origin_data }}</td>
+        <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="justify-center layout px-0">
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="red" dark>Registrar Consumo</v-btn>
+ 
+             <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
         </td>   
 
       </template>
@@ -85,7 +98,7 @@
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
         
-        <discharge></discharge>
+        <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
         
     </v-toolbar>
 
@@ -104,11 +117,10 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
 
-        <td small @click="consumptionClick(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
- <!--            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
-            > Registrado
-              <v-icon right>check</v-icon>
-            </v-btn> -->
+        <td 
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="red" dark>Registrar Consumo</v-btn>
+ 
+             <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
         </td>   
       </template>
     </v-data-table>
@@ -174,14 +186,14 @@
       v-if="pda.length > 0"
     >
       <template v-slot:items="props">
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.serial_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
-        <td v-if="props.item.source_type_name != 'Convertidor Teniente'" class="justify-center layout px-0">
+        <td class="text-xs-right">{{ props.item.source_type_name }}</td>
+        <td class="text-xs-right">{{ props.item.register_number }}</td>
+        <td class="text-xs-right">{{ props.item.brand }}</td>
+        <td class="text-xs-right">{{ props.item.serial_number }}</td>
+        <td class="text-xs-right">{{ props.item.internal_number }}</td>
+        <td class="text-xs-right">{{ props.item.origin_data }}</td>
+        <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="justify-center layout px-0">
             <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
             <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
             > Registrado
@@ -192,18 +204,24 @@
     </v-data-table>
 
 
-    <router-link to="/graphics">
-        <v-btn color="main_green" dark round>
-          Siguiente
-          <v-icon right>arrow_forward</v-icon>
-        </v-btn>
-    </router-link>
+  
+    <v-btn @click="toFactors" color="main_green" dark round>
+      Siguiente
+      <v-icon right>arrow_forward</v-icon>
+    </v-btn>
+  
     
 
     <div ref="container">
     </div>    
 
   </div>
+
+            </v-container>  
+            </v-card>
+        </v-dialog>
+    </v-layout>
+
 </template>
 
 <script>
@@ -211,9 +229,13 @@
   import { mapState } from 'vuex';  
   import Vue from 'vue';  
   import ConsumptionComponent  from './../components/ConsumptionComponent';
+  import FactorsComponent  from './../components/FactorsComponent';
 
 
   export default {
+    props: {
+        declaration: Object
+    },
     data: () => ({
         dias: ['Lunes', 'Martes', 'Miercoles', 'Jueves','Viernes', 'Sabado', 'Domingo'],
         headers: [
@@ -226,6 +248,7 @@
             { text: 'CCF8', value: 'ccf8' },
 
         ],
+        dialog: true,
         energy:[],
         general:[],
         pda:[],
@@ -321,6 +344,7 @@
     methods: {
         initialize () {
             var app = this;
+
             axios.get('/api/sources/byprocess?process=ENERGY')
                 .then(function (resp) {    
                     app.energy = resp.data;
@@ -330,8 +354,8 @@
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('/api/sources/byprocess?process=GENERAL_PURPOSE')
-                .then(function (resp) {    
+            axios.get('/api/sources/byprocess?process=GENERAL_USE')
+                .then(function (resp) {   
                     app.general = resp.data;
                 })
                 .catch(function (resp) {
@@ -404,8 +428,6 @@
                 });
         },
         consumptionClick (a){
-            alert(JSON.stringify(a));
-
             var ComponentReserv = Vue.extend(ConsumptionComponent)
             var instance = new ComponentReserv({store: this.$store, propsData: {
             source: a,
@@ -413,7 +435,17 @@
           }});
             instance.$mount();
             this.$refs.container.appendChild(instance.$el);
-        }
+        },
+        toFactors (a){
+            this.dialog = false;
+            var Graphics = Vue.extend(FactorsComponent)
+            var instance = new Graphics({store: this.$store, propsData: {
+            declaration_id: 2,
+             
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
     }
 }
 </script>

@@ -15,6 +15,13 @@ class CreateFactorsTable extends Migration
     {
         Schema::create('factors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('ccf8');
+            $table->string('polulant_id')->nullable();
+            $table->string('polulant')->nullable();
+            $table->float('factor',16,8)->nullable();
+            $table->string('unity')->nullable();
+            $table->string('measure_unit')->nullable();
+            $table->integer('measure_value')->nullable();
             $table->timestamps();
         });
     }

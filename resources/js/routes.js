@@ -6,7 +6,7 @@ import SourceList   from './views/SourceListView'
 import SendList     from './views/SendListView'
 import SendAdmin    from './views/SendAdminView'
 import RequisitionList    from './views/RequisitionListView'
-import Graphics     from './components/GraphicsComponent'
+
 
 import Readings       from './views/ReadingsView'
 
@@ -39,11 +39,6 @@ const router = new VueRouter({
             path: '/send_admin',
             name: 'send_admin',
             component: SendAdmin,
-        },
-        {
-            path: '/graphics',
-            name: 'graphics',
-            component: Graphics,
         },
         {
             path: '/requisition_list',

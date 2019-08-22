@@ -15,6 +15,8 @@ class CreateEmissionsTable extends Migration
     {
         Schema::create('emissions', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+
             $table->timestamps();
         });
     }

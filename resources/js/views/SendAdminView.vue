@@ -14,7 +14,7 @@
             tag="section"
           >
             <v-layout row wrap>
-              <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user['name'] }}</v-flex>
+              <!-- <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user['name'] }}</v-flex> -->
 
               <v-flex xs12 sm6 d-flex>
                 <v-select
@@ -29,58 +29,78 @@
         </v-card>
 
 
-    <v-toolbar flat color="success">
+    <v-toolbar flat color="main_green">
       <v-toolbar-title class="white--text">Administración de Declaraciones</v-toolbar-title>
     </v-toolbar>
 
+  
 
     <v-toolbar flat color="white">
         <v-toolbar-title></v-toolbar-title>
+            <template>
+              <v-row justify="center">
+                <v-dialog v-model="dialog3" scrollable max-width="350px">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="main_green" dark v-on="on">Cambiar Estado</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>Cambiar Estado</v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-text style="height: 150px;">
+                      <v-radio-group v-model="state" column>
+                        <v-radio label="Aceptada" value="ACEPTADA"></v-radio>
+                        <v-radio label="Rechazada" value="Rechazada"></v-radio>
+                        <v-radio label="Aceptada con Obs." value="Aceptada con Obs."></v-radio>
+                      </v-radio-group>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-btn color="main_green" dark @click="dialog3 = false">Cerrar</v-btn>
+                      <v-btn color="main_green" dark @click="changeState">Cambiar Estado</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
+            </template>
 
-
-            <router-link to="/">
-                <v-btn small color="success">
-                  <span>Cambiar estado</span>
-                </v-btn>
-            </router-link>
     </v-toolbar>
 
 
+
     <v-data-table
+      v-model="selected"
       :headers="headers"
-      :items="desserts"
+      :items="declarations"
       class="elevation-1"
+      item-key="declaration.id"
       hide-actions
     >
-      <template v-slot:items="props">
+      <template slot="items" slot-scope="props">
         <td>
         <v-checkbox
           v-model="props.selected"
           primary
           hide-details
+
         ></v-checkbox>
         </td>
-        <td class="text-xs-right">{{ props.item.type }}</td>
-        <td class="text-xs-right">{{ props.item.date }}</td>
-        <td class="text-xs-right">{{ props.item.region }}</td>
-        <td class="text-xs-right">{{ props.item.commune }}</td>
-        <td class="text-xs-right">{{ props.item.register_id }}</td>
-        <td class="text-xs-right">{{ props.item.establishment }}</td>
-        <td class="text-xs-right">{{ props.item.rut }}</td>
-        <td class="text-xs-right">{{ props.item.status }}</td>
-
+        <td class="text-xs-right">{{ props.item.declaration.id }}</td>
+        <td class="text-xs-right">{{ props.item.declaration.period }}</td>
+        <td class="text-xs-right">{{ props.item.declaration.type }}</td>
+        <td class="text-xs-right">{{ props.item.company.rut }}-{{ props.item.company.digit }}</td>
+        <td class="text-xs-right">{{ props.item.establishment.name }}</td>
+        <td class="text-xs-right">{{ props.item.commune.name }}</td>
+<!--         <td class="text-xs-right">{{ props.item.establishment.region.name }}</td>  -->
+        <td class="text-xs-right">{{ props.item.declaration.created_at}}</td>
+        <td class="text-xs-right">{{ props.item.declaration.state }}</td>
         <td class="justify-center layout px-0"> 
-            <v-btn small @click="" color="success">Bitacora</v-btn>
+            <v-btn small @click="toBinnacle(props.item.declaration)" dark color="main_green">Bitacora</v-btn>
         </td>   
         
         <td class="text-xs-right">{{ props.item.source_count }}</td>
 
         <td class="justify-center layout px-0">
-            <v-btn  small @click="" color="success">PDF</v-btn>  
-
-            <v-btn small @click="" color="success">Analizar</v-btn>
-                  
-            <v-btn small @click="" color="success">Observaciones</v-btn>
+            <v-btn small @click="toComment(props.item.declaration)" dark color="main_green">Observaciones</v-btn>
         </td>   
 
       </template>
@@ -95,10 +115,17 @@
 </template>
 
 <script>
+  import Vue from 'vue';  
+  import BinnacleComponent  from './../components/BinnacleComponent';
+  import CommentComponent  from './../components/CommentComponent';
+
   export default {
     data: () => ({
         dialog: false,
         dialog2: false,
+        dialog3: false,
+        state:'ACEPTADA',
+        selected:[],
         region:'Todas',
         items: ['Todas',
         'I de Tarapacá (Capital: Iquique)',
@@ -118,36 +145,26 @@
         'XV de Arica y Parinacota (Capital: Arica)',
         'XVI del Ñuble (Capital: Chillán)',
         ],
-        headers: [
 
-            { text: 'Tipo', value: 'type' }, 
-            { text: 'Fecha', value: 'date' },            
-            { text: 'Región', value: 'region' },
-            { text: 'Comuna', value: 'commune' },
-            { text: 'Nro.Registro', value: 'register_id' },
+        headers: [
+            { text: ' ', value: 'type' }, 
+            { text: 'Nro.', value: 'type' }, 
+            { text: 'Periodo', value: 'date' },            
+            { text: 'Tipo', value: 'region' },
+            { text: 'Rut', value: 'commune' },
             { text: 'Establecimiento', value: 'stablishment' },
-            { text: 'Rut', value: 'rut' },
+            { text: 'Comuna', value: 'rut' },
+            { text: 'Región', value: 'rut' },
+            { text: 'Fecha', value: 'rut' },
             { text: 'Estado', value: 'status' },
-            { text: 'Bitacora', value: 'binnacle' },
-            { text: 'Fuentes', value: 'source_count' },
-            { text: 'Acciones', value: '' },
         ],
-      desserts: [],
-        company:{
-            name: 'Empresa Prueba',
-            rut: '76200200',
-            digit: '3',
-            stret: 'Moneda',
-            number: '920',
-            comune: 'Santiago Centro',
-        },
-        user:{
-            name:'Osvaldo Miranda',
-            email: 'omiranda@mma.gob.cl'
-        },
+        desserts: [],
+        declarations:[],
+
     }),
 
     computed: {
+
     },
 
 
@@ -157,42 +174,48 @@
 
     methods: {
       initialize () {
-        this.desserts = [
-            {
-                type: 'D.S 138',
-                date: '01/01/2017',
-                region: 'Región Metropolitana de Santiago',
-                commune: 'Quilicura',
-                register_id: 'EIND017412-2(5466569)',
-                establishment: 'SENSU CHILE S.A.',
-                rut: '96439654-9',
-                status: 'En Desarrollo',
-                source_count: 2
-            },
-            {
-                type: 'D.S 138',
-                date: '01/01/2018',
-                region: 'Región Metropolitana de Santiago',
-                commune: 'Quilicura',
-                register_id: 'EIND017412-2(5466569)',
-                establishment: 'SENSU CHILE S.A.',
-                rut: '96439654-9',
-                status: 'Enviada',
-                source_count: 12
-            },
-            {
-                type: 'D.S 138',
-                date: '01/01/2019',
-                region: 'Región Metropolitana de Santiago',
-                commune: 'Quilicura',
-                register_id: 'EIND017412-2(5466569)',
-                establishment: 'SENSU CHILE S.A.',
-                rut: '96439654-9',
-                status: 'Rechada',
-                source_count: 5
-            },
-        ]
+        var app = this;
+        axios.get('/api/declarationswith?establishment_id=1')
+            .then(function (resp) {    
+                app.declarations = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
       },
+      toBinnacle (a){
+            this.dialog = false;
+            var Graphics = Vue.extend(BinnacleComponent)
+            var instance = new Graphics({store: this.$store, propsData: {
+            declaration: a,
+             
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
+      toComment (a){
+            this.dialog = false;
+            var Graphics = Vue.extend(CommentComponent)
+            var instance = new Graphics({store: this.$store, propsData: {
+            declaration: a,
+             
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
+        changeState (){
+            var app = this;
+            axios.post('/api/declarations/change?establishment_id=1&state='+this.state+'&declarations='+JSON.stringify(this.selected))
+                .then(function (resp) {    
+                    app.declarations = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+
+        }
     }
   }
 </script>
