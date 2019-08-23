@@ -132,16 +132,16 @@
         axios.get('/api/set_user')
             .then(function (resp) {
 
-              app.$store.commit('changeUser',resp.data[0]['user']);
-              app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
+              // app.$store.commit('changeUser',resp.data[0]['user']);
+              // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
               
 
-              alert(JSON.stringify(app.$store.getters.establishment));
+              // alert(JSON.stringify(app.$store.getters.establishment));
 
             })
             .catch(function (resp) {
                 console.log(resp);
-                alert("Could not load data :" + resp);
+                //alert("Could not load data :" + resp);
             });   
       }
   	}
