@@ -5,18 +5,66 @@
         <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
       </template> -->
       <v-card class="px-4">
-        <v-toolbar dark color="primary">
+        <v-toolbar dark color="main_green">
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>Calculo factores de emisión</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
+            <!-- <v-btn dark color="main_green" text @click="dialog = false">Guardar</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
 
 
+        <v-layout>
+
+            <template>
+              <v-carousel
+                cycle
+                height="400"
+                hide-delimiter-background
+                show-arrows-on-hover
+              >
+                <v-carousel-item
+                  v-for="(slide, i) in slides"
+                  :key="i"
+                >
+                  <v-sheet
+                    :color="colors[i]"
+                    height="100%"
+                  >
+                    <v-row
+                      class="fill-height"
+                      align="center"
+                      justify="center"
+                    >
+                      <div>
+                          <v-layout row>
+                            <v-flex xs2>
+                            </v-flex>
+                            <v-flex xs5 class="px-2">
+                                <p>CO2</p>
+                                <apexcharts palette="palette7" width="400"  type="bar" :options="chartOptions" :series="series"></apexcharts>
+                            </v-flex>
+
+                            <v-flex xs5 class="px-2">
+                                <p>CH4</p>
+                                <apexcharts width="400" heigth="500" type="bar" :options="chartOptions" :series="series"></apexcharts>
+                            </v-flex>
+                        </v-layout>    
+                      </div>
+                    </v-row>
+                  </v-sheet>
+                </v-carousel-item>
+              </v-carousel>
+            </template>
+
+          
+        </v-layout>
+
+
+<!-- 
             <v-layout row>
 
                 <v-flex xs3 class="px-2">
@@ -68,7 +116,7 @@
                         <p>NOx</p>
                         <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
                     </v-flex>
-            </v-layout>   
+            </v-layout>   --> 
 
 
             <v-layout row>
@@ -179,7 +227,7 @@
               <span>Cancelar</span>
             </v-btn>
 
-            <v-btn @click="changeState" color="success">
+            <v-btn @click="changeState" dark color="main_green">
               <span>Enviar a la Autoridad</span>
             </v-btn>
       
@@ -203,6 +251,24 @@
 
     data () {
       return {
+
+        colors: [
+          'white',
+          'white',
+          'white',
+          'white',
+          'white',
+        ],
+        slides: [
+          'First',
+          'Second',
+          'Third',
+          'Fourth',
+          'Fifth',
+        ],
+
+
+
         dialog: true,
         energy:[],
         geneal:[],
@@ -279,7 +345,7 @@
                 .then(function (resp) {    
                     app.energy = resp.data;
 
-                    alert(JSON.stringify(resp.data));
+                   // alert(JSON.stringify(resp.data));
                 })
                 .catch(function (resp) {
                     console.log(resp);

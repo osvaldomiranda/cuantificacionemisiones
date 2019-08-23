@@ -60,7 +60,7 @@
                 .then(function (resp) {
                     app.requisitions = resp.data
 
-                    alert(JSON.stringify(resp.data));
+                  //  alert(JSON.stringify(resp.data));
                     
                 })
                 .catch(function (resp) {
@@ -83,11 +83,11 @@
                         {'<>':'span','html':'${name} (${age})'}
                     ]};
 
-            alert(JSON.stringify(item));        
+            //alert(JSON.stringify(item));        
 
             this.requis =  json2html(item,transform);        
 
-            alert(requis);
+            //alert(requis);
         } 
     }        
   }

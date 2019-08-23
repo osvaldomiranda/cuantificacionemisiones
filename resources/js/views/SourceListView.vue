@@ -440,7 +440,7 @@
             this.dialog = false;
             var Graphics = Vue.extend(FactorsComponent)
             var instance = new Graphics({store: this.$store, propsData: {
-            declaration_id: 2,
+            declaration_id: this.declaration.id,
              
           }});
             instance.$mount();

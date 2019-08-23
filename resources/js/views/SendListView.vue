@@ -13,7 +13,7 @@
     <v-layout>
 
 
-        <v-flex xs8> 
+        <v-flex xs12> 
 
             
             <v-card  color="main_green" style="border-radius:0px;">
@@ -64,7 +64,7 @@
             </v-layout>
 
         </v-flex>
-        <v-flex xs4 class="px-1"> 
+<!--         <v-flex xs4 class="px-1"> 
             <v-card color="main_green" style="border-radius:0px;">
                 <v-card-title class="mx-2 white--text" style="padding: 10px;">
                     <h5 style="font: #FFF">DATOS DEL ESTABLECIMIENTO</h5>
@@ -78,14 +78,14 @@
                 tag="section"
               >
                 <v-layout row wrap>
-              <!-- <v-flex xs6 tag="h4" >{{ JSON.stringify(this.$store.getters.token) }}</v-flex> -->
+              <v-flex xs6 tag="h4" >{{ JSON.stringify(this.$store.getters.token) }}</v-flex>
                   <v-flex xs6 tag="h4" >Usuario: {{ $store.getters.user['name'] }}</v-flex>
                   <v-flex xs6 tag="h4" >Establecimiento: {{ $store.getters.establishment['name'] }}</v-flex>
                 </v-layout>
                 
               </v-container>
             </v-card>     
-        </v-flex>
+        </v-flex> -->
 
     <div ref="container">
     </div>   
@@ -171,7 +171,7 @@
       toDeclaration (a){
             var Graphics = Vue.extend(SourceList)
             var instance = new Graphics({store: this.$store, propsData: {
-            declaration_id: a.id,
+            declaration: a,
           }});
             instance.$mount();
             this.$refs.container.appendChild(instance.$el);

@@ -133,7 +133,7 @@
             .then(function (resp) {
 
               app.$store.commit('changeUser',resp.data[0]['user']);
-              //app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
+              app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
               
 
               alert(JSON.stringify(app.$store.getters.establishment));

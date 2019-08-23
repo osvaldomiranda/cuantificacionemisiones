@@ -94,6 +94,9 @@ class SourceController extends Controller
 
     public function factorsByProcess(Request $request){
 
+
+        Info($request);
+
         $process = $request->input('process');
         $declaration = $request->input('declaration');
         $establishment_id = $request->input('establishment_id'); 
@@ -117,20 +120,33 @@ class SourceController extends Controller
                                 $consumption->sec_jul + $consumption->sec_aug + $consumption->sec_sep+
                                 $consumption->sec_oct + $consumption->sec_nov + $consumption->sec_dic;
             } else {
-                 $sumPrimary = 0;
-                 $sumSecondary = 0;
+                 $sumPrimary = 12;
+                 $sumSecondary = 12;
             }
 
-            $factorsPrimaryCO2  = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryCO   = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryME   = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryNOX  = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryNO   = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryPM   = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryPM10 = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimaryPM25 = Factor::where('ccf8',$source->ccf8)->get()->first();
-            $factorsPrimarySOX  = Factor::where('ccf8',$source->ccf8)->get()->first();
+
+            $factorsPrimaryCO2  = rand(1,100)/100;
+            $factorsPrimaryCO   = rand(1,100)/100;
+            $factorsPrimaryME   = rand(1,100)/100;
+            $factorsPrimaryNOX  = rand(1,100)/100;
+            $factorsPrimaryNO   = rand(1,100)/100;
+            $factorsPrimaryPM   = rand(1,100)/100;
+            $factorsPrimaryPM10 = rand(1,100)/100;
+            $factorsPrimaryPM25 = rand(1,100)/100;
+            $factorsPrimarySOX  = rand(1,100)/100;
+
+            Info('CO2');
+            Info($factorsPrimaryCO2);
             
+            // $factorsPrimaryCO2  = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryCO   = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryME   = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryNOX  = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryNO   = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryPM   = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryPM10 = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimaryPM25 = Factor::where('ccf8',$source->ccf8)->get()->first();
+            // $factorsPrimarySOX  = Factor::where('ccf8',$source->ccf8)->get()->first();
             
             $sourceArray[$incI]['source_type'] = $source->source_type;
             $sourceArray[$incI]['source_type_name'] = $source->source_type_name;
@@ -138,45 +154,35 @@ class SourceController extends Controller
             $sourceArray[$incI]['consumption'] = $sumPrimary;
             $sourceArray[$incI]['unity'] = $source->nominal_consume_unity;
 
-            $sourceArray[$incI]['CO2']  = number_format((float)$factorsPrimaryCO2->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['CO']   = number_format((float)$factorsPrimaryCO->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['ME']   = number_format((float)$factorsPrimaryME->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['NOX']  = number_format((float)$factorsPrimaryNOX->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['NO']   = number_format((float)$factorsPrimaryNO->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['PM']   = number_format((float)$factorsPrimaryPM->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['PM10'] = number_format((float)$factorsPrimaryPM10->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['PM25'] = number_format((float)$factorsPrimaryPM25->factor * $sumPrimary, 2, '.', '');
-            $sourceArray[$incI]['SOX']  = number_format((float)$factorsPrimarySOX->factor * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['CO2']  = number_format((float)$factorsPrimaryCO2 * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['CO']   = number_format((float)$factorsPrimaryCO * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['ME']   = number_format((float)$factorsPrimaryME * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['NOX']  = number_format((float)$factorsPrimaryNOX * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['NO']   = number_format((float)$factorsPrimaryNO * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['PM']   = number_format((float)$factorsPrimaryPM * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['PM10'] = number_format((float)$factorsPrimaryPM10 * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['PM25'] = number_format((float)$factorsPrimaryPM25 * $sumPrimary, 2, '.', '');
+            $sourceArray[$incI]['SOX']  = number_format((float)$factorsPrimarySOX * $sumPrimary, 2, '.', '');
 
             $incI++;
 
            
             if($source->ccf8_secondary){
-                $factorsPrimaryCO2  = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryCO   = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryME   = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryNOX  = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryNO   = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryPM   = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryPM10 = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimaryPM25 = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                $factorsPrimarySOX  = Factor::where('ccf8',$source->ccf8_secondary)->get()->first();
-                
                 
                 $sourceArray[$incI]['source_type'] = $source->source_type;
                 $sourceArray[$incI]['fuel'] = $source->primary_fuel_name;
                 $sourceArray[$incI]['consumption'] = $sumSecondary;
                 $sourceArray[$incI]['unity'] = $source->nominal_consume_unity;
 
-                $sourceArray[$incI]['CO2']  = number_format((float)$factorsPrimaryCO2->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['CO']   = number_format((float)$factorsPrimaryCO->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['ME']   = number_format((float)$factorsPrimaryME->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['NOX']  = number_format((float)$factorsPrimaryNOX->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['NO']   = number_format((float)$factorsPrimaryNO->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['PM']   = number_format((float)$factorsPrimaryPM->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['PM10'] = number_format((float)$factorsPrimaryPM10->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['PM25'] = number_format((float)$factorsPrimaryPM25->factor * $sumSecondary, 2, '.', '');
-                $sourceArray[$incI]['SOX']  = number_format((float)$factorsPrimarySOX->factor * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['CO2']  = number_format((float)$factorsPrimaryCO2 * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['CO']   = number_format((float)$factorsPrimaryCO * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['ME']   = number_format((float)$factorsPrimaryME * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['NOX']  = number_format((float)$factorsPrimaryNOX * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['NO']   = number_format((float)$factorsPrimaryNO * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['PM']   = number_format((float)$factorsPrimaryPM * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['PM10'] = number_format((float)$factorsPrimaryPM10 * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['PM25'] = number_format((float)$factorsPrimaryPM25 * $sumSecondary, 2, '.', '');
+                $sourceArray[$incI]['SOX']  = number_format((float)$factorsPrimarySOX * $sumSecondary, 2, '.', '');
                 $incI++;
             }
 
@@ -201,12 +207,12 @@ class SourceController extends Controller
     public function refresh(){
         //  http://10.100.2.48:8081/api/source/get_sources/1
         $establishment_id = '1';
+
+
         $client = new Client();
         $res = $client->get("http://10.100.2.48:8081/api/source/get_sources/" . $establishment_id );
 
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
-
-
       
         foreach($jsonData as $data){
             $this->create_source($data);

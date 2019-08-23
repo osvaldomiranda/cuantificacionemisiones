@@ -89,7 +89,7 @@
       },
 
       createComment (){
-        alert("CREATE");
+        //alert("CREATE");
         var app = this;
         axios.post('/api/comment/create?declaration_id=' + app.declaration.id+'&comment='+app.comment)
             .then(function (resp) {    

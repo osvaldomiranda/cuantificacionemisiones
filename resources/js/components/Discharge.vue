@@ -250,7 +250,7 @@ body {
         }
       })
       .then(function (resp) {
-          alert("respuesta "+JSON.stringify(resp.data));
+          //alert("respuesta "+JSON.stringify(resp.data));
           //var xmlText = req.getText();
           if (resp.data.length!=0){
             var xmlText = resp.data[0]["data"];
