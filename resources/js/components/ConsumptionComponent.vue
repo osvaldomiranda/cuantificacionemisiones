@@ -9,7 +9,7 @@
           			<v-toolbar-title>Registrar consumos y niveles de actividad</v-toolbar-title>
           			<v-spacer></v-spacer>
           			<v-toolbar-items>
-            			<v-btn flat color="main_green" @click="save_all">Guardar</v-btn>
+            			<v-btn dark flat color="main_green" @click="save_all">Guardar</v-btn>
           			</v-toolbar-items>
         		</v-toolbar>
  				<br>
@@ -335,6 +335,7 @@
 
 
 <script>
+  import {EventBus}  from './../eventbus.js';
   export default {
   	props: {
   		source: Object
@@ -402,10 +403,9 @@
     },
 
     methods: {
+
       	initialize () {
       		var app = this;
-
-
 
             axios.get('/api/consumption/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
                 .then(function (resp) { 
@@ -476,9 +476,10 @@
 	        this.paralizations.push(item);
 	    },
 	    save_all (){
+
 	    	this.dialog = false;
 	    	var app = this;
-	    	// Guardar consumo
+
 	    	var consumos = {
 			            'source_id': this.source.id,
 			            'declaration_id': 1,
@@ -539,16 +540,18 @@
 					console.log(error);
 				});
 
-
-
 	    	// Guardar paralización
 	    	axios.post('/api/paralization/save', this.paralizations)
 				.then(response => {
-					
+	    			EventBus.$emit('clickedChild', 'someValue');
 				}).catch(error => {
 					alert("ERROR save paralizacion " + error)
 					console.log(error);
 				});
+
+
+
+
 	    }
 
     }

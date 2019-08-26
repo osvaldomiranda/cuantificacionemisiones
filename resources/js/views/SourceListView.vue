@@ -230,7 +230,7 @@
   import Vue from 'vue';  
   import ConsumptionComponent  from './../components/ConsumptionComponent';
   import FactorsComponent  from './../components/FactorsComponent';
-
+  import { EventBus } from './../eventbus.js';
 
   export default {
     props: {
@@ -338,13 +338,18 @@
     },
 
     created () {
-      this.initialize()
+        var app = this;
+        this.initialize();
+
+        EventBus.$on('clickedChild', function(){    
+            app.initialize();
+        });
     },
 
     methods: {
         initialize () {
-            var app = this;
 
+            var app = this;
             axios.get('/api/sources/byprocess?process=ENERGY')
                 .then(function (resp) {    
                     app.energy = resp.data;
@@ -352,8 +357,7 @@
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
-                });
-
+                });   
             axios.get('/api/sources/byprocess?process=GENERAL_USE')
                 .then(function (resp) {   
                     app.general = resp.data;
@@ -361,8 +365,7 @@
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
-                });
-
+                });  
             axios.get('/api/sources/byprocess?process=PDA')
                 .then(function (resp) {    
                     app.pda = resp.data;

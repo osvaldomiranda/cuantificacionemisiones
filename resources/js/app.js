@@ -103,6 +103,7 @@ const app = new Vue({
     store,
     router: router,
     created () {
+
         let token_vu = document.head.querySelector('meta[name="token"]');
 
         if (token_vu.content){
