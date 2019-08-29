@@ -35,13 +35,16 @@
                 <td class="text-xs-right">{{ props.item.created_at }}</td>
                 <td class="text-xs-right">{{ props.item.state }}</td>
                 <td class="justify-center layout px-0">
-   
-
-                    <v-btn flat @click='toDeclaration(props.item)' small color="side_bar_gray">
+                    <v-btn v-if="props.item.type=='MEDICION'" flat @click='toReading(props.item)' small color="side_bar_gray">
                         Editar
                         <v-icon color="side_bar_gray" right dark>edit</v-icon>
                     </v-btn>
-                      
+
+                    <v-btn v-if="props.item.type=='DS138'" flat @click='toDeclaration(props.item)' small color="side_bar_gray">
+                        Editar
+                        <v-icon color="side_bar_gray" right dark>edit</v-icon>
+                    </v-btn>
+        
                 </td>   
 
               </template>
@@ -53,9 +56,7 @@
                 </v-flex>
                
                 <v-flex xs4 class="px-4">  
-                    <router-link  to="/readings">
-                        <v-btn round color="main_green" class="white--text px-4">Registrar Mediciones</v-btn>
-                    </router-link>    
+                    <v-btn @click='newReading' round color="main_green" class="white--text px-4">Registrar Mediciones</v-btn>
                 </v-flex>
                 <v-flex xs4 class="px-4">
                     <covs></covs>      
@@ -96,6 +97,7 @@
 <script>
   import Vue from 'vue'; 
   import SourceList  from './../views/SourceListView';
+  import Readings  from './../components/ReadingsComponent';
   export default {
     data: () => ({
         dialog: false,
@@ -135,7 +137,7 @@
 
         var app = this;
 
-        axios.get('/api/declarations?establishment_id=1')
+        axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment)
             .then(function (resp) {    
                 app.declarations = resp.data;
             })
@@ -149,7 +151,29 @@
       new138(){
         var app = this;
 
-        axios.post('/api/declaration/new?establishment_id=1&type=DS138')
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=DS138')
+            .then(function (resp) {    
+                app.declaration = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
+        axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment)
+            .then(function (resp) {    
+                app.declarations = resp.data;
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Error sources/refresh :" + resp);
+            });
+
+      },
+      newReading(){
+        var app = this;
+
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=MEDICION')
             .then(function (resp) {    
                 app.declaration = resp.data;
             })
@@ -169,8 +193,17 @@
 
       },
       toDeclaration (a){
-            var Graphics = Vue.extend(SourceList)
-            var instance = new Graphics({store: this.$store, propsData: {
+        var Graphics = Vue.extend(SourceList)
+        var instance = new Graphics({store: this.$store, propsData: {
+            declaration: a,
+        }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
+
+      toReading (a){
+            var ReadingsDialog = Vue.extend(Readings)
+            var instance = new ReadingsDialog({store: this.$store, propsData: {
             declaration: a,
           }});
             instance.$mount();

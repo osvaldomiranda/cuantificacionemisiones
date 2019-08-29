@@ -114,7 +114,7 @@ class DeclarationController extends Controller
         $establishment_id = $request->input('establishment_id');
         $type = $request->input('type');
 
-        $declaration = Declaration::where('establishment_id', $establishment_id)->where('state', 'ACTIVA')->first();
+        $declaration = Declaration::where('establishment_id', $establishment_id)->where('type', $type)->where('state', 'ACTIVA')->first();
         if(!$declaration){
             $declaration = new Declaration();
             $declaration->establishment_id = $establishment_id;
@@ -125,11 +125,10 @@ class DeclarationController extends Controller
             $declaration->save();
 
             $binnacle = new Binnacle();
-            $binnacle->declaration_id = $declaration_id;
+            $binnacle->declaration_id = $declaration->id;
             $binnacle->new_state =  'ACTIVA';
             $binnacle->user_id = 1;
             $binnacle->save();
-
         }
 
         return response()->json($declaration); 
@@ -154,7 +153,7 @@ class DeclarationController extends Controller
 
     public function changeStates(Request $request){
 
-        Info($request);
+        // Info($request);
 
         // $declaration_id = $request->input('declaration_id');
         // $new_state = $request->input('new_state');

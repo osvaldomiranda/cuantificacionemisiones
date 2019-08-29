@@ -6,24 +6,14 @@
           			<v-btn icon dark @click="dialog = false">
             			<v-icon>close</v-icon>
           			</v-btn>
-          			<v-toolbar-title>Registrar consumos y niveles de actividad</v-toolbar-title>
+          			<v-toolbar-title>{{ this.source.source_type_name }}  Nro.Interno:{{this.source.internal_number}}</v-toolbar-title>
           			<v-spacer></v-spacer>
           			<v-toolbar-items>
-            			<v-btn dark flat color="main_green" @click="save_all">Guardar</v-btn>
+            			<v-btn flat class='white--text' @click="save_all">Guardar</v-btn>
           			</v-toolbar-items>
         		</v-toolbar>
  				<br>
 				<v-container>
-
-
-				<v-card class="px-5">
-					<br>
-					<v-layout>
-		                <span  class="title">{{ this.source.source_type_name }}</span>
-		            </v-layout>
-		            <br>
-		        </v-card>
-		        <br>
 				  
 				
 				<v-card class="px-5">

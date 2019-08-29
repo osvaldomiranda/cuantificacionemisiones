@@ -9,7 +9,7 @@
                     <v-toolbar-title>Registrar consumos y niveles de actividad</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn flat color="main_green" @click="save_all">Guardar</v-btn>
+                        <v-btn flat class="white--text"  @click="save_all">Guardar</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <br>
