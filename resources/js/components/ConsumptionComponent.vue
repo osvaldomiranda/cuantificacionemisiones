@@ -1,8 +1,8 @@
 <template>
   	<v-layout row>
     	<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-      		<v-card>
-        		<v-toolbar dark color="main_green">
+      		<v-card color="#EEEEEE">
+        		<v-toolbar dark color="ds_138">
           			<v-btn icon dark @click="dialog = false">
             			<v-icon>close</v-icon>
           			</v-btn>

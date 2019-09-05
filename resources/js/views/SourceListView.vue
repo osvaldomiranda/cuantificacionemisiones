@@ -1,8 +1,8 @@
 <template>
     <v-layout row>
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-            <v-card>
-                <v-toolbar dark color="main_green">
+            <v-card color="#EEEEEE">
+                <v-toolbar dark color="ds_138">
                     <v-btn icon dark @click="dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
@@ -79,7 +79,7 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="red" dark>Registrar Consumo</v-btn>
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
  
              <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
         </td>   
@@ -97,9 +97,9 @@
     <v-toolbar v-if="energy.length > 0" color="main_green" dark>
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
-        
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
-        
+        <v-spacer></v-spacer> 
+        <v-btn color="secondary_green" @click='toProduction' >Registrar Prodiucción</v-btn>
     </v-toolbar>
 
 
@@ -118,7 +118,7 @@
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
 
         <td 
-            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="red" dark>Registrar Consumo</v-btn>
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
  
              <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
         </td>   
@@ -142,7 +142,7 @@
     <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
         <v-toolbar-title>Producción de Celulosa</v-toolbar-title>
         <v-spacer></v-spacer>
-        <production></production>
+        <v-btn @click='toProduction' color="secondary_green">Registrar Produción</v-btn>>
     </v-toolbar>
 
 
@@ -160,7 +160,7 @@
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="justify-center layout px-0">
-                <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
+                <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
                 <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
                 > Registrado
                 <v-icon right>check</v-icon>
@@ -194,7 +194,7 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="main_green" dark>Registrar Consumo</v-btn>
+            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
             <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
             > Registrado
               <v-icon right>check</v-icon>
@@ -230,6 +230,7 @@
   import Vue from 'vue';  
   import ConsumptionComponent  from './../components/ConsumptionComponent';
   import FactorsComponent  from './../components/FactorsComponent';
+  import ProductionComponent  from './../components/ProductionComponent';
   import { EventBus } from './../eventbus.js';
 
   export default {
@@ -443,8 +444,17 @@
             this.dialog = false;
             var Graphics = Vue.extend(FactorsComponent)
             var instance = new Graphics({store: this.$store, propsData: {
-            declaration_id: this.declaration.id,
+            declaration: this.declaration,
              
+          }});
+            instance.$mount();
+            this.$refs.container.appendChild(instance.$el);
+        },
+        toProduction (){
+            this.dialog = false;
+            var Graphics = Vue.extend(ProductionComponent)
+            var instance = new Graphics({store: this.$store, propsData: {
+            declaration: this.declaration,
           }});
             instance.$mount();
             this.$refs.container.appendChild(instance.$el);

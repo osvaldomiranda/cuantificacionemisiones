@@ -17,14 +17,16 @@
         </v-toolbar>
 
 
+        <v-container>
+
         <v-layout>
 
             <template>
               <v-carousel
-                cycle
-                height="400"
-                hide-delimiter-background
-                show-arrows-on-hover
+                  cycle
+                  height="400"
+                  hide-delimiters='false'
+                  show-arrows-on-hover
               >
                 <v-carousel-item
                   v-for="(slide, i) in slides"
@@ -63,74 +65,18 @@
           
         </v-layout>
 
+        <br>
+        <br>
+        <v-layout row>
+            <v-flex xs12 class="px-4">
+                <span class="headline">Detalle de Emisiones</span>
+            </v-flex>
 
-<!-- 
-            <v-layout row>
-
-                <v-flex xs3 class="px-2">
-                    <p>CO2</p>
-                    <apexcharts width="250" heigth="500" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                </v-flex>
-
-                <v-flex xs3 class="px-2">
-                    <p>CH4</p>
-                    <apexcharts width="250" heigth="500" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                </v-flex>
-
-                <v-flex xs3 class="px-2">
-                    <p>N2O</p>
-                    <apexcharts width="250" heigth="500" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                </v-flex>
-                <v-flex xs3 class="px-2">
-                    <p>N2O</p>
-                    <apexcharts width="250" heigth="500" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                </v-flex>
-
-            </v-layout> 
-
-                
-            <v-layout row>
-                    <v-flex xs1>
-                      
-                    </v-flex>>
-                    
-                    <v-flex xs2 class="px-2">
-                        <p>MP10</p>
-                        <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                    </v-flex>
-
-                    <v-flex xs2 class="px-2">
-                        <p>MP2.5</p>
-                        <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                    </v-flex>
-
-                    <v-flex xs2 class="px-2">
-                        <p>SO2</p>
-                        <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                    </v-flex>
-                    <v-flex xs2 class="px-2">
-                        <p>NOx</p>
-                        <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                    </v-flex>
-                    <v-flex xs2 class="px-2">
-                        <p>NOx</p>
-                        <apexcharts width="200" type="bar" :options="chartOptions" :series="series"></apexcharts>
-                    </v-flex>
-            </v-layout>   --> 
-
-
-            <v-layout row>
-
-                <v-flex xs12 class="px-4">
-                    <span class="headline">Detalle de Emisiones</span>
-                </v-flex>
-                
-
-                <v-flex xs12>
-                    <v-toolbar flat>
-                        <v-toolbar-title>Fuentes de uso general</v-toolbar-title>
-                    </v-toolbar>
-                </v-flex>    
+            <v-flex xs12>
+                <v-toolbar flat>
+                    <v-toolbar-title>Fuentes de uso general</v-toolbar-title>
+                </v-toolbar>
+            </v-flex>    
                 <v-flex xs12>
                     <v-data-table
                       :headers="headers"
@@ -156,7 +102,7 @@
                 </v-flex>     
             </v-layout>
 
-
+            <br>
             <v-layout row>
                 <v-flex xs12>
                     <v-toolbar flat>
@@ -189,7 +135,7 @@
             </v-layout>
 
 
-
+            <br>
             <v-layout row>
                 <v-toolbar flat>
                         <v-toolbar-title>Proceso Cementera</v-toolbar-title> 
@@ -223,16 +169,15 @@
 
         </v-card-text>
 
-            <v-btn @click="dialog = false" color="warning">
-              <span>Cancelar</span>
-            </v-btn>
+        <v-btn @click="dialog = false" color="warning">
+            <span>Cancelar</span>
+        </v-btn>
 
-            <v-btn @click="changeState" dark color="main_green">
-              <span>Enviar a la Autoridad</span>
-            </v-btn>
-      
-
-
+        <v-btn @click="changeState" dark color="main_green">
+            <span>Enviar a la Autoridad</span>
+        </v-btn>
+    
+        </v-container>  
 
       </v-card>
     </v-dialog>
@@ -246,28 +191,22 @@
       apexcharts: VueApexCharts,
     },
     props: {
-        declaration_id: 0
+        declaration: Object
     },
 
     data () {
       return {
 
         colors: [
-          'white',
-          'white',
-          'white',
-          'white',
-          'white',
+          'seconday_gray',
+          'seconday_gray',
+          'seconday_gray',
         ],
         slides: [
           'First',
           'Second',
           'Third',
-          'Fourth',
-          'Fifth',
         ],
-
-
 
         dialog: true,
         energy:[],
@@ -318,7 +257,6 @@
           },
           fill: {
             opacity: 1
-
           },
           tooltip: {
             y: {
@@ -341,7 +279,7 @@
         initialize () {
             var app = this;
 
-            axios.get('/api/factors/byprocess?process=ENERGY&declaration='+app.declaration_id+'&establishment_id=1')
+            axios.get('/api/factors/byprocess?process=ENERGY&declaration='+app.declaration.id+'&establishment_id=1')
                 .then(function (resp) {    
                     app.energy = resp.data;
 
@@ -352,7 +290,7 @@
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('/api/factors/byprocess?process=GENERAL_USE&declaration='+app.declaration_id+'&establishment_id=1')
+            axios.get('/api/factors/byprocess?process=GENERAL_USE&declaration='+app.declaration.id+'&establishment_id=1')
                 .then(function (resp) {   
                     app.general = resp.data;
                     alert(JSON.stringify(resp.data));
@@ -362,7 +300,7 @@
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('/api/factors/byprocess?process=PDA&declaration='+app.declaration_id+'&establishment_id=1')
+            axios.get('/api/factors/byprocess?process=PDA&declaration='+app.declaration.id+'&establishment_id=1')
                 .then(function (resp) {    
                     app.pda = resp.data;
                 })
@@ -375,7 +313,7 @@
 
         changeState(){
             var app = this;
-            axios.post('/api/declaration/change?declaration_id='+app.declaration_id+'&new_state=ENVIADA')
+            axios.post('/api/declaration/change?declaration_id='+app.declaration.id+'&new_state=ENVIADA')
                 .then(function (resp) {    
                     app.pda = resp.data;
                 })

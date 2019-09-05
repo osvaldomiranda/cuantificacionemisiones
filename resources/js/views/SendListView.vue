@@ -30,10 +30,10 @@
             >
               <template v-slot:items="props">
 
-                <td class="text-xs-right">{{ props.item.period }}</td>
-                <td class="text-xs-right">{{ props.item.type }}</td>
-                <td class="text-xs-right">{{ props.item.created_at }}</td>
-                <td class="text-xs-right">{{ props.item.state }}</td>
+                <td class="text-xs-left">{{ props.item.period }}</td>
+                <td class="text-xs-left">{{ props.item.type }}</td>
+                <td class="text-xs-left">{{ props.item.created_at }}</td>
+                <td class="text-xs-left">{{ props.item.state }}</td>
                 <td class="justify-center layout px-0">
                     <v-btn v-if="props.item.type=='MEDICION'" flat @click='toReading(props.item)' small color="side_bar_gray">
                         Editar
@@ -45,6 +45,11 @@
                         <v-icon color="side_bar_gray" right dark>edit</v-icon>
                     </v-btn>
         
+                    <v-btn v-if="props.item.type=='COVS'" flat @click='toCovs(props.item)' small color="side_bar_gray">
+                        Editar
+                        <v-icon color="side_bar_gray" right dark>edit</v-icon>
+                    </v-btn>
+
                 </td>   
 
               </template>
@@ -59,7 +64,7 @@
                     <v-btn @click='newReading' round color="main_green" class="white--text px-4">Registrar Mediciones</v-btn>
                 </v-flex>
                 <v-flex xs4 class="px-4">
-                    <covs></covs>      
+                    <v-btn @click='newCovs' round color="main_green" class="white--text px-4">Registrar Covs</v-btn>   
                 </v-flex>
 
             </v-layout>
@@ -98,6 +103,7 @@
   import Vue from 'vue'; 
   import SourceList  from './../views/SourceListView';
   import Readings  from './../components/ReadingsComponent';
+  import Covs  from './../components/CovsComponent';
   export default {
     data: () => ({
         dialog: false,
@@ -160,14 +166,8 @@
                 alert("Error sources/refresh :" + resp);
             });
 
-        axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment)
-            .then(function (resp) {    
-                app.declarations = resp.data;
-            })
-            .catch(function (resp) {
-                console.log(resp);
-                alert("Error sources/refresh :" + resp);
-            });
+            this.initialize();
+
 
       },
       newReading(){
@@ -182,14 +182,22 @@
                 alert("Error sources/refresh :" + resp);
             });
 
-        axios.get('/api/declarations?establishment_id=1')
+            this.initialize();
+
+      },
+      newCovs(){
+        var app = this;
+
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=COVS')
             .then(function (resp) {    
-                app.declarations = resp.data;
+                app.declaration = resp.data;
             })
             .catch(function (resp) {
                 console.log(resp);
                 alert("Error sources/refresh :" + resp);
             });
+
+            this.initialize();
 
       },
       toDeclaration (a){
@@ -198,7 +206,7 @@
             declaration: a,
         }});
             instance.$mount();
-            this.$refs.container.appendChild(instance.$el);
+            this.$refs.container.replaceChild(instance.$el);
         },
 
       toReading (a){
@@ -207,7 +215,15 @@
             declaration: a,
           }});
             instance.$mount();
-            this.$refs.container.appendChild(instance.$el);
+            this.$refs.container.replaceChild(instance.$el);
+        },
+      toCovs (a){
+            var ReadingsDialog = Vue.extend(Covs)
+            var instance = new ReadingsDialog({store: this.$store, propsData: {
+            declaration: a,
+          }});
+            instance.$mount();
+            this.$refs.container.replaceChild(instance.$el);
         },
     }
   }

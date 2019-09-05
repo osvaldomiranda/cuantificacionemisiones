@@ -63,13 +63,27 @@ Route::get('/factors/byprocess','SourceController@factorsByProcess');
 Route::get('/binnacles','BinnacleController@index');
 Route::get('/comments','CommentController@index');
 Route::post('/comment/create','CommentController@create');
+Route::post('/reading/save', 'ReadingController@save');
 
+Route::get('/reading/bysource', 'ReadingController@bysource');
+Route::get('/run/bysource', 'RunController@bysource');
 
-	Route::get('/source_types', 'SourceTypes@index');
-	Route::get('/source_types/{type}', 'SourceTypes@getSourceByType');
-	Route::get('/source_type/{id}', 'SourceTypes@getSourceById');
-	Route::get('/source_types_fields/{sourceid}', 'SourceTypeFieldController@getFieldsBySource');
-	Route::get('/source_types/id_source/{sourceid}', 'SourceTypes@getIdSource');
-	Route::get('/source_types/sucessor/{sourceid}', 'SourceTypes@getSuccesors');
-	Route::get('/source_types/fuels/{id}','SourceTypes@getFuelBySource');
-	Route::get('/source_types/fieldsfuels/{id}','SourceTypes@getFieldsAndBurners');
+Route::get('/reading/bydecalration', 'ReadingController@index');
+// Route::get('/run/bydecalration', 'RunController@index');
+
+Route::post('/currentops/save', 'CurrentopController@save');
+Route::get('/currentops', 'CurrentopController@index');
+Route::get('/currentop/download', 'CurrentopController@downloadStorage');
+
+Route::post('/estimation/save', 'EstimationController@save');
+Route::get('/estimations', 'EstimationController@index');
+
+// para el diagrama de descarga
+Route::get('/source_types', 'SourceTypes@index');
+Route::get('/source_types/{type}', 'SourceTypes@getSourceByType');
+Route::get('/source_type/{id}', 'SourceTypes@getSourceById');
+Route::get('/source_types_fields/{sourceid}', 'SourceTypeFieldController@getFieldsBySource');
+Route::get('/source_types/id_source/{sourceid}', 'SourceTypes@getIdSource');
+Route::get('/source_types/sucessor/{sourceid}', 'SourceTypes@getSuccesors');
+Route::get('/source_types/fuels/{id}','SourceTypes@getFuelBySource');
+Route::get('/source_types/fieldsfuels/{id}','SourceTypes@getFieldsAndBurners');

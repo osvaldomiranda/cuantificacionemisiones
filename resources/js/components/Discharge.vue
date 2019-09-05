@@ -1058,7 +1058,8 @@ body {
               var valueKey = rec[key][key2]
               var needAction = false
               if (valueKey.hasOwnProperty("value")){
-                value = valueKey.value
+                value = valueKey.value.match(/<button(.*?)<\/button>/g)
+                value = valueKey.value.replace(value,"")
                 id = valueKey.id
               }
               if (valueKey.hasOwnProperty("style")){
@@ -1129,18 +1130,18 @@ body {
             ref.model.endUpdate();
             if (needAction){
              // all browsers except IE before version 9
-                (function(x){
-                  ca = document.getElementById(x.idHtmlCell)
-                  if (ca.addEventListener) {
-                  ca.addEventListener("click", function(){                     
-                    if (x.type == "CHIMENEA"){
-                      ref.openModalPipeSource(x.idCell)
-                    }else{
-                      ref.openModal(x.idCell,x)  
-                    }                      
-                  }, false); 
-                  } 
-                })(config)
+                // (function(x){
+                //   ca = document.getElementById(x.idHtmlCell)
+                //   if (ca.addEventListener) {
+                //   ca.addEventListener("click", function(){                     
+                //     if (x.type == "CHIMENEA"){
+                //       ref.openModalPipeSource(x.idCell)
+                //     }else{
+                //       ref.openModal(x.idCell,x)  
+                //     }                      
+                //   }, false); 
+                //   } 
+                // })(config)
               /*} else {
                 console.log("AÑADIR EVENTO x")
                 if (ca.attachEvent) {   // IE before version 9

@@ -95,7 +95,7 @@ class SourceController extends Controller
     public function factorsByProcess(Request $request){
 
 
-        Info($request);
+      //  Info($request);
 
         $process = $request->input('process');
         $declaration = $request->input('declaration');
@@ -135,8 +135,6 @@ class SourceController extends Controller
             $factorsPrimaryPM25 = rand(1,100)/100;
             $factorsPrimarySOX  = rand(1,100)/100;
 
-            Info('CO2');
-            Info($factorsPrimaryCO2);
             
             // $factorsPrimaryCO2  = Factor::where('ccf8',$source->ccf8)->get()->first();
             // $factorsPrimaryCO   = Factor::where('ccf8',$source->ccf8)->get()->first();
@@ -170,6 +168,7 @@ class SourceController extends Controller
             if($source->ccf8_secondary){
                 
                 $sourceArray[$incI]['source_type'] = $source->source_type;
+                $sourceArray[$incI]['source_type_name'] = $source->source_type_name . ' Secondaryfuel';
                 $sourceArray[$incI]['fuel'] = $source->primary_fuel_name;
                 $sourceArray[$incI]['consumption'] = $sumSecondary;
                 $sourceArray[$incI]['unity'] = $source->nominal_consume_unity;

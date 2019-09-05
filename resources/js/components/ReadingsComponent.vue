@@ -1,15 +1,15 @@
 <template>
     <v-layout row>
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-            <v-card>
-                <v-toolbar dark color="main_green">
+            <v-card color="#EEEEEE">
+                <v-toolbar dark color="readings">
                     <v-btn icon dark @click="dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
                     <v-toolbar-title>Registro de Mediciones</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn flat color="main_green" @click="save_all">Guardar</v-btn>
+                        <v-btn flat class="white--text" @click="save_all">Guardar</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <br>
@@ -77,7 +77,7 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn small @click="readingsClick(props.item)" color="red" dark>Registrar Mediciones</v-btn>
+            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
         </td>   
 
       </template>
@@ -95,6 +95,8 @@
         <v-spacer></v-spacer> 
         
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
+        <v-spacer></v-spacer> 
+        <v-btn @click="readingsProcess" color="secondary_green">Registrar Medición</v-btn>
         
     </v-toolbar>
 
@@ -113,7 +115,7 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td 
-            <v-btn  small @click="consumptionClick(props.item)" color="red" dark>Registrar Mediciones</v-btn>
+            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
         </td>   
       </template>
     </v-data-table>
@@ -153,7 +155,7 @@
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
             <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
             <td  class="justify-center layout px-0">
-                <v-btn small @click="editItem(props.item)" color="main_green" dark>Registrar Mediciones</v-btn>
+                <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
             </td>   
         </template>
     </v-data-table>
@@ -183,7 +185,7 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn small @click="editItem(props.item)" color="main_green" dark>Registrar Mediones</v-btn>
+            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
         </td>    
       </template>
     </v-data-table>
@@ -206,6 +208,7 @@
   import { mapState } from 'vuex';  
   import Vue from 'vue';  
   import ConsumptionComponent  from './../components/ReadingsNew';
+  import CovsReadings  from './../components/CovsReadings';
   import { EventBus } from './../eventbus.js';
 
   export default {
@@ -409,12 +412,18 @@
         readingsClick (a){
             var ComponentReserv = Vue.extend(ConsumptionComponent)
             var instance = new ComponentReserv({store: this.$store, propsData: {
-            source: a,
-             
-          }});
+            source: a, declaration: this.declaration}
+            });
             instance.$mount();
-            this.$refs.container.appendChild(instance.$el);
+            this.$refs.container.replaceChild(instance.$el);
         },
+      readingsProcess(){
+            var ComponentReserv = Vue.extend(CovsReadings)
+            var instance = new ComponentReserv({store: this.$store, propsData: { declaration: this.declaration}
+            });
+            instance.$mount();
+            this.$refs.container.replaceChild(instance.$el);
+      }, 
 
     }
 }

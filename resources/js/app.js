@@ -22,9 +22,7 @@ import Covs                 from './components/CovsComponent'
 import Isocinetic           from './components/IsocineticComponent'
 import Upload               from './components/UploadComponent'
 import NewIso               from './components/NewIsocinetic'
-import CovsOpActual         from './components/CovsOpActual'
-import CovsEstimaciones     from './components/CovsEstimacionEmisiones'
-import CovsMediciones       from './components/CovsMediciones'
+
 import ReadingsNew          from './components/ReadingsNew'
 import Production           from './components/ProductionComponent'
 
@@ -53,6 +51,13 @@ Vue.use(Vuetify, {
         secondary_green: '#38ACA9',
         highlight_green: '#6BEC87',
         side_bar_gray: '#595959',
+
+        seconday_gray: '#EEEEEE',
+
+        ds_138: '#FFCD65',
+        readings: '#FF8B4A',
+        covs: '#B9E55F',
+        
         primary: '#1976D2',
         secondary: '#424242',
         accent: '#82B1FF',
@@ -82,9 +87,7 @@ Vue.component('covs', Covs);
 Vue.component('isocinetic', Isocinetic);
 Vue.component('upload', Upload);
 Vue.component('new_iso', NewIso);
-Vue.component('covopactual', CovsOpActual);
-Vue.component('covsestimaciones', CovsEstimaciones);
-Vue.component('covsmediciones', CovsMediciones);
+
 Vue.component('readingsnew', ReadingsNew);
 Vue.component('production', Production);
 
