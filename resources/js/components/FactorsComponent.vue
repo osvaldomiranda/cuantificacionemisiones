@@ -293,7 +293,7 @@
             axios.get('/api/factors/byprocess?process=GENERAL_USE&declaration='+app.declaration.id+'&establishment_id=1')
                 .then(function (resp) {   
                     app.general = resp.data;
-                    alert(JSON.stringify(resp.data));
+                    // alert(JSON.stringify(resp.data));
                 })
                 .catch(function (resp) {
                     console.log(resp);
