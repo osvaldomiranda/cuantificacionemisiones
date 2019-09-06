@@ -302,31 +302,31 @@
     methods: {
         initialize () {
             var app = this;
-
-            axios.get('/api/reading/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
+            axios.get('/api/reading/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration.id)
                 .then(function (resp) { 
-                    app.correlative  = resp.correlative;
-                    app.methods      = resp.method;
-                    app.lab          = resp.lab;
-                    app.date_reading = resp.date_reading;
-                    app.pollutant    = resp.pollutant;
+                    app.correlative  = resp.data.correlative;
+                    app.method      = resp.data.method;
+                    app.lab          = resp.data.lab;
+                    app.date_reading = resp.data.date_reading;
+                    app.pollutant    = resp.data.pollutant;
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('api/runs/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration_id)
-                .then(function (resp) { 
-                    app.runs = resp.data; 
-                })
-                .catch(function (resp) {
-                    console.log(resp);
-                    alert("Error sources/refresh :" + resp);
-                });
+            // axios.get('api/runs/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration.id)
+            //     .then(function (resp) { 
+            //         app.runs = resp.data; 
+            //     })
+            //     .catch(function (resp) {
+            //         console.log(resp);
+            //         alert("Error sources/refresh :" + resp);
+            //     });
         },
         saveItem () {
             var item = {
+                        'source_id': this.source.id,
                         'duration': this.duration,
                         'measured_concentration': this.measured_concentration,
                         'corrected_concentration': this.corrected_concentration,
@@ -351,6 +351,7 @@
             if (this.$refs.form.validate()){
                 var reading = {
                     'declaration_id': this.declaration.id,
+                    'source_id': this.source.id,
                     'correlative': this.correlative,
                     'method': this.method,
                     'lab': this.lab,

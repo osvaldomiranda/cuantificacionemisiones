@@ -60,7 +60,7 @@
  
 
 
-    <v-toolbar v-if="general.length > 0" color="main_green" dark>
+    <v-toolbar v-if="general.length > 0" color="readings" dark>
       <v-toolbar-title >Fuentes de uso general</v-toolbar-title>
     </v-toolbar>
     <v-data-table
@@ -90,13 +90,13 @@
     </v-layout> 
 
 
-    <v-toolbar v-if="energy.length > 0" color="main_green" dark>
+    <v-toolbar v-if="energy.length > 0" color="readings" dark>
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
         
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer> 
-        <v-btn @click="readingsProcess" color="secondary_green">Registrar Medición</v-btn>
+        <v-btn @click="readingsProcess" color="readings">Registrar Medición</v-btn>
         
     </v-toolbar>
 
@@ -130,7 +130,7 @@
     
       
     
-    <v-toolbar v-if="transformMp.length > 0"  color="main_green" dark>
+    <v-toolbar v-if="transformMp.length > 0"  color="readings" dark>
         <v-toolbar-title>Procesos con Transformación de Materia Prima</v-toolbar-title>
     </v-toolbar>
 
@@ -167,7 +167,7 @@
         </v-flex>
     </v-layout> 
 
-    <v-toolbar v-if="pda.length > 0" color="main_green" dark>
+    <v-toolbar v-if="pda.length > 0" color="readings" dark>
       <v-toolbar-title>Fuentes Plan de Descontaminación</v-toolbar-title>
     </v-toolbar>
     <v-data-table

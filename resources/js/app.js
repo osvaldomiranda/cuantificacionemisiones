@@ -54,9 +54,9 @@ Vue.use(Vuetify, {
 
         seconday_gray: '#EEEEEE',
 
-        ds_138: '#FFCD65',
-        readings: '#FF8B4A',
-        covs: '#B9E55F',
+        ds_138: '#079992',
+        readings: '#4388A5',
+        covs: '#00596D',
         
         primary: '#1976D2',
         secondary: '#424242',

@@ -65,8 +65,8 @@ Route::get('/comments','CommentController@index');
 Route::post('/comment/create','CommentController@create');
 Route::post('/reading/save', 'ReadingController@save');
 
-Route::get('/reading/bysource', 'ReadingController@bysource');
-Route::get('/run/bysource', 'RunController@bysource');
+Route::get('/reading/bysource', 'ReadingController@bySource');
+Route::get('/run/bysource', 'ReadingController@runBySource');
 
 Route::get('/reading/bydecalration', 'ReadingController@index');
 // Route::get('/run/bydecalration', 'RunController@index');

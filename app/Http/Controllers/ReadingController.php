@@ -16,6 +16,21 @@ class ReadingController extends Controller
     	return response()->json($readings); 
     }
 
+    public function bySource(Request $request)
+    {
+        $declaration_id = $request->input('declaration_id');
+        $source_id = $request->input('source_id');
+        $readings = Reading::where('declaration_id', $declaration_id)->where('source_id', $source_id)->get()->first();
+        return response()->json($readings); 
+    }
+
+    public function runByReading(Request $request)
+    {
+        $declaration_id = $request->input('declaration_id');
+        $reading_id = $request->input('reading_id');
+        $runs = Run::where('declaration_id', $declaration_id)->where('reading_id', $reading_id)->get();
+        return response()->json($runs); 
+    }
 
 
     public function save(Request $request)
@@ -28,11 +43,12 @@ class ReadingController extends Controller
 
     	$declaration_id = $data->declaration_id;
 
-    	$reading = Reading::where('declaration_id', $declaration_id)->get()->last();
+    	$reading = Reading::where('declaration_id', $declaration_id)->where('source_id', $data->source_id)->get()->last();
 
 
     	if($reading){
     		$reading->declaration_id = $declaration_id;
+            $reading->source_id      = $data->source_id;
             $reading->pollutant      = $data->pollutant; 
     		$reading->correlative	 = $data->correlative;	
     		$reading->method 		 = $data->method; 	
@@ -43,6 +59,7 @@ class ReadingController extends Controller
     	}else {
     		$reading = new Reading();
     		$reading->declaration_id = $declaration_id;
+            $reading->source_id      = $data->source_id;
             $reading->pollutant      = $data->pollutant; 
     		$reading->correlative	 = $data->correlative;	
     		$reading->method 		 = $data->method; 	
@@ -63,6 +80,7 @@ class ReadingController extends Controller
                 
             $new_run->declaration_id = $declaration_id;
             $new_run->reading_id     = $reading->id; 
+            $new_run->source_id               = $run->source_id;
             $new_run->duration                = $run->duration;
             $new_run->measured_concentration  = $run->measured_concentration;
             $new_run->corrected_concentration = $run->corrected_concentration;
