@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Currentop;
-use Maatwebsite\Excel\Concerns\FromCollection;
+// use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ExcelExport implements FromCollection
 {

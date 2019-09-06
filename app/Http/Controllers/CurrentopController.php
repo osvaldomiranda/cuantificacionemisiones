@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Currentop;
 use Illuminate\Http\Request;
 use App\Exports\ExcelExport;
-use Maatwebsite\Excel\Facades\Excel;
+// use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 
