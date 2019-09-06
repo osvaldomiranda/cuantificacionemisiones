@@ -12,7 +12,11 @@
           <v-toolbar-title>Calculo factores de emisión</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <!-- <v-btn dark color="main_green" text @click="dialog = false">Guardar</v-btn> -->
+<!--         <v-btn @click="changeState" dark color="main_green">
+            <span>Enviar a la Autoridad</span>
+        </v-btn> -->
+
+            <!-- <v-btn flat dark color="main_green" text @click="changeState">Enviar a la autoridad</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
 
@@ -136,7 +140,7 @@
 
 
             <br>
-            <v-layout row>
+<!--             <v-layout row>
                 <v-toolbar flat>
                         <v-toolbar-title>Proceso Cementera</v-toolbar-title> 
                         
@@ -164,19 +168,26 @@
                     </v-data-table>
 
                  </v-layout>
-
+ -->
             </v-container>    
 
         </v-card-text>
-
+<!-- 
         <v-btn @click="dialog = false" color="warning">
             <span>Cancelar</span>
-        </v-btn>
-
-        <v-btn @click="changeState" dark color="main_green">
-            <span>Enviar a la Autoridad</span>
-        </v-btn>
-    
+        </v-btn> -->
+        <br>
+        <v-layout row>
+          <v-flex xs1>
+          </v-flex>
+            <v-flex xs6>
+                <v-btn @click="changeState" dark round color="main_green">
+                    <span>Enviar a la Autoridad</span>
+                </v-btn>
+            </v-flex>
+        </v-layout>
+        <br>
+        <br>    
         </v-container>  
 
       </v-card>

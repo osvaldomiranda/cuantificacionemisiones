@@ -12,7 +12,7 @@
           <v-toolbar-title>Registrar Compuestos Organicos Volatiles</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <!-- <v-btn dark flat @click="dialog = false">Save</v-btn> -->
+            <v-btn dark flat @click="dialog = false">Enviar a la autoridad</v-btn>
           </v-toolbar-items>
         </v-toolbar>
  
