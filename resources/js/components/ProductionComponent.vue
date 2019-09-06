@@ -83,7 +83,7 @@
 
                 <v-layout>
                     <v-flex  xs12 sm6 md3 class="pr-1">
-                        <v-text-field v-model="raw_material"  label="Combustible"></v-text-field>
+                        <v-text-field v-model="raw_material"  label="Materia Prima"></v-text-field>
                     </v-flex>
                     <v-flex  xs12 sm6 md3 class="px-1">
                         <v-text-field  v-model="unity_mp" readonly='true' label="Unidad"></v-text-field>
