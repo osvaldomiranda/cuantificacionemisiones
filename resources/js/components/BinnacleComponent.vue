@@ -16,16 +16,16 @@
                 hide-actions
             >
                 <template v-slot:items="props">
-                  <td>
+<!--                   <td>
                   <v-checkbox
                     v-model="props.selected"
                     primary
                     hide-details
                   ></v-checkbox>
-                  </td>
-                  <td class="text-xs-right">{{ props.item.id }}</td>
-                  <td class="text-xs-right">{{ props.item.created_at }}</td>
-                  <td class="text-xs-right">{{ props.item.new_state }}</td>
+                  </td> -->
+                  <td class="text-xs-left">{{ props.item.id }}</td>
+                  <td class="text-xs-left">{{ props.item.created_at }}</td>
+                  <td class="text-xs-left">{{ props.item.new_state }}</td>
                 </template>
             </v-data-table>
      
@@ -48,6 +48,12 @@
     data: () => ({
       dialog: true,
       binnacles:[],
+      headers:[
+            { text: 'Id', value: '' },
+            { text: 'Fecha', value: '' },
+            { text: 'Estado', value: '' },
+            ],
+
     }),
     created () {
       this.initialize()

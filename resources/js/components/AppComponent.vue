@@ -111,7 +111,7 @@
       establishment: null,
       naturalStates:[],
       items: [
-        { icon: 'contacts', text: 'Establecimiento', link: '/' },
+        { icon: 'contacts', text: 'Bienvenida', link: '/welcome' },
         { icon: 'wrap_text', text: 'Declaraciones', link: '/send_list'}, 
         { icon: 'wrap_text', text: 'Administrar Declaraciones', link: '/send_admin'}, 
         { icon: 'wrap_text', text: 'Administrar Solicitudes', link: '/requisition_list'},     

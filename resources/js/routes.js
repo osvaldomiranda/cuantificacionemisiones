@@ -6,6 +6,7 @@ import SourceList   from './views/SourceListView'
 import SendList     from './views/SendListView'
 import SendAdmin    from './views/SendAdminView'
 import RequisitionList    from './views/RequisitionListView'
+import Welcome    from './views/Welcome'
 
 
 Vue.use(VueRouter);
@@ -38,7 +39,11 @@ const router = new VueRouter({
             name: 'requisition_list',
             component: RequisitionList,
         },
-
+        {
+            path: '/welcome',
+            name: 'welcome',
+            component: Welcome,
+        },
 
         
     ],
