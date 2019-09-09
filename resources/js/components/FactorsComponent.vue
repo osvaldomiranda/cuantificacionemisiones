@@ -84,7 +84,7 @@
                 <v-flex xs12>
                     <v-data-table
                       :headers="headers"
-                      :items="general"
+                      :items="general_use"
                       class="elevation-1"
                       hide-actions
                     >
@@ -221,7 +221,7 @@
 
         dialog: true,
         energy:[],
-        geneal:[],
+        geneal_use:[],
         pda:[],
 
         headers: [
@@ -290,21 +290,18 @@
         initialize () {
             var app = this;
 
-            axios.get('/api/factors/byprocess?process=ENERGY&declaration='+app.declaration.id+'&establishment_id=1')
-                .then(function (resp) {    
-                    app.energy = resp.data;
-
-                   // alert(JSON.stringify(resp.data));
+            axios.get('/api/factors/byprocess?process=GENERAL_USE&declaration='+app.declaration.id+'&establishment_id=1')
+                .then(function (resp) {   
+                    app.general_use = resp.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
 
-            axios.get('/api/factors/byprocess?process=GENERAL_USE&declaration='+app.declaration.id+'&establishment_id=1')
-                .then(function (resp) {   
-                    app.general = resp.data;
-                    // alert(JSON.stringify(resp.data));
+            axios.get('/api/factors/byprocess?process=ENERGY&declaration='+app.declaration.id+'&establishment_id=1')
+                .then(function (resp) {    
+                    app.energy = resp.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);

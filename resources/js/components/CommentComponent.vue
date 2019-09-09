@@ -43,9 +43,6 @@
                 </v-layout>
                 <br>  
   
-
-
-     
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn dark color="main_green" text @click="dialog = false">Cerrar</v-btn>

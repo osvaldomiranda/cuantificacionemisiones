@@ -45,7 +45,6 @@ class ReadingController extends Controller
 
     	$reading = Reading::where('declaration_id', $declaration_id)->where('source_id', $data->source_id)->get()->last();
 
-
     	if($reading){
     		$reading->declaration_id = $declaration_id;
             $reading->source_id      = $data->source_id;
