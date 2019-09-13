@@ -119,31 +119,29 @@
         { icon: 'wrap_text', text: 'Tutoriales', link: '/'},
       ]
     }),
-    props: {
-      source: String
-    },
     created () {
       this.initialize()
     },
     methods: {
-      initialize () {
-        var app = this;
-        app.$store.commit('changeEstablishment',1);
-        axios.get('/api/set_user')
+       initialize() { 
+        var app = this 
+         axios.get('/api/set_user')
             .then(function (resp) {
 
-              // app.$store.commit('changeUser',resp.data[0]['user']);
-              // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);
-              
+                // app.$store.commit('changeUser',resp.data.user);
+                // app.$store.commit('changeEstablishment',resp.data.establishment);
 
-              // alert(JSON.stringify(app.$store.getters.establishment));
+                alert(JSON.stringify(resp.data));
+                alert(JSON.stringify(resp.data.user));
+                alert(JSON.stringify(resp.data.establishment));
 
             })
             .catch(function (resp) {
                 console.log(resp);
                 //alert("Could not load data :" + resp);
             });   
-      }
-  	}
+        }
+        
+    }
 }
 </script>

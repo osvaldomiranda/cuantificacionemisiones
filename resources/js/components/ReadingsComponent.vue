@@ -77,7 +77,8 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>
         </td>   
 
       </template>
@@ -93,7 +94,6 @@
     <v-toolbar v-if="energy.length > 0" color="readings" dark>
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
-        
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer> 
         <v-btn @click="readingsProcess" color="readings">Registrar Medición</v-btn>
@@ -114,9 +114,9 @@
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
-        <td 
-            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
-        </td>   
+        <td >
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>        </td>   
       </template>
     </v-data-table>
 
@@ -135,28 +135,30 @@
     </v-toolbar>
 
     <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
-        <v-toolbar-title>Producción de Celulosa</v-toolbar-title>
+        <v-toolbar-title>{{this.process.description}}</v-toolbar-title>
+        <v-spacer></v-spacer> 
+        <discharge key="this.process.name" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer>
-        <production></production>
+        <v-btn @click="readingsProcess" color="readings">Registrar Medición</v-btn>
     </v-toolbar>
 
 
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="transformMp"
       class="elevation-1"
       v-if="transformMp.length > 0" 
     >
         <template v-slot:items="props">
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
-            <td  class="justify-center layout px-0">
-                <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
-            </td>   
+        <td class="text-xs-right">{{ props.item.source_type_name }}</td>
+        <td class="text-xs-right">{{ props.item.register_number }}</td>
+        <td class="text-xs-right">{{ props.item.brand }}</td>
+        <td class="text-xs-right">{{ props.item.internal_number }}</td>
+        <td class="text-xs-right">{{ props.item.serial_number }}</td>
+        <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td v-if='props.item.ccf8'> 
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>        </td>   
         </template>
     </v-data-table>
 
@@ -185,7 +187,10 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn small @click="readingsClick(props.item)" color="readings" dark>Registrar Mediciones</v-btn>
+
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>
+
         </td>    
       </template>
     </v-data-table>
@@ -231,6 +236,7 @@
         energy:[],
         general:[],
         pda:[],
+        process:'',
         transformMp:[],
         desserts: [],
         company:{
@@ -320,7 +326,7 @@
         var app = this;
         this.initialize();
 
-        EventBus.$on('clickedChild', function(){    
+        EventBus.$on('saveReading', function(){    
             app.initialize();
         });
     },
@@ -353,6 +359,24 @@
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
+            axios.get('/api/sources/byprocess?process=OTHERS')
+                .then(function (resp) { 
+                    app.transformMp = resp.data; 
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+
+            axios.get('/api/sources/process')
+                .then(function (resp) { 
+                    app.process = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+
 
         },
 

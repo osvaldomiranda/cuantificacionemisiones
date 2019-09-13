@@ -86,7 +86,7 @@
                        
                     </v-flex>
                     <v-flex xs4 class="px-2">
-                        <v-text-field label="Adjuntar Archivo PDF" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                        <v-text-field label="Adjuntar Archivo (20MB max)" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
                         <input
                             type="file"
                             style="display: none"
@@ -98,6 +98,7 @@
                     </v-flex>
                 </v-layout>
             </v-card>
+            </v-form> 
             <br>
             <v-card class="px-5">
                 <br>
@@ -126,10 +127,10 @@
 
                     <v-layout> 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="excess_air" label="Exceso de Aire"></v-text-field>
+                            <v-text-field v-model="excess_air" label="Exceso de Aire %"></v-text-field>
                         </v-flex>
                         <v-flex xs3 class="px-2">
-                            <v-text-field v-model="combustion_efficiency" label="Eficiencia Combustión"></v-text-field>
+                            <v-text-field v-model="combustion_efficiency" label="Eficiencia Combustión %"></v-text-field>
                         </v-flex>  
                         <v-flex xs3 class="px-2">
                             <v-text-field v-model="temperature" label="Temperatura"></v-text-field>
@@ -147,16 +148,16 @@
                     <v-layout> 
 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="o2" label="O2"></v-text-field>
+                            <v-text-field v-model="o2" label="O2 %"></v-text-field>
                         </v-flex>
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co2" label="CO2"></v-text-field>
+                            <v-text-field v-model="co2" label="CO2 %"></v-text-field>
                         </v-flex>
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co" label="CO"></v-text-field>
+                            <v-text-field v-model="co" label="CO %"></v-text-field>
                         </v-flex>                        
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co_ppm" label="CP (ppm)"></v-text-field>
+                            <v-text-field v-model="co_ppm" label="CP (ppm) %"></v-text-field>
                         </v-flex> 
                         <v-flex xs4 class="px-2">
                             <v-btn @click="saveItem" class="ma-2" tile outline color="main_green">Ingresar Corrida</v-btn> 
@@ -194,7 +195,7 @@
                     </v-layout>
                     <br>    
                 </v-card>
-            </v-form>    
+              
         </v-container>
             </v-card>
 
@@ -226,6 +227,7 @@
         method:'',
         date_reading:'',
         pollutant:'',
+        reading_id:'',
     
 
         runs: [],
@@ -305,24 +307,34 @@
             axios.get('/api/reading/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration.id)
                 .then(function (resp) { 
                     app.correlative  = resp.data.correlative;
-                    app.method      = resp.data.method;
+                    app.method       = resp.data.method;
                     app.lab          = resp.data.lab;
                     app.date_reading = resp.data.date_reading;
                     app.pollutant    = resp.data.pollutant;
+                    app.reading_id   = resp.data.id;
+                    app.imageName    = resp.data.file;
+                    app.runs_reading();
                 })
                 .catch(function (resp) {
                     console.log(resp);
-                    alert("Error sources/refresh :" + resp);
+                //    alert("Error sources/refresh :" + resp);
                 });
 
-            // axios.get('api/runs/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration.id)
-            //     .then(function (resp) { 
-            //         app.runs = resp.data; 
-            //     })
-            //     .catch(function (resp) {
-            //         console.log(resp);
-            //         alert("Error sources/refresh :" + resp);
-            //     });
+        },
+
+        runs_reading (){
+            var app = this;
+
+            if(app.reading_id) {
+                axios.get('api/runs/byreading?reading_id=' + app.reading_id)
+                    .then(function (resp) { 
+                        app.runs = resp.data; 
+                    })
+                    .catch(function (resp) {
+                        console.log(resp);
+                    //    alert("Error sources/refresh :" + resp);
+                    });
+            }
         },
         saveItem () {
             var item = {

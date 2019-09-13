@@ -117,7 +117,7 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
 
-        <td 
+        <td> 
             <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
  
              <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
@@ -140,32 +140,33 @@
     </v-toolbar>
 
     <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
-        <v-toolbar-title>Producción de Celulosa</v-toolbar-title>
+        <v-toolbar-title>{{this.process.description}}</v-toolbar-title>
+        <v-spacer></v-spacer> 
+        <discharge key="this.process.name" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer>
-        <v-btn @click='toProduction' color="secondary_green">Registrar Produción</v-btn>>
+        <v-btn @click='toProduction' color="secondary_green">Registrar Produción</v-btn>
     </v-toolbar>
 
 
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="transformMp"
       class="elevation-1"
       v-if="transformMp.length > 0" 
     >
         <template v-slot:items="props">
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.source_type_name }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.register_number }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.brand }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.internal_number }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.origin_data }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="text-xs-right">{{ props.item.ccf8 }}</td>
-            <td v-if="props.item.source_type_name == 'Convertidor Teniente'" class="justify-center layout px-0">
-                <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
-                <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
-                > Registrado
-                <v-icon right>check</v-icon>
-                </v-btn>
-            </td>   
+        <td class="text-xs-right">{{ props.item.source_type_name }}</td>
+        <td class="text-xs-right">{{ props.item.register_number }}</td>
+        <td class="text-xs-right">{{ props.item.brand }}</td>
+        <td class="text-xs-right">{{ props.item.internal_number }}</td>
+        <td class="text-xs-right">{{ props.item.serial_number }}</td>
+        <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+
+        <td v-if='props.item.ccf8'> 
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
+ 
+             <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
+        </td>  
         </template>
     </v-data-table>
 
@@ -189,17 +190,15 @@
         <td class="text-xs-right">{{ props.item.source_type_name }}</td>
         <td class="text-xs-right">{{ props.item.register_number }}</td>
         <td class="text-xs-right">{{ props.item.brand }}</td>
-        <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
-        <td class="text-xs-right">{{ props.item.origin_data }}</td>
+        <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
-        <td class="justify-center layout px-0">
-            <v-btn v-if= "props.item.state=='PENDIENTE'" small @click="editItem(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
-            <v-btn v-if= "props.item.state=='ACTIVO'" small @click="editItem(props.item)" color="main_green" outline  
-            > Registrado
-              <v-icon right>check</v-icon>
-            </v-btn>
-        </td>    
+
+        <td v-if='props.item.ccf8'> 
+            <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
+ 
+             <v-btn  v-if="props.item.state!='ACTIVO'" small @click="consumptionClick(props.item)" color="main_green" dark>Ver Registro</v-btn>
+        </td>     
       </template>
     </v-data-table>
 
@@ -253,8 +252,10 @@
         energy:[],
         general:[],
         pda:[],
+        process:'',
         transformMp:[],
         desserts: [],
+
         company:{
             name: 'Empresa Prueba',
             rut: '76200200',
@@ -370,6 +371,24 @@
             axios.get('/api/sources/byprocess?process=PDA')
                 .then(function (resp) {    
                     app.pda = resp.data;
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+
+            axios.get('/api/sources/byprocess?process=OTHERS')
+                .then(function (resp) { 
+                    app.transformMp = resp.data; 
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+
+            axios.get('/api/sources/process')
+                .then(function (resp) { 
+                    app.process = resp.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);

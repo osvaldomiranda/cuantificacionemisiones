@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Reading;
 use App\Run;
+use App\Source;
 use DB;
 
 class ReadingController extends Controller
@@ -12,7 +13,7 @@ class ReadingController extends Controller
     public function index(Request $request)
     {
     	$declaration_id = $request->input('declaration_id');
-    	$readings = Reading::where('declaration_id', $declaration_id)->get();
+    	$readings = Reading::where('declaration_id', $declaration_id)->whereNull('source_id')->get();
     	return response()->json($readings); 
     }
 
@@ -36,12 +37,10 @@ class ReadingController extends Controller
     public function save(Request $request)
     {
 
-        $fileName = $request->file->getClientOriginalName();        
-        $fileDir = $request->file->storeAs('files',$fileName);  
-
         $data = json_decode($request->data);
 
     	$declaration_id = $data->declaration_id;
+
 
     	$reading = Reading::where('declaration_id', $declaration_id)->where('source_id', $data->source_id)->get()->last();
 
@@ -53,9 +52,13 @@ class ReadingController extends Controller
     		$reading->method 		 = $data->method; 	
     		$reading->lab            = $data->lab;
     		$reading->date_reading   = $data->date_reading; 
-    		$reading->file           = $fileDir;
+    		//$reading->file           = $fileDir;
     		$reading->save();
     	}else {
+
+            $fileName = $request->file->getClientOriginalName();        
+            $fileDir = $request->file->storeAs('files',$fileName);  
+
     		$reading = new Reading();
     		$reading->declaration_id = $declaration_id;
             $reading->source_id      = $data->source_id;
@@ -67,6 +70,10 @@ class ReadingController extends Controller
     		$reading->file           = $fileDir;
     		$reading->save();
     	}
+
+        $source = Source::where('id', $data->source_id)->get()->last();
+        $source->reading_state = 'REGISTERED';
+        $source->save();
 
 
         $runs = $data->runs;
@@ -97,9 +104,17 @@ class ReadingController extends Controller
 
             $new_run->save();    
         }
-        
 
     	return response()->json($reading); 
+    }
+
+
+    public function runsByReading(Request $request){
+
+        $reading_id = $request->input('reading_id');
+        $runs = Run::where('reading_id', $reading_id)->get();
+
+        return response()->json($runs);
     }
 
 }

@@ -30,13 +30,8 @@
                     <v-flex  xs12 sm6 md3 class="px-1">
                         <v-text-field  v-model="internal_number"  label="Nro.Interno"></v-text-field>
                     </v-flex>
-                    <v-flex xs3 class="px-1">
-                        <v-select
-                            :items="pollutants"
-                            v-model="pollutant"
-                            label="Contaminate"
-                            :rules = "generalRule"
-                        ></v-select> 
+                    <v-flex xs6 class="px-1">
+                        <v-text-field  readonly v-model="pollutant" label="Contaminante"></v-text-field>
                     </v-flex>
                 </v-layout>  
 
@@ -86,7 +81,7 @@
                        
                     </v-flex>
                     <v-flex xs4 class="px-2">
-                        <v-text-field label="Adjuntar Archivo PDF" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                        <v-text-field label="Adjuntar Archivo (20MB max)" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
                         <input
                             type="file"
                             style="display: none"
@@ -209,6 +204,7 @@
   export default {
     props: {
         declaration: Object,
+        process: String,
     },
 
     data () {
@@ -226,7 +222,7 @@
         correlative:'',
         method:'',
         date_reading:'',
-        pollutant:'',
+        pollutant:'Comuestos Organicos Volatiles (COV)',
     
 
         runs: [],
@@ -246,24 +242,8 @@
         co_ppm:'',
 
         pollutants: [
-                'Amoniaco',
-                'Arsenico',
-                'Azufre Total Reducido (TRS)',
-                'Benceno',
                 'Comuestos Organicos Volatiles (COV)',
-                'Dioxido de Carbono (CO2)',
-                'Dioxinas y Furanos',
-                'Mercurio',
-                'Monoxido de Carbono (CO)',
-                'Particulas Totales Suspendidas (PTS)',
-                'PM10',
-                'PM2.5',
-                'Plomo ',
-                'Oxidos de Nitrogeno (NOx)',
-                'Oxidos de Azufre (SOx)',
-                'Tolueno',
                 ],
-        pollutant:'',
         labs:[  'AIRON INGENIERIA Y CONTROL AMBIENTAL S.A',
                 'AEEG EMISSIONS SANTIAGO',
                 'MENDEZ ASOCIADOS LIMITADA',
@@ -311,20 +291,28 @@
                     app.lab          = resp.lab;
                     app.date_reading = resp.date_reading;
                     app.pollutant    = resp.pollutant;
+                    app.imageName    = resp.data.file;
+                    app.runs_reading();
                 })
                 .catch(function (resp) {
                     console.log(resp);
-                    alert("Error sources/refresh :" + resp);
+   //                 alert("Error sources/refresh :" + resp);
                 });
 
-            // axios.get('api/runs/bysource?declaration_id=' + app.declaration_id)
-            //     .then(function (resp) { 
-            //         app.runs = resp.data; 
-            //     })
-            //     .catch(function (resp) {
-            //         console.log(resp);
-            //         alert("Error sources/refresh :" + resp);
-            //     });
+        },
+        runs_reading (){
+            var app = this;
+
+            if(app.reading_id){
+                axios.get('api/runs/byreading?reading_id=' + app.reading_id)
+                    .then(function (resp) { 
+                        app.runs = resp.data; 
+                    })
+                    .catch(function (resp) {
+                        console.log(resp);
+                        alert("Error sources/refresh :" + resp);
+                    });
+            }
         },
         saveItem () {
             var item = {

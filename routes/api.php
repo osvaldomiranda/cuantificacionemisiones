@@ -37,6 +37,7 @@ Route::post('/requisition/reject', 'RequisitionController@reject');
 Route::get('/requisitions', 'RequisitionController@index');
 Route::get('/sources/refresh', 'SourceController@refresh');
 Route::get('/sources/byprocess', 'SourceController@sourcesByProcess');
+Route::get('/sources/process', 'SourceController@process');
 
 Route::get('/diagram/refresh', 'DiagramController@refresh');
 Route::get('/diagram/byestablishment', 'DiagramController@byEstablishment');
@@ -68,8 +69,8 @@ Route::post('/reading/save', 'ReadingController@save');
 Route::get('/reading/bysource', 'ReadingController@bySource');
 Route::get('/run/bysource', 'ReadingController@runBySource');
 
-Route::get('/reading/bydecalration', 'ReadingController@index');
-// Route::get('/run/bydecalration', 'RunController@index');
+Route::get('/reading/bydeclaration', 'ReadingController@index');
+Route::get('/runs/byreading', 'ReadingController@runsByReading');
 
 Route::post('/currentops/save', 'CurrentopController@save');
 Route::get('/currentops', 'CurrentopController@index');
@@ -77,6 +78,7 @@ Route::get('/currentop/download', 'CurrentopController@downloadStorage');
 
 Route::post('/estimation/save', 'EstimationController@save');
 Route::get('/estimations', 'EstimationController@index');
+
 
 // para el diagrama de descarga
 Route::get('/source_types', 'SourceTypes@index');

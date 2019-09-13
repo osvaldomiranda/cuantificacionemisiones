@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use App\Source;
 use App\Factor;
 use App\Consumption;
+use App\Process;
 use App\Paralization;
 use App\OperatingCicle;
 
@@ -198,9 +199,29 @@ class SourceController extends Controller
     public function sourcesByProcess(Request $request){
         $process = $request->input('process');
 
+        if($process=='OTHERS'){
+           $sources =  Source::select()->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->get();
+        }else {
+           $sources = Source::where('process', $process)->get(); 
+        }
+
+        return response()->json($sources);
+    }
+
+    public function sourcesByStep(Request $request){
+        $step = $request->input('step');
+
         $sources = Source::where('process', $process)->get();
 
         return response()->json($sources);
+    }
+
+
+    public function process(){
+        $process = Source::select('process')->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->first();
+        $process_name = Process::where('name', $process->process)->first();
+
+        return response()->json($process_name);
     }
 
     public function refresh(){
