@@ -28,11 +28,11 @@ Route::post('/requisition/reject', 'RequisitionController@reject');
 Route::middleware('client')->group(function () {
 	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');
 	Route::post('/crear_solicitud', 'ApiUserController@createRequisition'); 
-}
+});
 
 Route::middleware('auth:api')->group(function () {
 	Route::get('/set_user', 'ApiUserController@setUserVue');
-}
+});
 
 Route::get('/requisitions', 'RequisitionController@index');
 Route::get('/sources/refresh', 'SourceController@refresh');
