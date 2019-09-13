@@ -13,12 +13,14 @@
 
 use Illuminate\Http\Request;
 
-Route::get('/', function (Request $request) {
-	dd($token);
-    return view('welcome');
+Route::group(['middleware' => 'web'], function () {
+
+	Route::get('/', function (Request $request) {
+		dd($token);
+	    return view('welcome');
+	});
+
 });
-
-
 
 Route::get('/vuinvitation/{secret_a}/{secret_b}','ApiUserController@validateSecret');
 
