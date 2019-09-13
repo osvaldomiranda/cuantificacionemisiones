@@ -71,7 +71,6 @@ class ApiUserController extends Controller
         if($result){
             $token = $result->user->createToken('VU')->accessToken;
 
-            //Auth::guard('api')->login($result->user);
             $result->secret_a = null;
             $result->secret_b = null;
             $result->save();

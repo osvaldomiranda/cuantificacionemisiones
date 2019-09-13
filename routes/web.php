@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/vuinvitation/{secret_a}/{secret_b}','ApiUserController@validateSecret');
 
 
