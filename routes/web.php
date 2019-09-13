@@ -10,9 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Session;
+use Illuminate\Http\Request;
 
 Route::get('/', function (Request $request) {
-	dd($request->session('token'));
+	dd($request->session()->get('token'));
     return view('welcome');
 });
 
