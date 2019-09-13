@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+	dd($request->session('token'));
     return view('welcome');
 });
 

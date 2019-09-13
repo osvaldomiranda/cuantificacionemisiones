@@ -78,7 +78,6 @@ class ApiUserController extends Controller
 
             Info('token');
             Info($token);       
-            dd($token);
             return redirect('/')->with('token',$token);
         }else{
             return abort(404,'Error: UserAccess');
