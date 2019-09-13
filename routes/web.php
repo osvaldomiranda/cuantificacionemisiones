@@ -12,13 +12,16 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
+
+	Route::get('/', function () {
+	    return view('welcome');
+	});
+
+
+
+Route::group(['middleware' => ['web']], function () {
+	Route::get('/vuinvitation/{secret_a}/{secret_b}','ApiUserController@validateSecret');
 });
-
-
-Route::get('/vuinvitation/{secret_a}/{secret_b}','ApiUserController@validateSecret');
-
 
 Route::get('{any}', function () {
     return view('welcome');
