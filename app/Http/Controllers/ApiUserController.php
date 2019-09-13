@@ -70,11 +70,13 @@ class ApiUserController extends Controller
 
         if($result){
             $token = $result->user->createToken('VU')->accessToken;
-            Info($token);
+
             //Auth::guard('api')->login($result->user);
             $result->secret_a = null;
             $result->secret_b = null;
             $result->save();
+            Info('token');
+            Info($token);            
             return redirect('/')->with('token',$token);
         }else{
             return abort(404,'Error: UserAccess');
