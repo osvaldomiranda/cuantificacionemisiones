@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Session;
 use App\User;
 use App\Establishment;
 use App\Company;
