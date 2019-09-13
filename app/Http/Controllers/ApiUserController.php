@@ -78,9 +78,8 @@ class ApiUserController extends Controller
 
             Info('token');
             Info($token);    
-            session()->flash('token',$token);
-
-            return redirect('/');
+          
+            return redirect()->to('/')->with('token',$token)->send();
         }else{
             return abort(404,'Error: UserAccess');
         }
