@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use Session;
+
 use App\User;
 use App\Establishment;
 use App\Company;
@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Session;
 
 class ApiUserController extends Controller
 {
@@ -78,7 +80,8 @@ class ApiUserController extends Controller
 
             Info('token');
             Info($token);    
-          
+            Session::flash('token', $token);
+
             return redirect('/')->with('token',$token);
         }else{
             return abort(404,'Error: UserAccess');
