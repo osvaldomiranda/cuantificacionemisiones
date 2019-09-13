@@ -14,7 +14,7 @@
 use Illuminate\Http\Request;
 
 Route::get('/', function (Request $request) {
-	dd($request->session()->get('token'));
+	dd($token);
     return view('welcome');
 });
 
