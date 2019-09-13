@@ -110,14 +110,9 @@ const app = new Vue({
         let token_vu = document.head.querySelector('meta[name="token"]');
 
         if (token_vu.content){  
-            alert('VU token');
-            alert(token_vu.content);
-
             window.axios.defaults.headers.common['Authorization'] = 'Bearer '+token_vu.content;
             this.$store.commit('changeToken',token_vu.content)
         }else{
-            alert('store token');
-            alert(this.$store.getters.token);
             window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.getters.token;
         }
     },
