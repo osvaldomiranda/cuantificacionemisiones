@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'web'], function () {
 
 	Route::get('/', function (Request $request) {
-		dd($token);
+		
 	    return view('welcome');
 	});
 
