@@ -74,9 +74,10 @@ class ApiUserController extends Controller
             $result->secret_a = null;
             $result->secret_b = null;
             $result->save();
-            
+
             Info('token');
-            Info($token);            
+            Info($token);       
+            Session::put('token',$token );     
             return redirect('/')->with('token',$token);
         }else{
             return abort(404,'Error: UserAccess');
