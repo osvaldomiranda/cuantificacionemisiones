@@ -139,9 +139,31 @@
     },
 
     methods: {
-      initialize () {
+
+        async initialize() { 
+          var app = this 
+          await axios.get('/api/set_user')
+          .then(async function (resp) {
+            alert(JSON.stringify(resp.data));
+            alert(JSON.stringify(resp.data[0]['user']))
+            // app.$store.commit('changeUser',resp.data[0]['user']);
+            // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
+            
+           
+          })
+          .catch(function (resp) {
+              console.log(resp);
+              alert("Could not load data :" + resp);
+          });   
+        },
+
+      getdeclarations () {
 
         var app = this;
+
+
+
+
 
         axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment)
             .then(function (resp) {    

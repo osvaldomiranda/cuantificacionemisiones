@@ -120,7 +120,7 @@
       ]
     }),
     created () {
-      this.initialize()
+     // this.initialize()
     },
     methods: {
 
@@ -128,13 +128,13 @@
           var app = this 
           await axios.get('/api/set_user')
           .then(async function (resp) {
-            //alert(JSON.stringify(resp.data[0]['user']))
+            alert(JSON.stringify(resp.data));
+            alert(JSON.stringify(resp.data[0]['user']))
             // app.$store.commit('changeUser',resp.data[0]['user']);
             // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
             
-            alert(JSON.stringify(resp.data));
-            alert(JSON.stringify(resp.data.user));
-            alert(JSON.stringify(resp.data.establishment));
+            
+  
            
            
           })
