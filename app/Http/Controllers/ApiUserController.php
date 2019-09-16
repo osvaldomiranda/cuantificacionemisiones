@@ -22,6 +22,8 @@ class ApiUserController extends Controller
     {
 
         Info('setSecretInvitation');
+        Info($request);
+
         $retcid = $request->input('retcid');
         $secret_a = $request->input('secret_a');
         $secret_b = $request->input('secret_b');
@@ -65,6 +67,9 @@ class ApiUserController extends Controller
 
 
     public function validateSecret(Request $request){
+        Info('ValidateSecret');
+        Info($request);
+
         $secret_a =$request->secret_a;
         $secret_b =$request->secret_b;
         $result = UserEstablishment::where('secret_a',$secret_a)->where('secret_b',$secret_b)->first();
@@ -89,6 +94,9 @@ class ApiUserController extends Controller
     }
     
     public function setUserVue(Request $request){
+        Info('setUserVue');
+        Info($request);
+
        $user = Auth::user();
        info("user");
        info($user);
