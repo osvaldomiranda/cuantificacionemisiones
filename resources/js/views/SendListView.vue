@@ -139,33 +139,25 @@
     },
 
     methods: {
-
         async initialize() { 
           var app = this 
-          await axios.get('/api/set_user')
-          .then(async function (resp) {
-            alert(JSON.stringify(resp.data));
-            alert(JSON.stringify(resp.data[0]['user']))
-            // app.$store.commit('changeUser',resp.data[0]['user']);
-            // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
-            
-           
-          })
-          .catch(function (resp) {
-              console.log(resp);
-              alert("Could not load data :" + resp);
-          });   
+            await axios.get('/api/set_user')
+            .then(async function (resp) {
+            // alert(JSON.stringify(resp.data));
+            // alert(JSON.stringify(resp.data[0]['user']))
+                app.$store.commit('changeUser',resp.data[0]['user']);
+                app.$store.commit('changeEstablishment',resp.data[0]['establishment']);  
+                app.getdeclarations();      
+            })
+            .catch(function (resp) {
+                console.log(resp);
+                alert("Could not load data :" + resp);
+            });   
         },
 
       getdeclarations () {
-
         var app = this;
-
-
-
-
-
-        axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment)
+        axios.get('/api/declarations?establishment_id='+app.$store.getters.establishment.id)
             .then(function (resp) {    
                 app.declarations = resp.data;
             })
@@ -173,13 +165,11 @@
                 console.log(resp);
                 alert("Error sources/refresh :" + resp);
             });
-
-
       },
       new138(){
         var app = this;
 
-        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=DS138')
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment.id+'&type=DS138')
             .then(function (resp) {    
                 app.declaration = resp.data;
             })
@@ -195,7 +185,7 @@
       newReading(){
         var app = this;
 
-        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=MEDICION')
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment.id+'&type=MEDICION')
             .then(function (resp) {    
                 app.declaration = resp.data;
             })
@@ -210,7 +200,7 @@
       newCovs(){
         var app = this;
 
-        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment+'&type=COVS')
+        axios.post('/api/declaration/new?establishment_id='+app.$store.getters.establishment.id+'&type=COVS')
             .then(function (resp) {    
                 app.declaration = resp.data;
             })
