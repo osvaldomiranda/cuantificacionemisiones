@@ -106,4 +106,20 @@ class ApiUserController extends Controller
         return response()->json($user_establishment);
 
     }
+
+
+    public function vu_simulate(Request $request){
+        $ue = UserEstablishment::where('retc_id', '=', 119010)->first();  
+
+        if($ue){
+            $token = $ue->user->createToken('VU')->accessToken;
+            Info('token_vu_simulate');
+            Info($token); 
+
+            Session::flash('token', $token);
+            return redirect('/');
+        } else {
+            return abort(404,'Error: UserAccess');
+        }
+    }
 }

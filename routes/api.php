@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-
+Route::get('/vu_simulate', 'ApiUserController@vu_simulate');
 
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 Route::post('/requisition/approve', 'RequisitionController@approve');

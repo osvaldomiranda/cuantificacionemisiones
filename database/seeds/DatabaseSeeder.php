@@ -14,7 +14,15 @@ class DatabaseSeeder extends Seeder
     	App\User::truncate();
     	App\User::create(['name'=> 'Osvaldo Miranda', 'email'=>'osvaldo.omiranda@gmail.com', 'password'=>'prueba']);
 
+		App\Company::truncate();
+        App\Company::create(["name" => "Empresa de pruebas","rut"=>11367176,"digit"=>"9","commune_id"=>13504,"retc_code"=> 1,"user_id"=> 1,"region_id"=>  13]);
 
+        App\Establishment::truncate();
+        App\Establishment::create(["name"=>"Establesimiento de Prueba","commune_id"=> 13504,"company_id"=> 1,"ciiu_id"=> "C1110","region_id"=>13,"retc_code"=> 1]);
+
+
+        App\UserEstablishment::truncate();
+        App\UserEstablishment::create(["user_id"=>1, "establishment_id" => 1, "retc_id" => 119010]);
 
 
 App\Factor::truncate();
@@ -1270,10 +1278,6 @@ App\Factor::create(['ccf8'=>'10200602', 'polulant'=>'Carbon dioxide', 'factor'=>
 
 
 
-		App\Company::truncate();
-        App\Company::create(["name" => "Empresa de pruebas","rut"=>11367176,"digit"=>"9","commune_id"=>13504,"retc_code"=> 1,"user_id"=> 1,"region_id"=>  13]);
 
-        App\Establishment::truncate();
-        App\Establishment::create(["name"=>"Establesimiento de Prueba","commune_id"=> 13504,"company_id"=> 1,"ciiu_id"=> "C1110","region_id"=>13,"retc_code"=> 1]);
     }
 }
