@@ -28,9 +28,9 @@ Route::middleware('client')->group(function () {
 	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');
 	
 
-	Route::post('/api/actualizarEmpresa', 
-	Route::post('/api/actualizarEstablecimiento'
-	Route::post('/api/actualizarUsuario'
+	Route::post('/api/actualizarEmpresa','CompanyController@update'); 
+	Route::post('/api/actualizarEstablecimiento','EstablishmentController@update');
+	Route::post('/api/actualizarUsuario','UserController@update');
 
 });
 
