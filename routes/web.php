@@ -21,6 +21,7 @@
 
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/vuinvitation/{secret_a}/{secret_b}','ApiUserController@validateSecret');
+	Route::get('/vu_simulate', 'ApiUserController@vu_simulate');
 });
 
 Route::get('{any}', function () {

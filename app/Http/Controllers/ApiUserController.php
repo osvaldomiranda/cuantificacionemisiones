@@ -115,8 +115,8 @@ class ApiUserController extends Controller
             Info('token_vu_simulate');
             Info($token); 
 
-            Session::put('hola', $token);
-            Session::save();
+            Session::flash('token', $token);
+
             return redirect('/');
         } else {
             return abort(404,'Error: UserAccess');
