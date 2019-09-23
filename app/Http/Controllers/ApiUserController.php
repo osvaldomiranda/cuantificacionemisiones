@@ -73,6 +73,7 @@ class ApiUserController extends Controller
         $secret_a =$request->secret_a;
         $secret_b =$request->secret_b;
         $result = UserEstablishment::where('secret_a',$secret_a)->where('secret_b',$secret_b)->first();
+
         
         Info('validateSecret');
 
@@ -86,7 +87,6 @@ class ApiUserController extends Controller
             Info('token');
             Info($token);    
             Session::flash('token', $token);
-
             return redirect('/');
         }else{
             return abort(404,'Error: UserAccess');
@@ -101,7 +101,6 @@ class ApiUserController extends Controller
        info("user");
        info($user);
        $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get();
-        //$user_establishment = UserEstablishment::where('user_id', 18)->with('user')->with('establishment')->get();
 
         return response()->json($user_establishment);
 
@@ -116,7 +115,8 @@ class ApiUserController extends Controller
             Info('token_vu_simulate');
             Info($token); 
 
-            Session::flash('token', $token);
+            Session::put('hola', $token);
+            Session::save();
             return redirect('/');
         } else {
             return abort(404,'Error: UserAccess');

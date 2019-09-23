@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="token" content="{{ Session::get('token') }}">
+<!--         <meta name="token" content="{{ json_encode(Session::all()) }}"> -->
+
         <title>Cuantificación de Emisiones</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     </head>

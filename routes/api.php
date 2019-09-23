@@ -26,7 +26,12 @@ Route::post('/requisition/reject', 'RequisitionController@reject');
 
 Route::middleware('client')->group(function () {
 	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');
-	Route::post('/crear_solicitud', 'ApiUserController@createRequisition'); 
+	
+
+	Route::post('/api/actualizarEmpresa', 
+	Route::post('/api/actualizarEstablecimiento'
+	Route::post('/api/actualizarUsuario'
+
 });
 
 Route::middleware('auth:api')->group(function () {
