@@ -103,6 +103,8 @@
 </template>
 
 <script>
+  import Vue from 'vue'; 
+  import router  from './../routes';
   export default {
     data: () => ({
       dialog: false,
@@ -120,7 +122,7 @@
       ]
     }),
     created () {
-     // this.initialize()
+      this.sourceRefresh();
     },
     methods: {
 
@@ -132,16 +134,33 @@
             alert(JSON.stringify(resp.data[0]['user']))
             // app.$store.commit('changeUser',resp.data[0]['user']);
             // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
-            
-            
-  
-           
            
           })
           .catch(function (resp) {
               console.log(resp);
               alert("Could not load data :" + resp);
-          });   
+          });
+
+
+
+        },
+
+        sourceRefresh (){
+            axios.get('/api/sources/refresh')
+                .then(function (resp) {    
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+            
+            axios.get('/api/diagram/refresh')
+                .then(function (resp) {    
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
         },
 
     }

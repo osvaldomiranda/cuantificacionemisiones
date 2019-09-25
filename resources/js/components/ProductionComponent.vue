@@ -33,42 +33,42 @@
 
                 <v-layout>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_ene" label="Enero"></v-text-field>
+                        <v-text-field v-model="prod_ene" type="number" label="Enero"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_feb" label="Febrero"></v-text-field>
+                        <v-text-field v-model="prod_feb" type="number" label="Febrero"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_mar" label="Marzo"></v-text-field>
+                        <v-text-field v-model="prod_mar" type="number" label="Marzo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_abr" label="Abril"></v-text-field>
+                        <v-text-field v-model="prod_abr" type="number" label="Abril"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_may" label="Mayo"></v-text-field>
+                        <v-text-field v-model="prod_may" type="number" label="Mayo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_jun" label="Junio"></v-text-field>
+                        <v-text-field v-model="prod_jun" type="number" label="Junio"></v-text-field>
                     </v-flex>
                 </v-layout>
                 <v-layout>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="prod_jul" label="Julio"></v-text-field>
+                        <v-text-field  v-model="prod_jul" type="number" label="Julio"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="prod_ago" label="Agosto"></v-text-field>
+                        <v-text-field  v-model="prod_ago" type="number" label="Agosto"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="prod_sep" label="Septiembre"></v-text-field>
+                        <v-text-field  v-model="prod_sep" type="number" label="Septiembre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_oct" label="Octubre"></v-text-field>
+                        <v-text-field v-model="prod_oct" type="number" label="Octubre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_nov" label="Noviembre"></v-text-field>
+                        <v-text-field v-model="prod_nov" type="number" label="Noviembre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="prod_dic" label="Diciembre"></v-text-field>
+                        <v-text-field v-model="prod_dic" type="number" label="Diciembre"></v-text-field>
                     </v-flex>
                 </v-layout> 
              
@@ -92,42 +92,42 @@
 
                 <v-layout>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_ene" label="Enero"></v-text-field>
+                        <v-text-field v-model="mp_ene" type="number" label="Enero"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_feb" label="Febrero"></v-text-field>
+                        <v-text-field v-model="mp_feb" type="number" label="Febrero"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_mar" label="Marzo"></v-text-field>
+                        <v-text-field v-model="mp_mar" type="number" label="Marzo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_abr" label="Abril"></v-text-field>
+                        <v-text-field v-model="mp_abr" type="number" label="Abril"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_may" label="Mayo"></v-text-field>
+                        <v-text-field v-model="mp_may" type="number" label="Mayo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_jun" label="Junio"></v-text-field>
+                        <v-text-field v-model="mp_jun" type="number" label="Junio"></v-text-field>
                     </v-flex>
                 </v-layout>
                 <v-layout>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="mp_jul" label="Julio"></v-text-field>
+                        <v-text-field  v-model="mp_jul" type="number" label="Julio"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="mp_ago" label="Agosto"></v-text-field>
+                        <v-text-field  v-model="mp_ago" type="number" label="Agosto"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field  v-model="mp_sep" label="Septiembre"></v-text-field>
+                        <v-text-field  v-model="mp_sep" type="number" label="Septiembre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_oct" label="Octubre"></v-text-field>
+                        <v-text-field v-model="mp_oct" type="number" label="Octubre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_nov" label="Noviembre"></v-text-field>
+                        <v-text-field v-model="mp_nov" type="number" label="Noviembre"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="mp_dic" label="Diciembre"></v-text-field>
+                        <v-text-field v-model="mp_dic" type="number" label="Diciembre"></v-text-field>
                     </v-flex>
                 </v-layout> 
              

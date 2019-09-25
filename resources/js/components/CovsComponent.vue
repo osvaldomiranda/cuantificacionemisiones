@@ -44,20 +44,22 @@
                           <span class="headline">Información Operación Actual</span>
                         </v-card-title>
                         <v-card-text>
+
                           <v-container grid-list-md>
+                            <v-form ref="form_operation_type"  lazy-validation>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md4>
 
-                                  <v-text-field v-model='register_id' label="Nro. Registro" required></v-text-field>
+                                  <v-text-field v-model='register_id' :rules = "generalRule" label="Nro. Registro" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='operation_type' label="Tipo Operación"></v-text-field>
+                                  <v-text-field v-model='operation_type' :rules = "generalRule" label="Tipo Operación"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field  v-model='control_system' label="Sistema de Control"></v-text-field>
+                                  <v-text-field  v-model='control_system' :rules = "generalRule" label="Sistema de Control"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='description'label="Descripción"></v-text-field>
+                                  <v-text-field v-model='description' :rules = "generalRule" label="Descripción"></v-text-field>
                                 </v-flex>
 
                         <v-flex sm8 md8 class="text-xs-center text-sm-center text-md-center text-lg-center">
@@ -65,6 +67,7 @@
                             <v-text-field label="Adjuntar Archivo PDF" @click='pickOpFile' v-model='imageOpName' prepend-icon='attach_file'></v-text-field>
                             <input
                                 type="file"
+                                :rules = "generalRule"
                                 style="display: none"
                                 ref="imageOp"
                                 accept=".pdf"
@@ -74,6 +77,7 @@
                         </v-flex>
 
                             </v-layout>
+                          </v-form>
                           </v-container>
                         </v-card-text>
                         <v-card-actions>
@@ -147,31 +151,32 @@
                         </v-card-title>
                         <v-card-text>
                           <v-container grid-list-md>
+                            <v-form ref="form_estimation"  lazy-validation>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md4>
 
-                                  <v-text-field v-model='source' label="Fuente" required></v-text-field>
+                                  <v-text-field v-model='source' :rules = "generalRule"  label="Fuente" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='discharge_type' label="Tipo Descarga"></v-text-field>
+                                  <v-text-field v-model='discharge_type' :rules = "generalRule"  label="Tipo Descarga"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='measuring_method' label="Método de Medición"></v-text-field>
+                                  <v-text-field v-model='measuring_method' :rules = "generalRule"  label="Método de Medición"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='factor' label="Valor del Factor"></v-text-field>
-                                </v-flex>
-
-                                <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='unity' label="Unidad de Medida"></v-text-field>
+                                  <v-text-field v-model='factor' :rules = "generalRule"  label="Valor del Factor"></v-text-field>
                                 </v-flex>
 
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field v-model='factor_origin' label="Origen del Factor"></v-text-field>
+                                  <v-text-field v-model='unity' :rules = "generalRule"  label="Unidad de Medida"></v-text-field>
                                 </v-flex>
 
                                 <v-flex xs12 sm6 md4>
-                                  <v-text-field  v-model='estimated_emission' label="Emisión Estimada"></v-text-field>
+                                  <v-text-field v-model='factor_origin' :rules = "generalRule"  label="Origen del Factor"></v-text-field>
+                                </v-flex>
+
+                                <v-flex xs12 sm6 md4>
+                                  <v-text-field  v-model='estimated_emission' :rules = "generalRule"  label="Emisión Estimada"></v-text-field>
                                 </v-flex>
 
                            <v-flex sm8 md8 class="text-xs-center text-sm-center text-md-center text-lg-center">
@@ -182,12 +187,14 @@
                                 style="display: none"
                                 ref="imageEm"
                                 accept=".pdf"
+                                :rules = "generalRule" 
                                 @change="onEmFilePicked"
                             >
 
                         </v-flex>
 
                             </v-layout>
+                          </v-form>
                           </v-container>
                         </v-card-text>
                         <v-card-actions>
@@ -316,6 +323,10 @@
     },
     data () {
       return {
+
+        generalRule: [v => !!v || 'Campo requerido'],
+        numberRule: [v => !!v || 'Campo requerido', v => v && /^[0-9]+$/.test(v) || 'Debe ser valor numérico',],
+
         dialog: true,
         dialogOpAct: false,
         dialogEstim: false,
@@ -379,13 +390,14 @@
     created () {
         this.initialize();
 
-        EventBus.$on('saveReading', function(){    
+        EventBus.$on('saveCovsReading', function(){    
             app.initialize();
         });
     },
     methods: {
       initialize () {
         var app = this;
+        
         axios.get('/api/currentops?declaration_id=' + app.declaration.id)
             .then(function (resp) {  
                   
@@ -405,8 +417,8 @@
                 alert("Error sources/refresh :" + resp);
             });
 
-        axios.get('/api/reading/bydecalration?declaration_id=' + app.declaration.id)
-            .then(function (resp) {    
+        axios.get('/api/reading/bydeclaration?declaration_id=' + app.declaration.id)
+            .then(function (resp) {   
                 app.readings = resp.data;
             })
             .catch(function (resp) {
@@ -418,7 +430,7 @@
 
       opSave (){
             var app = this;
-            // if (this.$refs.form.validate()){
+            if (this.$refs.form_operation_type.validate()){
                 var op = {
                     'declaration_id': this.declaration.id,
                     'register_id'   : this.register_id,
@@ -446,7 +458,7 @@
                 });
 
                 this.dialogOpAct = false;           
-            // }        
+            }        
 
       },
 
@@ -470,7 +482,7 @@
 
       emSave(){
             var app = this;
-            //if (this.$refs.form.validate()){
+            if (this.$refs.form_estimation.validate()){
                 var emit = {
                     'declaration_id'    : this.declaration.id,
                     'source'            : this.source,
@@ -500,7 +512,7 @@
                 });
 
                 this.dialogEstim = false;           
-           // }     
+            }     
 
       },
 

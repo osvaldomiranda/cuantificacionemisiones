@@ -182,7 +182,7 @@
     </v-toolbar>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="pda"
       class="elevation-1"
       v-if="pda.length > 0"
     >
@@ -369,7 +369,8 @@
                     alert("Error sources/refresh :" + resp);
                 });  
             axios.get('/api/sources/byprocess?process=PDA')
-                .then(function (resp) {    
+                .then(function (resp) {  
+                    alert(JSON.stringify(resp.data));  
                     app.pda = resp.data;
                 })
                 .catch(function (resp) {

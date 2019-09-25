@@ -20,27 +20,33 @@
 
         
         <v-container>
-            <v-form ref="form"  lazy-validation>
+            
             <v-card class="px-5">
+                <v-form ref="form_redings"  lazy-validation>
                 <br>
                 <v-layout>
                     <v-flex  xs12 sm6 md3 class="pr-1">
-                        <v-text-field v-model="source"   label="Fuente/Proceso"></v-text-field>
+                        <v-text-field v-model="source" :rules = "generalRule"  label="Fuente/Proceso"></v-text-field>
                     </v-flex>
                     <v-flex  xs12 sm6 md3 class="px-1">
-                        <v-text-field  v-model="internal_number"  label="Nro.Interno"></v-text-field>
+                        <v-text-field  v-model="internal_number" :rules = "generalRule" type='number' label="Nro.Interno"></v-text-field>
                     </v-flex>
                     <v-flex xs6 class="px-1">
-                        <v-text-field  readonly v-model="pollutant" label="Contaminante"></v-text-field>
+                        <v-select
+                            :items="pollutants"
+                            v-model="pollutant"
+                            label="Contaminante"
+                            :rules = "generalRule"
+                        ></v-select> 
                     </v-flex>
                 </v-layout>  
 
                 <v-layout>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="correlative" label="Correlativo"></v-text-field>
+                        <v-text-field v-model="correlative" :rules = "generalRule" type='number'  label="Correlativo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
-                        <v-text-field v-model="method" label="Metodo"></v-text-field>
+                        <v-text-field v-model="method" :rules = "generalRule" label="Metodo"></v-text-field>
                     </v-flex>
                     <v-flex xs2 class="px-1">
                         <v-select
@@ -65,6 +71,7 @@
                                   <template v-slot:activator="{ on }">
                                     <v-text-field
                                       v-model="date_reading"
+                                      :rules = "generalRule"
                                       label="Fecha de Medición
                                       "
                                       persistent-hint
@@ -92,48 +99,52 @@
                         >
                     </v-flex>
                 </v-layout>
+                </v-form>
             </v-card>
             <br>
             <v-card class="px-5">
                 <br>
+                <v-form ref="form_runs"  lazy-validation>
                     <v-layout>
                         <span class="title">Corridas</span>
                     </v-layout>
 
+                    
+
                     <v-layout>
                         <v-flex xs2 class="px-2">
-                            <v-text-field :rules = "numberRule" v-model="duration"  label="Duración"></v-text-field>
+                            <v-text-field :rules = "generalRule" type='number' v-model="duration"  label="Duración"></v-text-field>
                         </v-flex>
                         <v-flex xs3 class="px-2">
-                            <v-text-field v-model="measured_concentration" label="Concentración Medida"></v-text-field>
+                            <v-text-field v-model="measured_concentration" :rules = "generalRule" type='number' label="Concentración Medida"></v-text-field>
                         </v-flex>
                         <v-flex xs3 class="px-2">
-                            <v-text-field v-model="corrected_concentration" label="Concentración corregida"></v-text-field>
+                            <v-text-field v-model="corrected_concentration" :rules = "generalRule" type='number' label="Concentración corregida"></v-text-field>
                         </v-flex>                        
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="corrected_flow" label="Caudal Corregido"></v-text-field>
+                            <v-text-field v-model="corrected_flow" :rules = "generalRule" type='number' label="Caudal Corregido"></v-text-field>
                         </v-flex> 
 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="emission" label="Emisión"></v-text-field>
+                            <v-text-field v-model="emission" :rules = "generalRule" type='number' label="Emisión"></v-text-field>
                         </v-flex>
                     </v-layout> 
 
                     <v-layout> 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="excess_air" label="Exceso de Aire"></v-text-field>
+                            <v-text-field v-model="excess_air" :rules = "generalRule" type='number' label="Exceso de Aire"></v-text-field>
                         </v-flex>
                         <v-flex xs3 class="px-2">
-                            <v-text-field v-model="combustion_efficiency" label="Eficiencia Combustión"></v-text-field>
+                            <v-text-field v-model="combustion_efficiency" :rules = "generalRule" type='number' label="Eficiencia Combustión"></v-text-field>
                         </v-flex>  
                         <v-flex xs3 class="px-2">
-                            <v-text-field v-model="temperature" label="Temperatura"></v-text-field>
+                            <v-text-field v-model="temperature" :rules = "generalRule" type='number' label="Temperatura"></v-text-field>
                         </v-flex>                        
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="speed" label="Velocidad m/s"></v-text-field>
+                            <v-text-field v-model="speed" :rules = "generalRule" type='number' label="Velocidad m/s"></v-text-field>
                         </v-flex> 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="isocinetic" label="Isocinetismo"></v-text-field>
+                            <v-text-field v-model="isocinetic" :rules = "generalRule" type='number' label="Isocinetismo"></v-text-field>
                         </v-flex>
  
                     </v-layout>  
@@ -142,21 +153,24 @@
                     <v-layout> 
 
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="o2" label="O2"></v-text-field>
+                            <v-text-field v-model="o2" :rules = "generalRule" type='number' label="O2"></v-text-field>
                         </v-flex>
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co2" label="CO2"></v-text-field>
+                            <v-text-field v-model="co2" :rules = "generalRule" type='number' label="CO2"></v-text-field>
                         </v-flex>
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co" label="CO"></v-text-field>
+                            <v-text-field v-model="co" :rules = "generalRule" type='number' label="CO"></v-text-field>
                         </v-flex>                        
                         <v-flex xs2 class="px-2">
-                            <v-text-field v-model="co_ppm" label="CP (ppm)"></v-text-field>
+                            <v-text-field v-model="co_ppm" :rules = "generalRule" type='number' label="CP (ppm)"></v-text-field>
                         </v-flex> 
+
+
                         <v-flex xs4 class="px-2">
                             <v-btn @click="saveItem" class="ma-2" tile outline color="main_green">Ingresar Corrida</v-btn> 
                         </v-flex>
                     </v-layout> 
+                </v-form>    
                     <br>
                     <v-layout>
                         <v-flex xs12>
@@ -243,6 +257,8 @@
 
         pollutants: [
                 'Comuestos Organicos Volatiles (COV)',
+                'Tolueno',
+                'Xileno'
                 ],
         labs:[  'AIRON INGENIERIA Y CONTROL AMBIENTAL S.A',
                 'AEEG EMISSIONS SANTIAGO',
@@ -315,29 +331,31 @@
             }
         },
         saveItem () {
-            var item = {
-                        'duration': this.duration,
-                        'measured_concentration': this.measured_concentration,
-                        'corrected_concentration': this.corrected_concentration,
-                        'corrected_flow': this.corrected_flow,
-                        'emission': this.emission,
-                        'excess_air': this.excess_air,
-                        'combustion_efficiency': this.combustion_efficiency,
-                        'temperature': this.temperature,
-                        'speed': this.speed,
-                        'isocinetic': this.isocinetic,
-                        'o2': this.o2,
-                        'co2': this.co2,
-                        'co': this.co,
-                        'co_ppm': this.co_ppm
-                    };
+            if (this.$refs.form_runs.validate()){
+                var item = {
+                            'duration': this.duration,
+                            'measured_concentration': this.measured_concentration,
+                            'corrected_concentration': this.corrected_concentration,
+                            'corrected_flow': this.corrected_flow,
+                            'emission': this.emission,
+                            'excess_air': this.excess_air,
+                            'combustion_efficiency': this.combustion_efficiency,
+                            'temperature': this.temperature,
+                            'speed': this.speed,
+                            'isocinetic': this.isocinetic,
+                            'o2': this.o2,
+                            'co2': this.co2,
+                            'co': this.co,
+                            'co_ppm': this.co_ppm
+                        };
 
-            this.runs.push(item);
+                this.runs.push(item);
+            }
         },
 
         saveAll(){
 
-            if (this.$refs.form.validate()){
+            if ((this.$refs.form_redings.validate()) && (this.runs.length > 0))   {
                 var reading = {
                     'source': this.source,
                     'internal_number': this.internal_number,
@@ -354,22 +372,23 @@
                 let formData = new FormData();
                 formData.append('data',  JSON.stringify(reading));
                 formData.append('file', this.imageFile);
-                axios.post('/api/reading/save',formData,
+                axios.post('/api/reading/savecovs',formData,
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(function (resp) {
-                    EventBus.$emit('saveReading', 'someValue');
+                    EventBus.$emit('saveCovsReading', 'someValue');
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error source_types :" + resp);
                 });
                 this.dialog = false;           
+            }else if (this.runs.length <= 0){
+                alert("Debe ingresar al menos una corrida");
             }
-
 
         },
 

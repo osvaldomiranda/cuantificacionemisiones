@@ -117,4 +117,63 @@ class ReadingController extends Controller
         return response()->json($runs);
     }
 
+
+    public function covsSave(Request $request)
+    {
+
+        $data = json_decode($request->data);
+
+        $declaration_id = $data->declaration_id;
+
+
+        //Reading::where('declaration_id', $declaration_id)->delete();
+
+        $fileName = $request->file->getClientOriginalName();        
+        $fileDir = $request->file->storeAs('files',$fileName);  
+
+        $reading = new Reading();
+        $reading->declaration_id = $declaration_id;
+        $reading->source_id      = null;
+        $reading->pollutant      = $data->pollutant; 
+        $reading->correlative    = $data->correlative;  
+        $reading->method         = $data->method;   
+        $reading->lab            = $data->lab;
+        $reading->date_reading   = $data->date_reading; 
+        $reading->file           = $fileDir;
+        $reading->save();
+        
+
+        $runs = $data->runs;
+        Run::where('declaration_id', $declaration_id)->delete();
+
+        foreach($runs as $run){
+
+            $new_run = new Run();
+                
+            $new_run->declaration_id = $declaration_id;
+            $new_run->reading_id     = $reading->id; 
+            $new_run->source_id               = null;
+            $new_run->duration                = $run->duration;
+            $new_run->measured_concentration  = $run->measured_concentration;
+            $new_run->corrected_concentration = $run->corrected_concentration;
+            $new_run->corrected_flow          = $run->corrected_flow;
+            $new_run->emission                = $run->emission;
+            $new_run->excess_air              = $run->excess_air;
+            $new_run->combustion_efficiency   = $run->combustion_efficiency;
+            $new_run->temperature             = $run->temperature;
+            $new_run->speed                   = $run->speed;
+            $new_run->isocinetic              = $run->isocinetic;
+            $new_run->o2                      = $run->o2;
+            $new_run->co2                     = $run->co2;
+            $new_run->co                      = $run->co;
+            $new_run->co_ppm                  = $run->co_ppm;
+
+            $new_run->save();    
+        }
+
+        return response()->json($reading); 
+    }
+
+
+
 }

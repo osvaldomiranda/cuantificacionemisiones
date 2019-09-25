@@ -69,6 +69,7 @@ Route::middleware('auth:api')->group(function () {
 	Route::get('/comments','CommentController@index');
 	Route::post('/comment/create','CommentController@create');
 	Route::post('/reading/save', 'ReadingController@save');
+    Route::post('/reading/savecovs', 'ReadingController@covsSave');
 
 	Route::get('/reading/bysource', 'ReadingController@bySource');
 	Route::get('/run/bysource', 'ReadingController@runBySource');
