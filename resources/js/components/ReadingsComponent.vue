@@ -115,7 +115,7 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td >
-            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="main_green" dark>Registrar Mediciones</v-btn>
             <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>        </td>   
       </template>
     </v-data-table>
@@ -157,7 +157,7 @@
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td v-if='props.item.ccf8'> 
-            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="main_green" dark>Registrar Mediciones</v-btn>
             <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>        </td>   
         </template>
     </v-data-table>
@@ -188,7 +188,7 @@
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
 
-            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="main_green" dark>Registrar Mediciones</v-btn>
             <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>
 
         </td>    
