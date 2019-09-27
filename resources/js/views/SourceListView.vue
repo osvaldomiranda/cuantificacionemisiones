@@ -98,8 +98,8 @@
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
-        <v-spacer></v-spacer> 
-        <v-btn color="secondary_green" @click='toProduction' >Registrar Prodiucción</v-btn>
+<!--         <v-spacer></v-spacer> 
+        <v-btn color="secondary_green" @click='toProduction' >Registrar Prodiucción</v-btn> -->
     </v-toolbar>
 
 
@@ -142,7 +142,7 @@
     <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
         <v-toolbar-title>{{this.process.description}}</v-toolbar-title>
         <v-spacer></v-spacer> 
-        <discharge key="this.process.name" title='Ir a Diagrama de Descarga'></discharge>
+        <discharge :key= "this.process.name" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer>
         <v-btn @click='toProduction' color="secondary_green">Registrar Produción</v-btn>
     </v-toolbar>
@@ -474,7 +474,7 @@
             this.dialog = false;
             var Graphics = Vue.extend(ProductionComponent)
             var instance = new Graphics({store: this.$store, propsData: {
-            declaration: this.declaration,
+            declaration: this.declaration, process: this.process.name
           }});
             instance.$mount();
             this.$refs.container.appendChild(instance.$el);

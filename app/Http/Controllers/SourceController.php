@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 use App\Source;
 use App\Factor;
@@ -12,6 +13,8 @@ use App\Consumption;
 use App\Process;
 use App\Paralization;
 use App\OperatingCicle;
+use App\UserEstablishment;
+
 
 use Illuminate\Http\Request;
 
@@ -200,9 +203,11 @@ class SourceController extends Controller
         $process = $request->input('process');
 
         if($process=='OTHERS'){
-           $sources =  Source::select()->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->get();
+           $sources =  Source::select()->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->where('pda', false)->get();
+        }else if ($process=='PDA'){
+           $sources = Source::where('pda', true)->get(); 
         }else {
-           $sources = Source::where('process', $process)->get(); 
+           $sources = Source::where('process', $process)->where('pda', false)->get(); 
         }
 
         return response()->json($sources);
@@ -219,6 +224,7 @@ class SourceController extends Controller
 
     public function process(){
         $process = Source::select('process')->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->first();
+
         $process_name = Process::where('name', $process->process)->first();
 
         return response()->json($process_name);
@@ -226,7 +232,15 @@ class SourceController extends Controller
 
     public function refresh(){
         //  http://10.100.2.48:8081/api/source/get_sources/1
-        $establishment_id = '1';
+        $user = Auth::user();
+
+        $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
+
+
+        Info('***************');
+        Info($user_establishment);
+
+        $establishment_id = $user_establishment->establishment_id;
 
 
         $client = new Client();
@@ -312,6 +326,8 @@ class SourceController extends Controller
                     $source->installed_power_unity  =  $response['installed_power_unity'];
                     $source->state                  =  $response['state'];
 
+                    $source->pda               =  $response['pda'];
+
                     $source->save();    
 
                 }
@@ -371,6 +387,8 @@ class SourceController extends Controller
                 $new_source->nominal_power_unity    =  $response['nominal_power_unity'];
                 $new_source->installed_power_unity  =  $response['installed_power_unity'];
                 $new_source->state                  =  $response['state'];
+
+                $new_source->pda               =  $response['pda'];
                 
                 $new_source->save();
             }

@@ -27,7 +27,7 @@
                         <v-text-field v-model="product"  label="Producto Final"></v-text-field>
                     </v-flex>
                     <v-flex  xs12 sm6 md3 class="px-1">
-                        <v-text-field  v-model="unity" readonly='true' label="Unidad"></v-text-field>
+                        <v-text-field  v-model="prod_unity"  label="Unidad"></v-text-field>
                     </v-flex>
                 </v-layout>  
 
@@ -86,7 +86,7 @@
                         <v-text-field v-model="raw_material"  label="Materia Prima"></v-text-field>
                     </v-flex>
                     <v-flex  xs12 sm6 md3 class="px-1">
-                        <v-text-field  v-model="unity_mp" readonly='true' label="Unidad"></v-text-field>
+                        <v-text-field  v-model="rm_unity"  label="Unidad"></v-text-field>
                     </v-flex>
                 </v-layout>  
 
@@ -146,26 +146,23 @@
   export default {
     props: {
       source: Object,
-      declaration: Object
+      declaration: Object,
+      process: String
     },
     data () {
       return {
 
         dialog: true,
 
+        raw_material_id: 1,
         raw_material: '',
-        product: '',
+        rm_unity: 'Lt',
 
-        menu1: false,
-        menu2: false,
-        menu3: false,
-        menu4: false,
-       
-    headers:[ 
-            { text: 'Fecha Inicio', value: 'date_from' },
-            { text: 'Fecha Fin', value: 'date_to' },
-            { text: 'Nro.Dias', value: 'count' },
-            ],
+        product_id: 1,
+        product: '',
+        prod_unity: 'Lt',
+
+
 
         prod_ene: 0,
         prod_feb: 0,
@@ -206,89 +203,106 @@
         initialize () {
           var app = this;
 
-            // axios.get('/api/consumption/bysource?source_id=' + app.source.id + '&declaration_id=' + app.declaration.id)
-            //     .then(function (resp) { 
-            //       app.prod_ene = resp.data.jan;
-            //       app.prod_feb = resp.data.feb;
-            //       app.prod_mar = resp.data.mar;
-            //       app.prod_abr = resp.data.apr;
-            //       app.prod_may = resp.data.may;
-            //       app.prod_jun = resp.data.jun;
-            //       app.prod_jul = resp.data.jul;
-            //       app.prod_ago = resp.data.aug;
-            //       app.prod_sep = resp.data.sep;
-            //       app.prod_oct = resp.data.oct;
-            //       app.prod_nov = resp.data.nov;
-            //       app.prod_dic = resp.data.dic;
+            axios.get('/api/production/bydeclarationprocess?process=' + app.process + '&declaration_id=' + app.declaration.id)
+                .then(function (resp) { 
 
-            //       app.mp_ene = resp.data.mp_jan;
-            //       app.mp_feb = resp.data.mp_feb;
-            //       app.mp_mar = resp.data.mp_mar;
-            //       app.mp_abr = resp.data.mp_apr;
-            //       app.mp_may = resp.data.mp_may;
-            //       app.mp_jun = resp.data.mp_jun;
-            //       app.mp_jul = resp.data.mp_jul;
-            //       app.mp_ago = resp.data.mp_aug;
-            //       app.mp_sep = resp.data.mp_sep;
-            //       app.mp_oct = resp.data.mp_oct;
-            //       app.mp_nov = resp.data.mp_nov;
-            //       app.mp_dic = resp.data.mp_dic;
+                  app.raw_material_id = resp.data.raw_material_id;
+                  app.raw_material    = resp.data.raw_material;
+                  app.rm_unity        = resp.data.rm_unity;
 
-            //     })
-            //     .catch(function (resp) {
-            //         console.log(resp);
-            //         alert("Error sources/refresh :" + resp);
-            //     });
+                  app.product_id = resp.data.final_product_id;
+                  app.product    = resp.data.final_product;
+                  app.prod_unity = resp.data.fp_unity;
+
+                  app.prod_ene = resp.data.fp_jan;
+                  app.prod_feb = resp.data.fp_feb;
+                  app.prod_mar = resp.data.fp_mar;
+                  app.prod_abr = resp.data.fp_apr;
+                  app.prod_may = resp.data.fp_may;
+                  app.prod_jun = resp.data.fp_jun;
+                  app.prod_jul = resp.data.fp_jul;
+                  app.prod_ago = resp.data.fp_aug;
+                  app.prod_sep = resp.data.fp_sep;
+                  app.prod_oct = resp.data.fp_oct;
+                  app.prod_nov = resp.data.fp_nov;
+                  app.prod_dic = resp.data.fp_dic;
+
+                  app.mp_ene = resp.data.rm_jan;
+                  app.mp_feb = resp.data.rm_feb;
+                  app.mp_mar = resp.data.rm_mar;
+                  app.mp_abr = resp.data.rm_apr;
+                  app.mp_may = resp.data.rm_may;
+                  app.mp_jun = resp.data.rm_jun;
+                  app.mp_jul = resp.data.rm_jul;
+                  app.mp_ago = resp.data.rm_aug;
+                  app.mp_sep = resp.data.rm_sep;
+                  app.mp_oct = resp.data.rm_oct;
+                  app.mp_nov = resp.data.rm_nov;
+                  app.mp_dic = resp.data.rm_dic;
+
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
 
         },
 
       save_all (){
 
-        this.dialog = false;
+        alert("save All");
         var app = this;
 
-        var consumos = {
+        var production = {
+
                 'declaration_id': this.declaration.id,
-                'product_id': this.source.product_id,
-                'product': this.source.product,
-                'unity': this.source.unity,
-                'raw_material_id': this.source.raw_material_id,
-                'raw_material': this.source.raw_material,
-                'rm_unity': this.source.rm_unity,
-                'jan':  this.prod_ene,
-                'feb':  this.prod_feb,
-                'mar':  this.prod_mar,
-                'apr':  this.prod_abr,
-                'may':  this.prod_may,
-                'jun':  this.prod_jun,
-                'jul':  this.prod_jul,
-                'aug':  this.prod_ago,
-                'sep':  this.prod_sep,
-                'oct':  this.prod_oct,
-                'nov':  this.prod_nov,
-                'dic':  this.fprod_dic,
-                'mp_jan':  this.mp_ene,
-                'mp_feb':  this.mp_feb,
-                'mp_mar':  this.mp_mar,
-                'mp_apr':  this.mp_abr,
-                'mp_may':  this.mp_may,
-                'mp_jun':  this.mp_jun,
-                'mp_jul':  this.mp_jul,
-                'mp_aug':  this.mp_ago,
-                'mp_sep':  this.mp_sep,
-                'mp_oct':  this.mp_oct,
-                'mp_nov':  this.mp_nov,
-                'mp_dic':  this.mp_dic,
+                'process': this.process,
+
+                'raw_material_id': this.raw_material_id,
+                'raw_material': this.raw_material,
+                'rm_unity': this.rm_unity,
+
+                'final_product_id': this.product_id,
+                'final_product': this.product,
+                'fp_unity': this.prod_unity,
+
+                'fp_jan':  this.prod_ene,
+                'fp_feb':  this.prod_feb,
+                'fp_mar':  this.prod_mar,
+                'fp_apr':  this.prod_abr,
+                'fp_may':  this.prod_may,
+                'fp_jun':  this.prod_jun,
+                'fp_jul':  this.prod_jul,
+                'fp_aug':  this.prod_ago,
+                'fp_sep':  this.prod_sep,
+                'fp_oct':  this.prod_oct,
+                'fp_nov':  this.prod_nov,
+                'fp_dic':  this.prod_dic,
+                'rm_jan':  this.mp_ene,
+                'rm_feb':  this.mp_feb,
+                'rm_mar':  this.mp_mar,
+                'rm_apr':  this.mp_abr,
+                'rm_may':  this.mp_may,
+                'rm_jun':  this.mp_jun,
+                'rm_jul':  this.mp_jul,
+                'rm_aug':  this.mp_ago,
+                'rm_sep':  this.mp_sep,
+                'rm_oct':  this.mp_oct,
+                'rm_nov':  this.mp_nov,
+                'rm_dic':  this.mp_dic,
+
+
         };
 
-        axios.post('/api/consumption/save', consumos)
+        axios.post('/api/production/save', production)
         .then(response => {
           
         }).catch(error => {
-          alert("ERROR save consumos " + error)
+          alert("ERROR save productions " + error)
           console.log(error);
         });
 
+        this.dialog = false;
       }
 
     }

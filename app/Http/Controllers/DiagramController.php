@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 use App\Diagram;
 use Illuminate\Http\Request;
+use App\UserEstablishment;
 
 class DiagramController extends Controller
 {
@@ -49,13 +51,13 @@ class DiagramController extends Controller
      */
     public function show(Request $request)
     {
+        $establishment = json_decode(  $request->input("establishment") );
 
         if ($request->input("process") == ''){
-            $diagram = Diagram::where("establishment", $request->input("establishment"))->get();
+            $diagram = Diagram::where("establishment", $establishment->id )->get();
         }else{
-            $diagram = Diagram::where("establishment", $request->input("establishment") )->where("process", $request->input("process"))->get();
+            $diagram = Diagram::where("establishment", $establishment->id )->where("process", $request->input("process"))->get();
         }
-        
         return $diagram;//response()->json($diagram);
     }
 
@@ -98,7 +100,14 @@ class DiagramController extends Controller
 
     public function refresh(){
         //  10.100.2.48:8081/api/diagram/byestablishment?id=1
-        $establishment_id = '1';
+        $user = Auth::user();
+
+        $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
+
+        $establishment_id = $user_establishment->establishment_id;
+
+
+
         $client = new Client();
         $res = $client->get("http://10.100.2.48:8081/api/diagram/byestablishment?id=" . $establishment_id );
 

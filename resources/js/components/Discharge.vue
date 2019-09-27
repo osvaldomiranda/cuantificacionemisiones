@@ -243,6 +243,7 @@ body {
       ///alert("inicio "+this.sourceType)
       //alert(JSON.stringify(this.$store.getters.establishment))
       var ref = this
+      
       axios.get('/api/diagram/get/',{
         params: {
           establishment: this.$store.getters.establishment,

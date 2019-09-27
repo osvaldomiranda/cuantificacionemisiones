@@ -57,6 +57,9 @@ Route::middleware('auth:api')->group(function () {
 	Route::get('/consumption/bysource','ConsumptionController@bySource');
 	Route::post('/consumption/save','ConsumptionController@save');
 
+	Route::get('/production/bydeclarationprocess','ProductionController@byDeclarationProcess');
+	Route::post('/production/save','ProductionController@save');
+
 	Route::get('/paralization/bysource','ParalizationController@bySource');
 	Route::post('/paralization/save','ParalizationController@save');
 
