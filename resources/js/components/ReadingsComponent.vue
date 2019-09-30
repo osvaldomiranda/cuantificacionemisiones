@@ -77,7 +77,7 @@
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
         <td class="justify-center layout px-0">
-            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="primary_green" dark>Registrar Mediciones</v-btn>
+            <v-btn v-if="props.item.reading_state!='REGISTERED' " small @click="readingsClick(props.item)" color="main_green" dark>Registrar Mediciones</v-btn>
             <v-btn v-if="props.item.reading_state=='REGISTERED' " small @click="readingsClick(props.item)" color="readings" dark>Ver Mediciones</v-btn>
         </td>   
 
@@ -174,7 +174,7 @@
     </v-toolbar>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="pda"
       class="elevation-1"
       v-if="pda.length > 0"
     >
