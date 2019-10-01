@@ -21,9 +21,6 @@ class ApiUserController extends Controller
     public function setSecretInvitation(Request $request)
     {
 
-        Info('setSecretInvitation');
-        Info($request);
-
         $retcid = $request->input('retcid');
         $secret_a = $request->input('secret_a');
         $secret_b = $request->input('secret_b');

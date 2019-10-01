@@ -225,7 +225,11 @@ class SourceController extends Controller
     public function process(){
         $process = Source::select('process')->whereNotIn('process',['ENERGY','GENERAL_USE','PDA'])->first();
 
-        $process_name = Process::where('name', $process->process)->first();
+        if($process){ 
+            $process_name = Process::where('name', $process->process)->first();
+        } else {
+            $process_name = '';
+        }
 
         return response()->json($process_name);
     }
@@ -236,12 +240,7 @@ class SourceController extends Controller
 
         $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
 
-
-        Info('***************');
-        Info($user_establishment);
-
         $establishment_id = $user_establishment->establishment_id;
-
 
         $client = new Client();
         $res = $client->get("http://10.100.2.48:8081/api/source/get_sources/" . $establishment_id );

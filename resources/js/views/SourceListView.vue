@@ -78,6 +78,7 @@
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
         <td class="text-xs-right">{{ props.item.origin_data }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="text-xs-right">{{ props.item.process }}</td>
         <td class="justify-center layout px-0">
             <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
  
@@ -116,6 +117,7 @@
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="text-xs-right">{{ props.item.process }}</td>
 
         <td> 
             <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
@@ -140,7 +142,7 @@
     </v-toolbar>
 
     <v-toolbar v-if="transformMp.length > 0"  color="secondary_green" dark>
-        <v-toolbar-title>{{this.process.description}}</v-toolbar-title>
+        <v-toolbar-title>{{this.process.name}}</v-toolbar-title>
         <v-spacer></v-spacer> 
         <discharge :key= "this.process.name" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer>
@@ -161,6 +163,7 @@
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="text-xs-right">{{ props.item.process }}</td>
 
         <td v-if='props.item.ccf8'> 
             <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
@@ -193,6 +196,7 @@
         <td class="text-xs-right">{{ props.item.internal_number }}</td>
         <td class="text-xs-right">{{ props.item.serial_number }}</td>
         <td class="text-xs-right">{{ props.item.ccf8 }}</td>
+        <td class="text-xs-right">{{ props.item.process }}</td>
 
         <td v-if='props.item.ccf8'> 
             <v-btn  v-if="props.item.state=='ACTIVO'" small @click="consumptionClick(props.item)" color="ds_138" dark>Registrar Consumo</v-btn>
@@ -370,7 +374,7 @@
                 });  
             axios.get('/api/sources/byprocess?process=PDA')
                 .then(function (resp) {  
-                    alert(JSON.stringify(resp.data));  
+                    // alert(JSON.stringify(resp.data));  
                     app.pda = resp.data;
                 })
                 .catch(function (resp) {
@@ -390,6 +394,7 @@
             axios.get('/api/sources/process')
                 .then(function (resp) { 
                     app.process = resp.data;
+                    alert(JSON.stringify(resp.data));
                 })
                 .catch(function (resp) {
                     console.log(resp);
