@@ -29,6 +29,41 @@ class RequisitionController extends Controller
 
     	$retc_id =$request->input('retc_id');
 
+    	Info('approve');
+
+    	$client = new Client();
+    	$res = $client->post('http://10.200.113.27/access/token',['form_params' => ['client'=>'gei', 'secret'=>'123123']]);
+        $jsonData = json_decode((string) $res->getBody()->getContents()) ;
+        $token =  $jsonData->token;
+
+       Info($token);
+
+        $client = new Client();
+        $res = $client->post('http://10.200.113.27/api/v1/gei/' . $retc_id . '/approve',['headers'=>['token'=>$token]] );
+
+        $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
+
+        Info($res->getBody());
+        Info("***************");
+        Info($jsonData['response']);
+     
+        if($res->getStatusCode()==200){
+        	$requisition = Requisition::where('retc_id', $retc_id)->get()->first();
+        	$requisition->aprove_data = json_encode($jsonData);
+        	$requisition->state = 'APROBADA';
+        	$requisition->save();
+
+        	$this->userCreate($jsonData['response']);
+        }
+
+		
+    }
+
+
+    public function approveVU1(Request $request){
+
+    	$retc_id =$request->input('retc_id');
+
     //	Info('approve');
 
     	$client = new Client();
@@ -54,7 +89,6 @@ class RequisitionController extends Controller
 
 	//	Info($res->getBody());
     }
-
 
 
     public function userCreate($response){

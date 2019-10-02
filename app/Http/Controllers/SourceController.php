@@ -247,8 +247,11 @@ class SourceController extends Controller
 
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
       
-        foreach($jsonData as $data){
-            $this->create_source($data);
+
+        if($jsonData){
+            foreach($jsonData as $data){
+                $this->create_source($data);
+            }
         }
     }
 

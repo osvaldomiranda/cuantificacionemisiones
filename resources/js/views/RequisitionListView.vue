@@ -22,10 +22,10 @@
       <td>{{ props.item.state }}</td>
       <td>
       <td class="justify-center layout px-0"> 
-            <v-btn small @click="approve_requisition(props.item)" color="success">Aprobar</v-btn>
+            <v-btn small v-if="props.item.state=='PENDIENTE'" @click="approve_requisition(props.item)" color="success">Aprobar</v-btn>
       </td> 
       <td class="justify-center layout px-0"> 
-            <v-btn small @click="refuse(props.item)" color="success">Rechazar</v-btn>
+            <v-btn small  v-if="props.item.state=='PENDIENTE'"  @click="refuse(props.item)" color="success">Rechazar</v-btn>
       </td> 
     </template>
   </v-data-table>
@@ -51,7 +51,7 @@
       }
     },
     created () {
-        this.initialize()
+        this.initialize();
     },
     methods: {
         initialize () {  
@@ -69,8 +69,10 @@
                 });
         },
         approve_requisition(item){
+            var app = this;
             axios.post('/api/requisition/approve', item)
-                .then(function (resp) {    
+                .then(function (resp) { 
+                    app.initialize(); 
                 })
                 .catch(function (resp) {
                     console.log(resp);
