@@ -29,6 +29,9 @@ class DeclarationController extends Controller
         $incI = 0;
         foreach($declarations as $declaration){
 
+
+            Info($declaration);
+
             $declarationsArray[$incI]['declaration'] = $declaration;
             $declarationsArray[$incI]['establishment'] = $declaration->establishment;
             $declarationsArray[$incI]['commune'] = $declaration->establishment->commune;

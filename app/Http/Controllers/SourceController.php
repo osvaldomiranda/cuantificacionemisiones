@@ -240,7 +240,7 @@ class SourceController extends Controller
 
         $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
 
-        $establishment_id = $user_establishment->establishment_id;
+        $establishment_id = $user_establishment->retc_code;
 
         $client = new Client();
         $res = $client->get("http://10.100.2.48:8081/api/source/get_sources/" . $establishment_id );
