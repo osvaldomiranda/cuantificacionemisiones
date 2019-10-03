@@ -20,12 +20,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/recibir_solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
-Route::post('/requisition/approve', 'RequisitionController@approve');
-Route::post('/requisition/reject', 'RequisitionController@reject');
 
-	Route::post('/actualizarEmpresa','CompanyController@update'); 
-	Route::post('/actualizarEstablecimiento','EstablishmentController@update');
-	Route::post('/actualizarUsuario','UserController@update');
+// Route::post('/requisition/approve', 'RequisitionController@approveVU2');
+// Route::post('/requisition/reject', 'RequisitionController@rejectVU2');
+
+Route::post('/requisition/approve', 'RequisitionController@approveVU1');
+Route::post('/requisition/reject', 'RequisitionController@rejectVU1');
+
+	Route::post('/actualizar_empresa','CompanyController@update'); 
+	Route::post('/actualizar_establecimiento','EstablishmentController@update');
+	Route::post('/actualizar_usuario','UserController@update');
 
 Route::middleware('client')->group(function () {
 	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');

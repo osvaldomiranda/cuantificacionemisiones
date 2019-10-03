@@ -81,15 +81,16 @@
         },
 
         refuse(item){
-            var transform = {'<>':'li','html':[
-                        {'<>':'span','html':'${name} (${age})'}
-                    ]};
+            var app = this;
+            axios.post('/api/requisition/reject', item)
+                .then(function (resp) { 
+                    app.initialize(); 
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error reject_requisition :" + resp);
+                });
 
-            //alert(JSON.stringify(item));        
-
-            this.requis =  json2html(item,transform);        
-
-            //alert(requis);
         } 
     }        
   }
