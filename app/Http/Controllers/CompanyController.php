@@ -10,6 +10,10 @@ class CompanyController extends Controller
 
     public function update(Request $request)
     {
+
+    	Info("***** CompanyController 14 ******");
+    	Info($request);
+
     	return response()->json(['ok' => true, 'message' => "Empresa Actualizada" ]);
     }
 }

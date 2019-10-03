@@ -14,6 +14,6 @@ class UserController extends Controller
     	Info("***** userController 14 ******");
     	Info($request);
 
-    	return response()->json(['ok' => true, 'message' => "Usuario Actualizada" ]);
+    	return response()->json(['ok' => true, 'message' => "Usuario Actualizado" ]);
     }
 }

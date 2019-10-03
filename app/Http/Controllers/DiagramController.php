@@ -104,7 +104,7 @@ class DiagramController extends Controller
 
         $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
 
-        $establishment_id = $user_establishment->establishment_id;
+        $establishment_id = $user_establishment->retc_code;
 
 
 
