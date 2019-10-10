@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/send_to_reports', 'DeclarationController@send_to_reports');
 
 Route::post('/recibir_solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
@@ -27,9 +28,9 @@ Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 Route::post('/requisition/approve', 'RequisitionController@approveVU1');
 Route::post('/requisition/reject', 'RequisitionController@rejectVU1');
 
-	Route::post('/actualizar_empresa','CompanyController@update'); 
-	Route::post('/actualizar_establecimiento','EstablishmentController@update');
-	Route::post('/actualizar_usuario','UserController@update');
+Route::post('/actualizar_empresa','CompanyController@update'); 
+Route::post('/actualizar_establecimiento','EstablishmentController@update');
+Route::post('/actualizar_usuario','UserController@update');
 
 Route::middleware('client')->group(function () {
 	Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');

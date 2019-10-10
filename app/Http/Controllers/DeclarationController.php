@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Declaration;
 use App\Binnacle;
+use App\Consumption;
+use App\OperatingCicle;
+use App\Paralization;
+use App\Emission;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class DeclarationController extends Controller
@@ -151,31 +156,44 @@ class DeclarationController extends Controller
         $binnacle->new_state =  $new_state;
         $binnacle->user_id = 1;
         $binnacle->save();
+
+        if($new_state=='ENVIADA'){
+            $this->send_to_reports($declaration_id);    
+        }
     }
 
 
-    public function changeStates(Request $request){
+    public function send_to_reports($declaration_id){
 
-        // Info($request);
+        $declaration_array = Array();
+        $declaration = Declaration::where('id', $declaration_id)->first(); 
+        $consumptions = Consumption::where('declaration_id', $declaration->id)->get();
+        $operatingCicles = OperatingCicle::where('declaration_id', $declaration->id)->get();
+        $paralization = Paralization::where('declaration_id', $declaration->id)->get();
+        //$emission = Emission::where('declaration_id', $declaration->id)->get();
 
-        // $declaration_id = $request->input('declaration_id');
-        // $new_state = $request->input('new_state');
+        array_push($declaration_array, $declaration);
+        
+        $declaration_array[0]['consumption'] = $consumptions;
+        $declaration_array[0]['operatingcicles'] = $operatingCicles;
+        $declaration_array[0]['paralization'] = $paralization;
+        // $declaration_array[0]['emission'] = $emission;
 
 
-        // $declaration = Declaration::where('id',$declaration_id)->first();
-        // $declaration->state = $new_state;
-        // $declaration->save();
 
-        // $binnacle = new Binnacle();
-        // $binnacle->declaration_id = $declaration_id;
-        // $binnacle->new_state =  $new_state;
-        // $binnacle->user_id = 1;
-        // $binnacle->save();
+        $client = new Client();
+        $res = $client->post("http://127.0.0.1:8081/api/refresh_declaration", ['form_params' => ['declaration' => json_encode($declaration_array)]]);
 
-        $establishment_id = $request->input('establishment_id');
-        $declarations = Declaration::where('establishment_id', $establishment_id)->get();
-        return response()->json($declarations); 
+        $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
+
+
+
+        return response()->json($jsonData);
     }
+
+
+
+
 
 
 }

@@ -227,6 +227,7 @@ class RequisitionController extends Controller
 	                }
 	                $usuario->name=$usuarios['nombre'].' '.$usuarios['paterno'].' '.$usuarios['materno'];
 	                $usuario->email=$usuarios['email'];
+                    $usuario->type=0;
 	                $usuario->password=Hash::make('CuantificacionEmisiones');
 	                $usuario->save();
 	                $userEstablishment = UserEstablishment::where('user_id',$usuario->id)->where('establishment_id',$establishmentExists->id)->first();

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Consumption;
 
 class Declaration extends Model
 {
@@ -10,4 +11,5 @@ class Declaration extends Model
 	{
 	   	return $this->belongsTo(Establishment::class, 'establishment_id');
 	}
+
 }
