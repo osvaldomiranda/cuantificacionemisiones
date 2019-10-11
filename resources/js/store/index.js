@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+import createPersistedState from 'vuex-persistedstate'
+
 
 export default new Vuex.Store(
 {
@@ -33,5 +35,8 @@ export default new Vuex.Store(
 		establishment: state => state.establishment, 
 		user: state => state.user,
 		declaration_id: state=>declaration_id,
-	}
+	},
+    plugins: [
+    	createPersistedState()
+  	]
 });
