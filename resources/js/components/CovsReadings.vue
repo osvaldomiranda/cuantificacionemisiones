@@ -256,7 +256,7 @@
         co_ppm:'',
 
         pollutants: [
-                'Comuestos Organicos Volatiles (COV)',
+                'Compuestos Organicos Volatiles (COV)',
                 'Tolueno',
                 'Xileno'
                 ],

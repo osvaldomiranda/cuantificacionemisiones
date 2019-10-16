@@ -99,8 +99,6 @@
         <v-toolbar-title>Fuentes Generación de Energía y Vapor</v-toolbar-title>
         <v-spacer></v-spacer> 
         <discharge key="ENERGY" title='Ir a Diagrama de Descarga'></discharge>
-<!--         <v-spacer></v-spacer> 
-        <v-btn color="secondary_green" @click='toProduction' >Registrar Prodiucción</v-btn> -->
     </v-toolbar>
 
 
@@ -146,7 +144,7 @@
         <v-spacer></v-spacer> 
         <discharge :key= "this.process.name" title='Ir a Diagrama de Descarga'></discharge>
         <v-spacer></v-spacer>
-        <v-btn @click='toProduction' color="secondary_green">Registrar Produción</v-btn>
+        <v-btn @click='toProduction' color="secondary_green">Registrar Producción</v-btn>
     </v-toolbar>
 
 

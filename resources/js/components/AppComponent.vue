@@ -146,22 +146,22 @@
         },
 
         sourceRefresh (){
-            axios.get('/api/sources/refresh')
-                .then(function (resp) {
-                   alert("Fuentes Actualizadas")    
-                })
-                .catch(function (resp) {
-                    console.log(resp);
-                    alert("Error sources/refresh :" + resp);
-                });
+            // axios.get('/api/sources/refresh')
+            //     .then(function (resp) {
+            //        alert("Fuentes Actualizadas")    
+            //     })
+            //     .catch(function (resp) {
+            //         console.log(resp);
+            //         alert("Error sources/refresh :" + resp);
+            //     });
             
-            axios.get('/api/diagram/refresh')
-                .then(function (resp) {    
-                })
-                .catch(function (resp) {
-                    console.log(resp);
-                    alert("Error sources/refresh :" + resp);
-                });
+            // axios.get('/api/diagram/refresh')
+            //     .then(function (resp) {    
+            //     })
+            //     .catch(function (resp) {
+            //         console.log(resp);
+            //         alert("Error sources/refresh :" + resp);
+            //     });
         },
 
     }

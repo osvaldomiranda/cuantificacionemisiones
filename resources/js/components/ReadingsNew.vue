@@ -34,7 +34,7 @@
                         <v-select
                             :items="pollutants"
                             v-model="pollutant"
-                            label="Contaminate"
+                            label="Contaminante"
                             :rules = "generalRule"
                         ></v-select> 
                     </v-flex>
