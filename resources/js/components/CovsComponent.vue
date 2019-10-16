@@ -12,7 +12,7 @@
           <v-toolbar-title>Registrar Compuestos Organicos Volatiles</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="dialog = false">Enviar a la autoridad</v-btn>
+            <v-btn dark flat @click="send">Enviar a la autoridad</v-btn>
           </v-toolbar-items>
         </v-toolbar>
  
@@ -572,6 +572,22 @@
             this.$refs.container.replaceChild(instance.$el);
       }, 
 
+      send (){
+          var status = {'declaration_id': this.declaration.id,
+                        'new_state'     : 'ENVIADA'
+          }
+        
+
+           axios.post('/api/declaration/change',status,)
+                .then(function (resp) {
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error source_types :" + resp);
+                });
+            this.dialog = false;  
+            EventBus.$emit('refreshDeclaration', 'someValue');  
+      }
 
     }
 

@@ -104,6 +104,7 @@
   import SourceList  from './../views/SourceListView';
   import Readings  from './../components/ReadingsComponent';
   import Covs  from './../components/CovsComponent';
+  import {EventBus}  from './../eventbus.js';
   export default {
     data: () => ({
         dialog: false,
@@ -135,7 +136,12 @@
 
 
     created () {
-      this.initialize()
+        var app = this;
+        app.initialize()
+        
+        EventBus.$on('refreshDeclaration', function(){    
+            app.getdeclarations();
+        });
     },
 
     methods: {

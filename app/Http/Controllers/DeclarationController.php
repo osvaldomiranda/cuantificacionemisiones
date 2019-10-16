@@ -143,6 +143,7 @@ class DeclarationController extends Controller
     }
 
     public function changeState(Request $request){
+
         $declaration_id = $request->input('declaration_id');
         $new_state = $request->input('new_state');
 
@@ -158,7 +159,7 @@ class DeclarationController extends Controller
         $binnacle->save();
 
         if($new_state=='ENVIADA'){
-            $this->send_to_reports($declaration_id);    
+         //   $this->send_to_reports($declaration_id);    
         }
     }
 

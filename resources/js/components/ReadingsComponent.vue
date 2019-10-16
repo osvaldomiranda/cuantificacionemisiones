@@ -441,13 +441,32 @@
             instance.$mount();
             this.$refs.container.replaceChild(instance.$el);
         },
-      readingsProcess(){
+        readingsProcess(){
             var ComponentReserv = Vue.extend(CovsReadings)
             var instance = new ComponentReserv({store: this.$store, propsData: { declaration: this.declaration}
             });
             instance.$mount();
             this.$refs.container.replaceChild(instance.$el);
-      }, 
+        }, 
+
+
+        save_all (){
+          var status = {'declaration_id': this.declaration.id,
+                        'new_state'     : 'ENVIADA'
+          }
+          
+
+           axios.post('/api/declaration/change',status,)
+                .then(function (resp) {
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error source_types :" + resp);
+                });
+            this.dialog = false;  
+            EventBus.$emit('refreshDeclaration', 'someValue');  
+      }
+
 
     }
 }
