@@ -115,4 +115,14 @@ class ApiUserController extends Controller
             return abort(404,'Error: UserAccess');
         }
     }
+
+    public function logout(Request $request){
+        Info('**************');
+        Info('**************');
+        Info('**************');
+        Info('**************');
+        Info(' LOGOUT');
+
+    }
+
 }

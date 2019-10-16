@@ -123,27 +123,31 @@
     }),
     created () {
       this.sourceRefresh();
+
+
     },
     methods: {
 
-        async initialize() { 
-          var app = this 
-          await axios.get('/api/set_user')
-          .then(async function (resp) {
-            alert(JSON.stringify(resp.data));
-            alert(JSON.stringify(resp.data[0]['user']))
-            // app.$store.commit('changeUser',resp.data[0]['user']);
-            // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
+
+
+        // async initialize() { 
+        //   var app = this 
+        //   await axios.get('/api/set_user')
+        //   .then(async function (resp) {
+        //     alert(JSON.stringify(resp.data));
+        //     alert(JSON.stringify(resp.data[0]['user']))
+        //     // app.$store.commit('changeUser',resp.data[0]['user']);
+        //     // app.$store.commit('changeEstablishment',resp.data[0]['establishment']);        
            
-          })
-          .catch(function (resp) {
-              console.log(resp);
-              alert("Could not load data :" + resp);
-          });
+        //   })
+        //   .catch(function (resp) {
+        //       console.log(resp);
+        //       alert("Could not load data :" + resp);
+        //   });
 
 
 
-        },
+        // },
 
         sourceRefresh (){
             // axios.get('/api/sources/refresh')

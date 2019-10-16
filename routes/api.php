@@ -40,6 +40,7 @@ Route::middleware('client')->group(function () {
 
 Route::middleware('auth:api')->group(function () {
 	Route::get('/set_user', 'ApiUserController@setUserVue');
+	Route::get('/user/logout', 'ApiUserController@logout');
 
 
 	Route::get('/requisitions', 'RequisitionController@index');

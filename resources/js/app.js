@@ -115,5 +115,22 @@ const app = new Vue({
         }else{
             window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.getters.token;
         }
+
+
+        window.addEventListener('beforeunload', this.handler)
     },
+
+     methods: {
+
+          handler: function handler(event) {
+            axios.get('/api/user/logout')
+                .then(function (resp) {
+                   
+                })
+                .catch(function (resp) {
+                    console.log(resp);
+                    alert("Error sources/refresh :" + resp);
+                });
+          },
+      }
 });
