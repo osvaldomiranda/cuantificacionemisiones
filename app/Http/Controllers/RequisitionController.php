@@ -76,6 +76,10 @@ class RequisitionController extends Controller
         $res = $client->post('https://vuprueba.mma.gob.cl/VUb2/ws/cde/application/' . $retc_id . '/approve',['headers'=>['Authorization'=>$token]] );
 
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
+
+        Info($res->getBody());
+        Info("***************");
+        Info($jsonData['response']);
      
         if($res->getStatusCode()==200){
         	$requisition = Requisition::where('retc_id', $retc_id)->get()->first();
