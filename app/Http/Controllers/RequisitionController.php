@@ -201,7 +201,7 @@ class RequisitionController extends Controller
 	            $companyExists->fantasy_name=$response['empresa']['fantasia'];
 	            $companyExists->digit=$response['empresa']['digito'];
 	            $companyExists->street=$response['empresa']['calle'];
-	            $companyExists->number=$response['empresa']['numero'];
+	            // $companyExists->number=$response['empresa']['numero'];
 	            $companyExists->commune_id=$response['empresa']['comuna'];
 	            $companyExists->save();
 
@@ -213,7 +213,7 @@ class RequisitionController extends Controller
 	            $establishmentExists->name = $response['establecimiento']['nombre'];
 	            $establishmentExists->commune_id = $response['establecimiento']['comuna'];
 	            $establishmentExists->street = $response['establecimiento']['calle'];
-	            $establishmentExists->number = $response['establecimiento']['numero'];
+	            // $establishmentExists->number = $response['establecimiento']['numero'];
 	            $establishmentExists->company_id = $companyExists->id;
 	            $establishmentExists->user_id = $encargado_establecimiento->id;
 	            $establishmentExists->save();

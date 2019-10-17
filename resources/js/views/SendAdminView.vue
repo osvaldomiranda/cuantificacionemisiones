@@ -175,7 +175,7 @@
     methods: {
       initialize () {
         var app = this;
-        axios.get('/api/declarationswith?establishment_id=1')
+        axios.get('/api/declarationswith?establishment_id='+app.$store.getters.establishment.id)
             .then(function (resp) {    
                 app.declarations = resp.data;
             })
@@ -206,7 +206,7 @@
         },
         changeState (){
             var app = this;
-            axios.post('/api/declarations/change?establishment_id=1&state='+this.state+'&declarations='+JSON.stringify(this.selected))
+            axios.post('/api/declarations/change?establishment_id='+app.$store.getters.establishment.id+'&state='+this.state+'&declarations='+JSON.stringify(this.selected))
                 .then(function (resp) {    
                     app.declarations = resp.data;
                 })
