@@ -160,7 +160,7 @@ class RequisitionController extends Controller
 
     public function userCreate($response){
 
-    	//Info($response);
+        Info($response);
         
 	    DB::transaction(function() use ($response){
 

@@ -33,42 +33,42 @@
 
 		            <v-layout>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_ene" type="number" label="Enero"></v-text-field>
+		                    <v-text-field v-model="fuel_ene" min="0" type="number"  label="Enero"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_feb" type="number" label="Febrero"></v-text-field>
+		                    <v-text-field v-model="fuel_feb" min="0" type="number" label="Febrero"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_mar" type="number" label="Marzo"></v-text-field>
+		                    <v-text-field v-model="fuel_mar" min="0" type="number" label="Marzo"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_abr" type="number" label="Abril"></v-text-field>
+		                    <v-text-field v-model="fuel_abr" min="0" type="number" label="Abril"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_may" type="number" label="Mayo"></v-text-field>
+		                    <v-text-field v-model="fuel_may" min="0" type="number" label="Mayo"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_jun" type="number" label="Junio"></v-text-field>
+		                    <v-text-field v-model="fuel_jun" min="0" type="number" label="Junio"></v-text-field>
 		                </v-flex>
 		            </v-layout>
 		            <v-layout>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="fuel_jul" type="number" label="Julio"></v-text-field>
+		                    <v-text-field  v-model="fuel_jul" min="0" type="number" label="Julio"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="fuel_ago" type="number" label="Agosto"></v-text-field>
+		                    <v-text-field  v-model="fuel_ago" min="0" type="number" label="Agosto"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="fuel_sep" type="number" label="Septiembre"></v-text-field>
+		                    <v-text-field  v-model="fuel_sep" min="0" type="number" label="Septiembre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_oct" type="number" label="Octubre"></v-text-field>
+		                    <v-text-field v-model="fuel_oct" min="0" type="number" label="Octubre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_nov" type="number" label="Noviembre"></v-text-field>
+		                    <v-text-field v-model="fuel_nov" min="0" type="number" label="Noviembre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="fuel_dic" type="number" label="Diciembre"></v-text-field>
+		                    <v-text-field v-model="fuel_dic" min="0" type="number" label="Diciembre"></v-text-field>
 		                </v-flex>
 		            </v-layout>	
 		         
@@ -92,42 +92,42 @@
 
 		            <v-layout>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_ene" type="number" label="Enero"></v-text-field>
+		                    <v-text-field v-model="sec_ene" min="0" type="number" label="Enero"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_feb" type="number" label="Febrero"></v-text-field>
+		                    <v-text-field v-model="sec_feb" min="0" type="number" label="Febrero"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_mar" type="number" label="Marzo"></v-text-field>
+		                    <v-text-field v-model="sec_mar" min="0" type="number" label="Marzo"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_abr" type="number" label="Abril"></v-text-field>
+		                    <v-text-field v-model="sec_abr" min="0" type="number" label="Abril"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_may" type="number" label="Mayo"></v-text-field>
+		                    <v-text-field v-model="sec_may" min="0" type="number" label="Mayo"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_jun" type="number" label="Junio"></v-text-field>
+		                    <v-text-field v-model="sec_jun" min="0" type="number" label="Junio"></v-text-field>
 		                </v-flex>
 		            </v-layout>
 		            <v-layout>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="sec_jul" type="number" label="Julio"></v-text-field>
+		                    <v-text-field  v-model="sec_jul" min="0" type="number" label="Julio"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="sec_ago" type="number" label="Agosto"></v-text-field>
+		                    <v-text-field  v-model="sec_ago" min="0" type="number" label="Agosto"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field  v-model="sec_sep" type="number" label="Septiembre"></v-text-field>
+		                    <v-text-field  v-model="sec_sep" min="0" type="number" label="Septiembre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_oct" type="number" label="Octubre"></v-text-field>
+		                    <v-text-field v-model="sec_oct" min="0" type="number" label="Octubre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_nov" type="number" label="Noviembre"></v-text-field>
+		                    <v-text-field v-model="sec_nov" min="0" type="number" label="Noviembre"></v-text-field>
 		                </v-flex>
 		                <v-flex xs2 class="px-1">
-		                    <v-text-field v-model="sec_dic" type="number" label="Diciembre"></v-text-field>
+		                    <v-text-field v-model="sec_dic" min="0" type="number" label="Diciembre"></v-text-field>
 		                </v-flex>
 		            </v-layout>	
 		         
