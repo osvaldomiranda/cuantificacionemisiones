@@ -109,7 +109,7 @@ class DiagramController extends Controller
 
 
         $client = new Client();
-        $res = $client->get("http://10.100.2.48:8081/api/diagram/byestablishment?id=" . $establishment_id );
+        $res = $client->get("http://10.100.1.34:8081/api/diagram/byestablishment?id=" . $establishment_id );
 
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
 

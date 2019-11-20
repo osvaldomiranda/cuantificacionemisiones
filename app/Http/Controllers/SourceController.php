@@ -243,7 +243,7 @@ class SourceController extends Controller
         $establishment_id = $user_establishment->retc_code;
 
         $client = new Client();
-        $res = $client->get("http://10.100.2.48:8081/api/source/get_sources/" . $establishment_id );
+        $res = $client->get("http://10.100.1.34:8081/api/source/get_sources/" . $establishment_id );
 
         $jsonData = json_decode((string) $res->getBody()->getContents(), true) ;
       
