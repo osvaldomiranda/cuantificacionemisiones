@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
         App\Company::create(["name" => "Empresa de pruebas","rut"=>11367176,"digit"=>"9","commune_id"=>13504,"retc_code"=> 1,"user_id"=> 1,"region_id"=>  13]);
 
         App\Establishment::truncate();
-        App\Establishment::create(["name"=>"Establesimiento de Prueba","commune_id"=> 13504,"company_id"=> 1,"ciiu_id"=> "C1110","region_id"=>13,"retc_code"=> 1]);
+        App\Establishment::create(["name"=>"Establesimiento de Prueba","commune_id"=> 13504,"company_id"=> 1,"ciiu_id"=> "C1110","region_id"=>13,"retc_code"=> 2402]);
 
 
         App\UserEstablishment::truncate();
-        App\UserEstablishment::create(["user_id"=>1, "establishment_id" => 1, "retc_id" => 119010]);
+        App\UserEstablishment::create(["user_id"=>1, "establishment_id" => 1, "retc_id" => 119003]);
 
 
 App\Factor::truncate();

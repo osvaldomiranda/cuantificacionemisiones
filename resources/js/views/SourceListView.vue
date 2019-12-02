@@ -439,20 +439,21 @@
 
         sourceRefresh (){
             axios.get('/api/sources/refresh')
-                .then(function (resp) {    
+                .then(function (resp) {   
+                alert(JSON.stringify(resp.data)); 
                 })
                 .catch(function (resp) {
                     console.log(resp);
                     alert("Error sources/refresh :" + resp);
                 });
             
-            axios.get('/api/diagram/refresh')
-                .then(function (resp) {    
-                })
-                .catch(function (resp) {
-                    console.log(resp);
-                    alert("Error sources/refresh :" + resp);
-                });
+            // axios.get('/api/diagram/refresh')
+            //     .then(function (resp) {    
+            //     })
+            //     .catch(function (resp) {
+            //         console.log(resp);
+            //         alert("Error sources/refresh :" + resp);
+            //     });
         },
         consumptionClick (a){
             var ComponentReserv = Vue.extend(ConsumptionComponent)

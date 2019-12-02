@@ -246,7 +246,7 @@
 						          max-width="290px"
 						          min-width="290px"
 						        >
-						          <template v-slot:activator="{ on }">
+						        <template v-slot:activator="{ on }">
 						            <v-text-field
 						              v-model="paralization_from"
 						              label="Desde"
@@ -256,7 +256,7 @@
 						              v-on="on"
 						            ></v-text-field>
 						          </template>
-						          <v-date-picker v-model="paralization_from" no-title @input="menu3 = false"></v-date-picker>
+						          <v-date-picker v-model="paralization_from" no-title @input="val_paralization_from"></v-date-picker>
 						        </v-menu>
 						    </v-col>
 
@@ -284,7 +284,7 @@
 						              v-on="on"
 						            ></v-text-field>
 						          </template>
-						          <v-date-picker v-model="paralization_to" no-title @input="menu4 = false"></v-date-picker>
+						          <v-date-picker v-model="paralization_to" no-title @input="val_paralization_to"></v-date-picker>
 						        </v-menu>
 						    </v-col>
                 		</v-flex>
@@ -465,6 +465,28 @@
 
 	        this.paralizations.push(item);
 	    },
+
+	    val_paralization_from(){
+	    	this.menu3 = false;
+	    	if(this.paralization_to!=''){
+		    	if(this.paralization_from > this.paralization_to){
+		    		alert('Periódo incorrecto');
+		    		this.paralization_from = '';
+		    		this.paralization_to = '';
+		    	}
+	    	}
+	    },
+	    val_paralization_to(){
+	    	this.menu4 = false;
+	    	if(this.paralization_to!=''){
+		    	if(this.paralization_from > this.paralization_to){
+		    		alert('Periódo incorrecto');
+		    		this.paralization_from = '';
+		    		this.paralization_to = '';
+		    	}
+		    }
+	    },
+
 	    save_all (){
 
 	    	this.dialog = false;

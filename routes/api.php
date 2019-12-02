@@ -19,8 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/send_to_reports', 'DeclarationController@send_to_reports');
 
-Route::post('/recibir_solicitud_industrial', 'ApiUserController@solicitudIndustrial');
+
+Route::post('/user_invitation', 'ApiUserController@setSecretInvitation');
 Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
+
+// Route::post('/recibir_solicitud_industrial', 'ApiUserController@solicitudIndustrial');
+// Route::post('/solicitud_industrial', 'ApiUserController@solicitudIndustrial');
 
 // Route::post('/requisition/approve', 'RequisitionController@approveVU2');
 // Route::post('/requisition/reject', 'RequisitionController@rejectVU2');

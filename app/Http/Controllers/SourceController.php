@@ -235,12 +235,14 @@ class SourceController extends Controller
     }
 
     public function refresh(){
-        //  http://10.100.2.48:8081/api/source/get_sources/1
+        //  http://10.100.1.34:8081/api/source/get_sources/1
         $user = Auth::user();
 
         $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
 
-        $establishment_id = $user_establishment->retc_code;
+        // $establishment_id = $user_establishment->retc_code;
+        $establishment_id = 2402;
+
 
         $client = new Client();
         $res = $client->get("http://10.100.1.34:8081/api/source/get_sources/" . $establishment_id );
@@ -256,6 +258,8 @@ class SourceController extends Controller
     }
 
     public function create_source($response){
+
+        Info($response);
 
         DB::transaction(function() use ($response){
             $source = Source::where('external_id', $response['id'])->get()->first();

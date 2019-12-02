@@ -99,7 +99,7 @@ class DiagramController extends Controller
 
 
     public function refresh(){
-        //  10.100.2.48:8081/api/diagram/byestablishment?id=1
+        //  10.100.1.34:8081/api/diagram/byestablishment?id=1
         $user = Auth::user();
 
         $user_establishment = UserEstablishment::where('user_id', $user->id)->with('user')->with('establishment')->get()->first();
